@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wyniki i drabinka — Łódzka Liga Strzelectwa Laserowego</title>
-<meta name="description" content="Ranking, awans do finału i drabinka Łódzkiej Ligi Strzelectwa Laserowego Szkół. Trenażery ANSCHÜTZ i PentaShot.">
+<title>Wyniki i finał — Łódzka Liga Strzelectwa Laserowego</title>
+<meta name="description" content="Ranking, awans do finału i finał w formule ISSF Łódzkiej Ligi Strzelectwa Laserowego Szkół. Trenażery ANSCHÜTZ i PentaShot.">
 <meta name="theme-color" content="#15171c">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://ligalaserowa.2piny.pl/liga.html">
@@ -206,53 +206,23 @@
   .tally .t .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
   .tally .t.a .n{color:var(--laser-green)} .tally .t.b .n{color:var(--laser-orange)} .tally .t.c .n{color:var(--laser-magenta)}
 
-  /* ---------- BRACKET ---------- */
-  .bracket-status{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px;font-size:14px;color:var(--muted)}
+  /* ---------- FINAŁ (ISSF) ---------- */
+  .final-status{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px;font-size:14px;color:var(--muted)}
   .pill{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.04em}
   .pill.live{color:var(--laser-green);border:1px solid rgba(93,255,93,.4);background:rgba(93,255,93,.08)}
   .pill.soon{color:var(--laser-orange);border:1px solid rgba(255,138,30,.4);background:rgba(255,138,30,.08)}
 
-  .bracket-scroll{overflow-x:auto;padding-bottom:14px;scrollbar-color:var(--fog) transparent}
-  .bracket{display:flex;gap:0;min-width:max-content}
-  .round{display:flex;flex-direction:column;justify-content:space-around;min-width:210px;padding:0 14px}
-  .round-title{
-    font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:700;
-    color:var(--laser-green);text-align:center;padding-bottom:14px;position:sticky;top:0;
-  }
-  .match{
-    background:var(--concrete-2);border:1px solid var(--line);border-radius:5px;
-    margin:9px 0;position:relative;
-  }
-  /* connector stubs */
-  .round:not(:last-child) .match::after{
-    content:"";position:absolute;right:-14px;top:50%;width:14px;height:1px;background:var(--line);
-  }
-  .slot{
-    display:flex;align-items:center;gap:10px;padding:9px 12px;font-size:13px;
-  }
-  .slot+.slot{border-top:1px solid rgba(255,255,255,.06)}
-  .slot .seed{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);width:20px;flex:none}
-  .slot .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#cfd4dd}
-  .slot .sc{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);flex:none}
-  .slot.win .nm{color:var(--ink);font-weight:800}
-  .slot.win .sc{color:var(--laser-green);font-weight:700}
-  .slot.win::before{content:"";position:absolute;left:0;width:3px;top:0;bottom:0}
-  .slot.bye .nm{color:var(--fog);font-style:italic}
-  .slot.tbd .nm{color:var(--fog)}
-  .match.final-match{border-color:rgba(255,47,179,.4);box-shadow:0 0 24px -6px rgba(255,47,179,.4)}
-  .champion{
-    display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-    min-width:210px;padding:0 14px;
-  }
-  .champ-card{
-    background:linear-gradient(160deg,rgba(93,255,93,.12),rgba(58,160,255,.06));
-    border:1px solid rgba(93,255,93,.4);border-radius:8px;padding:26px 18px;width:100%;
-  }
-  .champ-card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--laser-green);font-weight:700}
-  .champ-card .trophy{font-size:34px;margin:8px 0}
-  .champ-card .nm{font-family:'Anton',sans-serif;font-size:22px;line-height:1.05;text-transform:uppercase}
-  .champ-card .sch{font-size:12px;color:var(--muted);margin-top:6px}
-  .champ-card .tbd{color:var(--fog);font-family:'Anton',sans-serif;font-size:22px;text-transform:uppercase}
+  .final-sub{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+  td.serie{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);white-space:nowrap}
+  .barcell{min-width:140px}
+  .bartrack{background:var(--fog);border-radius:4px;overflow:hidden;height:8px}
+  .bar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--laser-green),var(--laser-blue))}
+  tr.top1 .bar{background:linear-gradient(90deg,var(--laser-orange),var(--laser-magenta))}
+
+  .elim{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 22px;font-size:13px;color:var(--muted)}
+  .elim .ec{background:var(--concrete-2);border:1px solid var(--line);border-radius:999px;padding:5px 12px;white-space:nowrap}
+  .elim .ec.gold{border-color:rgba(255,138,30,.5);color:var(--laser-orange)}
+  .elim .arrow{color:var(--fog)}
 
   /* ---------- SCHEDULE ---------- */
   .timeline{position:relative;margin-left:8px;padding-left:30px}
@@ -301,8 +271,8 @@
 
 <div class="wrap">
   <div class="page-head">
-    <h1>Wyniki i <span class="accent">drabinka</span></h1>
-    <p>Ranking zawodników, awans do finału i drabinka pucharowa Łódzkiej Ligi Strzelectwa Laserowego Szkół. Przełącznik na górze zmienia konkurencję.</p>
+    <h1>Wyniki i <span class="accent">finał</span></h1>
+    <p>Ranking zawodników, awans do finału i finał medalowy w formule ISSF Łódzkiej Ligi Strzelectwa Laserowego Szkół. Przełącznik na górze zmienia konkurencję.</p>
     <div class="sample-banner" id="sampleBanner">
       <span>🎯 <b>Dane przykładowe.</b> To makieta z przykładowymi wynikami — podmień je w sekcji <code>DANE</code> na początku pliku <code>liga.html</code>. Jak, opisano w komentarzach w kodzie.</span>
     </div>
@@ -311,7 +281,7 @@
   <div class="tabs" role="tablist" aria-label="Sekcje ligi">
     <button class="tab" role="tab" aria-selected="true"  aria-controls="p-ranking" id="t-ranking">Ranking</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-awans"   id="t-awans">Awans do finału</button>
-    <button class="tab" role="tab" aria-selected="false" aria-controls="p-drabinka"id="t-drabinka">Drabinka finału</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-final" id="t-final">Finał (ISSF)</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-terminarz" id="t-terminarz">Terminarz</button>
   </div>
 
@@ -358,16 +328,14 @@
     </div>
   </section>
 
-  <!-- DRABINKA -->
-  <section class="panel" id="p-drabinka" role="tabpanel" aria-labelledby="t-drabinka" hidden>
+  <!-- FINAŁ (ISSF) -->
+  <section class="panel" id="p-final" role="tabpanel" aria-labelledby="t-final" hidden>
     <div class="panel-head">
-      <h2>Drabinka finału</h2>
-      <p>32 finalistów, rozstawienie według wyniku kwalifikacyjnego (nr 1 = najlepszy wynik). Pojedyncza eliminacja. Zwycięzców uzupełnia się w danych po każdej rundzie.</p>
+      <h2>Finał medalowy</h2>
+      <p>Ósemka z najlepszymi wynikami kwalifikacji wchodzi do finału. Formuła ISSF: strzelanie z progresywną eliminacją od 8. miejsca w górę, aż zostaje pojedynek o złoto. Klasyfikacja końcowa 1–8.</p>
     </div>
-    <div class="bracket-status" id="bracketStatus"></div>
-    <div class="bracket-scroll">
-      <div class="bracket" id="bracket"></div>
-    </div>
+    <div class="final-status" id="finalStatus"></div>
+    <div id="finalBody"></div>
   </section>
 
   <!-- TERMINARZ -->
@@ -405,10 +373,13 @@
                     `pistolet` / `karabinek` = wynik (liczba) albo null,
                     jeśli ktoś nie startuje w tej konkurencji.
    • terminarz    – wydarzenia. `status`: 'done' | 'live' | 'plan'.
-   • finalWyniki  – wyniki meczów drabinki, osobno dla konkurencji.
-                    Klucz = id meczu ('r0-m0' = runda 1, mecz 1).
-                    `win`: 'a' (górny) albo 'b' (dolny) = kto wygrał.
-                    `sa`,`sb` = wyniki. Puste {} = drabinka jeszcze nie ruszyła.
+   • finaly       – finał medalowy (ISSF), osobno dla każdej konkurencji.
+                    `rozegrany`: false = pokazuje ósemkę wyłonioną z
+                    kwalifikacji; true = pokazuje klasyfikację końcową.
+                    `zawodnicy`: lista finalistów z wynikami serii
+                    (`serie` – tablica liczb, aplikacja sumuje je i
+                    ustawia miejsca 1–8 malejąco). Wpisuj po `imie`
+                    dokładnie tak jak w liście `zawodnicy` powyżej.
    ===================================================================== */
 const DANE = {
   sezon: "2026",
@@ -481,23 +452,30 @@ const DANE = {
     { data:"2026-04-18", etap:"Etap 3 · Finał", tytul:"Wielki finał — 32 finalistów", miejsce:"Hala MOSiR, Łódź", status:"plan" },
   ],
 
-  // Wyniki drabinki. Klucz meczu: r{runda}-m{numer}, licząc od 0.
-  // Runda 1 (32→16) ma mecze r0-m0 … r0-m15.
-  finalWyniki: {
+  // Finał medalowy (ISSF). `serie` sumują się na wynik końcowy; miejsca
+  // ustawiane malejąco. Pistolet — przykład rozegrany; karabinek — przed finałem.
+  finaly: {
     pistolet: {
-      "r0-m0":{win:"a", sa:10.4, sb:9.7}, "r0-m1":{win:"a", sa:10.1, sb:9.9},
-      "r0-m2":{win:"b", sa:9.6,  sb:10.2},"r0-m3":{win:"a", sa:10.5, sb:8.8},
-      "r0-m4":{win:"a", sa:10.0, sb:9.5}, "r0-m5":{win:"b", sa:9.2,  sb:10.3},
-      "r0-m6":{win:"a", sa:10.6, sb:9.1}, "r0-m7":{win:"a", sa:9.8,  sb:9.4},
-      "r0-m8":{win:"a", sa:10.2, sb:9.9}, "r0-m9":{win:"b", sa:9.3,  sb:10.0},
-      "r0-m10":{win:"a",sa:10.7, sb:9.6}, "r0-m11":{win:"a",sa:10.1, sb:8.9},
-      "r0-m12":{win:"a",sa:9.9,  sb:9.7}, "r0-m13":{win:"b",sa:9.0,  sb:10.4},
-      "r0-m14":{win:"a",sa:10.3, sb:9.2}, "r0-m15":{win:"a",sa:10.5, sb:10.1},
-      // Ćwierćfinały (16→8) — kilka rozegranych, reszta czeka
-      "r1-m0":{win:"a", sa:10.6, sb:10.2}, "r1-m1":{win:"b", sa:9.8, sb:10.4},
-      "r1-m2":{win:"a", sa:10.5, sb:9.9},  "r1-m3":{win:"a", sa:10.3, sb:10.0},
+      rozegrany: true,
+      data: "2026-04-18",
+      miejsce: "Hala MOSiR, Łódź",
+      zawodnicy: [
+        { imie:"Antoni Nowak",         serie:[38.4,39.1,38.7,38.9,38.2,38.5] },
+        { imie:"Maja Kowalczyk",       serie:[38.0,38.6,38.9,38.4,38.2,38.4] },
+        { imie:"Aleksandra Michalska", serie:[38.1,37.9,38.5,38.2,38.0,38.2] },
+        { imie:"Natalia Baran",        serie:[37.5,37.9,37.6,38.1,37.4,37.6] },
+        { imie:"Nikola Kozłowska",     serie:[37.2,37.5,37.4,37.6,37.4,37.6] },
+        { imie:"Zofia Wiśniewska",     serie:[37.0,37.2,37.1,37.3,36.8,36.9] },
+        { imie:"Kacper Jankowski",     serie:[36.5,36.7,36.8,36.6,36.5,36.7] },
+        { imie:"Mateusz Zając",        serie:[36.0,36.2,36.1,36.0,36.0,36.1] },
+      ]
     },
-    karabinek: {}   // drabinka karabinka jeszcze nie ruszyła
+    karabinek: {
+      rozegrany: false,
+      data: "2026-04-18",
+      miejsce: "Hala MOSiR, Łódź",
+      zawodnicy: []   // przed finałem — aplikacja pokaże ósemkę z kwalifikacji
+    }
   }
 };
 
@@ -605,95 +583,77 @@ function renderAwans(){
   }).join("") : `<div class="empty" style="padding:24px">Za mało zawodników poza czwórkami, żeby wyłonić lucky loserów.</div>`;
 }
 
-/* ---- DRABINKA ---- */
-function seedOrder(n){
-  let seeds=[1,2];
-  while(seeds.length<n){
-    const sum=seeds.length*2+1, next=[];
-    seeds.forEach(s=>{ next.push(s); next.push(sum-s); });
-    seeds=next;
-  }
-  return seeds;
+/* ---- FINAŁ (ISSF) ---- */
+function inicjaly(imie){
+  const cz = String(imie).trim().split(/\s+/);
+  const im = cz[0]||"";
+  const nz = cz.length>1 ? (cz[cz.length-1][0]+".") : "";
+  return (im+" "+nz).trim();
 }
-function buildBracket(finalisci, wyniki){
-  const N=32, order=seedOrder(N);
-  // Runda 0 — pary wg rozstawienia
-  let rounds=[];
-  let r0=[];
-  for(let i=0;i<N/2;i++){
-    const sa=order[2*i], sb=order[2*i+1];
-    r0.push({ a: finalisci[sa-1]||null, b: finalisci[sb-1]||null, seedA:sa, seedB:sb });
-  }
-  rounds.push(r0);
-  // Kolejne rundy z wyników / bye
-  let size=N/2, ri=0;
-  while(size>1){
-    const cur=rounds[ri], next=[];
-    for(let i=0;i<cur.length;i+=2){
-      next.push({ a: winnerOf(cur[i], `r${ri}-m${i}`, wyniki), b: winnerOf(cur[i+1], `r${ri}-m${i+1}`, wyniki), seedA:null, seedB:null });
+function renderFinal(){
+  const cfg = DANE.finaly[konkurencja] || { rozegrany:false, zawodnicy:[] };
+  const status = $("#finalStatus"), wrap = $("#finalBody");
+  const top8 = kwalifikacja().finalisci.slice(0,8);
+  const intro = "Finał medalowy: 8 zawodników, formuła ISSF z progresywną eliminacją od 8. miejsca.";
+  const gdzie = cfg.miejsce ? ` · ${esc(cfg.miejsce)}` : "";
+
+  // Przed finałem — pokaż ósemkę wyłonioną z kwalifikacji.
+  if(!cfg.rozegrany || !(cfg.zawodnicy||[]).length){
+    status.innerHTML = `<span class="pill soon">Przed finałem</span> ${intro}`;
+    if(top8.length < 2){
+      wrap.innerHTML = `<div class="empty"><div class="big">Brak finalistów</div>Ósemka finałowa pojawi się, gdy będą wyniki kwalifikacji.</div>`;
+      return;
     }
-    rounds.push(next); size/=2; ri++;
-  }
-  return rounds;
-}
-function winnerOf(match, id, wyniki){
-  if(!match) return null;
-  // bye: jeden zawodnik obecny, drugi nie -> awansuje obecny
-  if(match.a && !match.b) return match.a;
-  if(match.b && !match.a) return match.b;
-  const res = wyniki[id];
-  if(!res) return null;
-  return res.win==="a" ? match.a : match.b;
-}
-function renderDrabinka(){
-  const { finalisci } = kwalifikacja();
-  const wyniki = (DANE.finalWyniki[konkurencja])||{};
-  const status = $("#bracketStatus");
-  if(finalisci.length < 2){
-    $("#bracket").innerHTML="";
-    status.innerHTML = `<span class="pill soon">Przed startem</span> Za mało finalistów, żeby zbudować drabinkę.`;
+    wrap.innerHTML = `<div class="final-sub">Ósemka finałowa — awans z kwalifikacji${gdzie}</div>`
+      + `<div class="lucky-list">` + top8.map((z,i)=>{
+          const s = szkolaById(z.szkola)||{};
+          return `<div class="lucky-item">
+            <span class="ll-rk" style="color:var(--laser-green)">${i+1}</span>
+            <span class="ll-name">${esc(z.imie)}<span class="ll-sch"> · ${esc(s.nazwa||z.szkola)}</span></span>
+            <span class="ll-sc">${z.w.toFixed(1)}</span></div>`;
+        }).join("") + `</div>`;
     return;
   }
-  const played = Object.keys(wyniki).length;
-  status.innerHTML = played
-    ? `<span class="pill live">W trakcie</span> Rozegrano ${played} ${played===1?'mecz':'mecz(e/ów)'}. Rozstawienie wg wyniku kwalifikacyjnego.`
-    : `<span class="pill soon">Przed startem</span> Drabinka rozstawiona (${Math.min(finalisci.length,32)} finalistów). Wyniki pojawią się po pierwszej rundzie.`;
 
-  const rounds = buildBracket(finalisci, wyniki);
-  const nazwy = ["1/16","1/8","Ćwierćfinał","Półfinał","Finał"];
-  let html="";
-  rounds.forEach((round,ri)=>{
-    const finalRound = ri===rounds.length-1;
-    html += `<div class="round"><div class="round-title">${nazwy[ri]||("Runda "+(ri+1))}</div>`;
-    round.forEach((m,mi)=>{
-      const id=`r${ri}-m${mi}`, res=(wyniki[id])||{};
-      html += `<div class="match ${finalRound?'final-match':''}">
-        ${slotHTML(m.a, m.seedA, res.win==="a", res.sa, m)}
-        ${slotHTML(m.b, m.seedB, res.win==="b", res.sb, m)}
-      </div>`;
-    });
-    html += `</div>`;
-  });
-  // Zwycięzca finału
-  const finalMatch = rounds[rounds.length-1][0];
-  const champ = winnerOf(finalMatch, `r${rounds.length-1}-m0`, wyniki);
-  html += `<div class="champion"><div class="champ-card"><div class="lbl">Mistrz ligi</div><div class="trophy">🏆</div>`;
-  html += champ ? `<div class="nm">${esc(champ.imie)}</div><div class="sch">${esc((szkolaById(champ.szkola)||{}).nazwa||"")}</div>` : `<div class="tbd">— TBD —</div>`;
-  html += `</div></div>`;
-  $("#bracket").innerHTML = html;
-}
-function slotHTML(z, seed, won, sc, match){
-  if(!z){
-    const isBye = match && ((match.a&&!match.b)||(match.b&&!match.a));
-    return `<div class="slot ${isBye?'bye':'tbd'}"><span class="seed">${seed||""}</span><span class="nm">${isBye?'wolny los':'—'}</span><span class="sc"></span></div>`;
-  }
-  const col = szkolaKolor(z.szkola);
-  return `<div class="slot ${won?'win':''}" ${won?`style="--x:${col}"`:''}>
-    ${won?`<span style="position:absolute;left:0;top:0;bottom:0;width:3px;background:${col};box-shadow:0 0 10px ${col}"></span>`:''}
-    <span class="seed">${seed||""}</span>
-    <span class="nm">${esc(z.imie)}</span>
-    <span class="sc">${typeof sc==="number"?sc.toFixed(1):""}</span>
-  </div>`;
+  // Finał rozegrany — klasyfikacja końcowa wg sumy serii.
+  const rows = cfg.zawodnicy.map(z=>{
+    const serie = (z.serie||[]).map(Number).filter(n=>isFinite(n));
+    const total = serie.reduce((a,b)=>a+b,0);
+    const info = DANE.zawodnicy.find(x=>x.imie===z.imie) || {};
+    return { imie:z.imie, szkola:info.szkola, serie, total };
+  }).sort((a,b)=>b.total-a.total);
+  const max = rows[0].total || 1;
+
+  status.innerHTML = `<span class="pill live">Rozegrany</span> Klasyfikacja końcowa${gdzie}. ${intro}`;
+
+  // Kolejność eliminacji: od ostatniego miejsca w górę, na końcu pojedynek o złoto.
+  const elim = rows.slice().reverse();
+  const elimStrip = `<div class="elim"><b style="color:var(--muted)">Kolejność eliminacji:</b> `
+    + elim.map((r,i)=>{
+        const miejsce = rows.length - i;
+        const gold = miejsce<=2;
+        return `<span class="ec ${gold?'gold':''}">${miejsce}. ${esc(inicjaly(r.imie))}</span>`;
+      }).join(`<span class="arrow">→</span>`)
+    + `<span class="arrow">→</span><span class="ec gold">🏆 złoto</span></div>`;
+
+  const body = rows.map((r,i)=>{
+    const cls = i<3 ? `top${i+1}` : "";
+    const medal = i<3 ? `<span class="medal">${MEDALE[i]}</span>` : "";
+    const s = szkolaById(r.szkola)||{};
+    const pct = Math.max(6, Math.round(r.total/max*100));
+    return `<tr class="${cls}">
+      <td class="rk">${i+1}</td>
+      <td class="who">${medal}${esc(r.imie)}</td>
+      <td><span class="chip"><span class="dot" style="color:${szkolaKolor(r.szkola)}"></span>${esc(s.nazwa||r.szkola||"")}</span></td>
+      <td class="serie">${r.serie.map(x=>x.toFixed(1)).join(" · ")}</td>
+      <td class="num score">${r.total.toFixed(1)}</td>
+      <td class="barcell"><div class="bartrack"><div class="bar" style="width:${pct}%"></div></div></td>
+    </tr>`;
+  }).join("");
+
+  wrap.innerHTML = elimStrip + `<div class="table-scroll"><table>
+    <thead><tr><th class="rk">#</th><th>Zawodnik</th><th>Szkoła</th><th>Serie</th><th class="num">Wynik</th><th>Progresja</th></tr></thead>
+    <tbody>${body}</tbody></table></div>`;
 }
 
 /* ---- TERMINARZ ---- */
@@ -714,7 +674,7 @@ function renderTerminarz(){
 }
 
 /* ---- INIT ---- */
-function renderAll(){ renderRanking(); renderAwans(); renderDrabinka(); }
+function renderAll(){ renderRanking(); renderAwans(); renderFinal(); }
 function init(){
   $("#seasonBadge").textContent = "SEZON "+DANE.sezon;
   if(!DANE.daneTestowe) $("#sampleBanner").hidden = true;
