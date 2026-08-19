@@ -77,15 +77,13 @@
     color:var(--laser-blue);border:1px solid rgba(58,160,255,.4);
     padding:3px 9px;border-radius:999px;letter-spacing:.06em;
   }
-  /* discipline toggle */
-  .disc{display:inline-flex;background:var(--concrete-2);border:1px solid var(--line);border-radius:999px;padding:4px}
-  .disc button{
-    font:inherit;font-size:13px;font-weight:700;letter-spacing:.02em;
-    background:transparent;color:var(--muted);border:none;cursor:pointer;
-    padding:8px 16px;border-radius:999px;transition:all .15s;white-space:nowrap;
+  /* format badge */
+  .format-badge{
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    color:var(--laser-green);border:1px solid rgba(93,255,93,.35);background:rgba(93,255,93,.06);
+    padding:6px 12px;border-radius:999px;letter-spacing:.03em;white-space:nowrap;
   }
-  .disc button[aria-pressed="true"]{background:var(--laser-blue);color:#0d0e12}
-  .disc button:not([aria-pressed="true"]):hover{color:var(--ink)}
+  @media(max-width:640px){.format-badge{display:none}}
 
   /* ---------- PAGE HEAD ---------- */
   .page-head{padding:44px 0 8px}
@@ -213,16 +211,10 @@
   .pill.soon{color:var(--laser-orange);border:1px solid rgba(255,138,30,.4);background:rgba(255,138,30,.08)}
 
   .final-sub{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
-  td.serie{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);white-space:nowrap}
   .barcell{min-width:140px}
   .bartrack{background:var(--fog);border-radius:4px;overflow:hidden;height:8px}
   .bar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--laser-green),var(--laser-blue))}
   tr.top1 .bar{background:linear-gradient(90deg,var(--laser-orange),var(--laser-magenta))}
-
-  .elim{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 22px;font-size:13px;color:var(--muted)}
-  .elim .ec{background:var(--concrete-2);border:1px solid var(--line);border-radius:999px;padding:5px 12px;white-space:nowrap}
-  .elim .ec.gold{border-color:rgba(255,138,30,.5);color:var(--laser-orange)}
-  .elim .arrow{color:var(--fog)}
 
   /* ---------- SCHEDULE ---------- */
   .timeline{position:relative;margin-left:8px;padding-left:30px}
@@ -262,17 +254,14 @@
       <span class="mark"><span class="a">LIGA</span> <span class="b">LASEROWA</span></span>
       <span class="season" id="seasonBadge">SEZON —</span>
     </div>
-    <div class="disc" role="group" aria-label="Wybór konkurencji">
-      <button type="button" data-disc="pistolet" aria-pressed="true">Pistolet</button>
-      <button type="button" data-disc="karabinek" aria-pressed="false">Karabinek</button>
-    </div>
+    <span class="format-badge">10× pistolet + 5× karabinek · suma</span>
   </div>
 </div>
 
 <div class="wrap">
   <div class="page-head">
     <h1>Wyniki i <span class="accent">finał</span></h1>
-    <p>Ranking zawodników, awans do finału i finał medalowy w formule ISSF Łódzkiej Ligi Strzelectwa Laserowego Szkół. Przełącznik na górze zmienia konkurencję.</p>
+    <p>Ranking zawodników, awans do finału i finał Łódzkiej Ligi Strzelectwa Laserowego Szkół. Każdy oddaje <strong style="color:var(--laser-green)">10 strzałów z pistoletu i 5 z karabinka</strong> — o miejscu decyduje łączna suma punktów.</p>
     <div class="sample-banner" id="sampleBanner">
       <span>🎯 <b>Dane przykładowe.</b> To makieta z przykładowymi wynikami — podmień je w sekcji <code>DANE</code> na początku pliku <code>liga.html</code>. Jak, opisano w komentarzach w kodzie.</span>
     </div>
@@ -288,8 +277,8 @@
   <!-- RANKING -->
   <section class="panel" id="p-ranking" role="tabpanel" aria-labelledby="t-ranking">
     <div class="panel-head">
-      <h2>Ranking — <span id="rankDisc">pistolet</span></h2>
-      <p>Zestawienie wyników kwalifikacyjnych. Najlepszy rezultat każdego zawodnika. Punktacja w stylu ISSF (40 strzałów, dziesiętne).</p>
+      <h2>Ranking łączny</h2>
+      <p>Suma punktów z obu broni: pistolet (10 strzałów) + karabinek (5 strzałów). Sortowanie malejąco po sumie; przy remisie wyżej lepszy wynik z pistoletu.</p>
     </div>
     <div class="toolbar">
       <select class="select" id="schoolFilter" aria-label="Filtruj po szkole"></select>
@@ -298,7 +287,7 @@
     </div>
     <div class="table-scroll">
       <table>
-        <thead><tr><th class="rk">#</th><th>Zawodnik</th><th>Szkoła</th><th class="num">Wynik</th></tr></thead>
+        <thead><tr><th class="rk">#</th><th>Zawodnik</th><th>Szkoła</th><th class="num">Pistolet</th><th class="num">Karabinek</th><th class="num">Suma</th></tr></thead>
         <tbody id="rankBody"></tbody>
       </table>
     </div>
@@ -332,7 +321,7 @@
   <section class="panel" id="p-final" role="tabpanel" aria-labelledby="t-final" hidden>
     <div class="panel-head">
       <h2>Finał medalowy</h2>
-      <p>Ósemka z najlepszymi wynikami kwalifikacji wchodzi do finału. Formuła ISSF: strzelanie z progresywną eliminacją od 8. miejsca w górę, aż zostaje pojedynek o złoto. Klasyfikacja końcowa 1–8.</p>
+      <p>Ósemka z najlepszą sumą punktów wchodzi do finału i strzela jeszcze raz — 10× pistolet + 5× karabinek. O medalach decyduje suma punktów z finału. Klasyfikacja końcowa 1–8.</p>
     </div>
     <div class="final-status" id="finalStatus"></div>
     <div id="finalBody"></div>
@@ -370,16 +359,17 @@
                     bo odwołują się do niego zawodnicy. `kolor`: green,
                     blue, magenta, orange, violet.
    • zawodnicy    – lista uczniów. `szkola` = id szkoły.
-                    `pistolet` / `karabinek` = wynik (liczba) albo null,
-                    jeśli ktoś nie startuje w tej konkurencji.
+                    `pistolet`  = suma punktów z 10 strzałów z pistoletu.
+                    `karabinek` = suma punktów z 5 strzałów z karabinka.
+                    O miejscu w rankingu decyduje SUMA obu (pistolet+karabinek).
+                    Jeśli ktoś jeszcze nie strzelał z którejś broni, wpisz null.
    • terminarz    – wydarzenia. `status`: 'done' | 'live' | 'plan'.
-   • finaly       – finał medalowy (ISSF), osobno dla każdej konkurencji.
+   • final        – finał medalowy (ósemka strzela jeszcze raz).
                     `rozegrany`: false = pokazuje ósemkę wyłonioną z
                     kwalifikacji; true = pokazuje klasyfikację końcową.
-                    `zawodnicy`: lista finalistów z wynikami serii
-                    (`serie` – tablica liczb, aplikacja sumuje je i
-                    ustawia miejsca 1–8 malejąco). Wpisuj po `imie`
-                    dokładnie tak jak w liście `zawodnicy` powyżej.
+                    `zawodnicy`: finaliści z wynikami finału `pistolet`
+                    i `karabinek`; aplikacja sumuje i ustawia miejsca 1–8.
+                    Wpisuj po `imie` dokładnie jak w liście `zawodnicy`.
    ===================================================================== */
 const DANE = {
   sezon: "2026",
@@ -393,56 +383,57 @@ const DANE = {
     { id:"SP199", nazwa:"Szkoła Podstawowa nr 199", dzielnica:"Polesie",  kolor:"violet"  },
   ],
 
+  // pistolet = suma 10 strzałów (maks. 109.0), karabinek = suma 5 strzałów (maks. 54.5)
   zawodnicy: [
     // SP26 (mocna szkoła — jej "piątki" wchodzą jako lucky loserzy)
-    { imie:"Maja Kowalczyk",     szkola:"SP26",  pistolet:381.4, karabinek:376.2 },
-    { imie:"Antoni Nowak",       szkola:"SP26",  pistolet:378.9, karabinek:371.0 },
-    { imie:"Zofia Wiśniewska",   szkola:"SP26",  pistolet:375.1, karabinek:379.4 },
-    { imie:"Jan Lewandowski",    szkola:"SP26",  pistolet:372.6, karabinek:368.8 },
-    { imie:"Lena Zielińska",     szkola:"SP26",  pistolet:370.2, karabinek:366.1 },
-    { imie:"Filip Szymański",    szkola:"SP26",  pistolet:369.5, karabinek:362.3 },
-    { imie:"Alicja Dąbrowska",   szkola:"SP26",  pistolet:367.8, karabinek:null  },
-    { imie:"Szymon Woźniak",     szkola:"SP26",  pistolet:null,  karabinek:364.7 },
+    { imie:"Maja Kowalczyk",     szkola:"SP26",  pistolet:96.4, karabinek:48.2 },
+    { imie:"Antoni Nowak",       szkola:"SP26",  pistolet:94.1, karabinek:47.0 },
+    { imie:"Zofia Wiśniewska",   szkola:"SP26",  pistolet:92.8, karabinek:49.1 },
+    { imie:"Jan Lewandowski",    szkola:"SP26",  pistolet:90.5, karabinek:45.3 },
+    { imie:"Lena Zielińska",     szkola:"SP26",  pistolet:89.7, karabinek:44.6 },
+    { imie:"Filip Szymański",    szkola:"SP26",  pistolet:88.9, karabinek:43.1 },
+    { imie:"Alicja Dąbrowska",   szkola:"SP26",  pistolet:87.4, karabinek:42.5 },
+    { imie:"Szymon Woźniak",     szkola:"SP26",  pistolet:85.2, karabinek:44.0 },
 
     // SP81
-    { imie:"Nikola Kozłowska",   szkola:"SP81",  pistolet:377.3, karabinek:370.5 },
-    { imie:"Kacper Jankowski",   szkola:"SP81",  pistolet:374.0, karabinek:373.9 },
-    { imie:"Hanna Mazur",        szkola:"SP81",  pistolet:368.4, karabinek:365.0 },
-    { imie:"Igor Krawczyk",      szkola:"SP81",  pistolet:366.1, karabinek:360.2 },
-    { imie:"Julia Piotrowska",   szkola:"SP81",  pistolet:361.7, karabinek:358.9 },
-    { imie:"Oskar Grabowski",    szkola:"SP81",  pistolet:359.3, karabinek:355.6 },
-    { imie:"Amelia Nowakowska",  szkola:"SP81",  pistolet:356.0, karabinek:null  },
-    { imie:"Wiktor Pawlak",      szkola:"SP81",  pistolet:352.8, karabinek:351.4 },
+    { imie:"Nikola Kozłowska",   szkola:"SP81",  pistolet:93.3, karabinek:46.5 },
+    { imie:"Kacper Jankowski",   szkola:"SP81",  pistolet:91.0, karabinek:47.9 },
+    { imie:"Hanna Mazur",        szkola:"SP81",  pistolet:86.4, karabinek:43.0 },
+    { imie:"Igor Krawczyk",      szkola:"SP81",  pistolet:84.1, karabinek:41.2 },
+    { imie:"Julia Piotrowska",   szkola:"SP81",  pistolet:81.7, karabinek:39.8 },
+    { imie:"Oskar Grabowski",    szkola:"SP81",  pistolet:79.3, karabinek:38.6 },
+    { imie:"Amelia Nowakowska",  szkola:"SP81",  pistolet:78.0, karabinek:40.1 },
+    { imie:"Wiktor Pawlak",      szkola:"SP81",  pistolet:76.8, karabinek:37.4 },
 
     // LO3
-    { imie:"Aleksandra Michalska",szkola:"LO3",  pistolet:379.6, karabinek:374.1 },
-    { imie:"Mateusz Zając",      szkola:"LO3",   pistolet:373.2, karabinek:369.7 },
-    { imie:"Wiktoria Wróbel",    szkola:"LO3",   pistolet:370.9, karabinek:372.8 },
-    { imie:"Bartosz Kaczmarek",  szkola:"LO3",   pistolet:365.4, karabinek:363.5 },
-    { imie:"Gabriela Olszewska", szkola:"LO3",   pistolet:360.8, karabinek:357.2 },
-    { imie:"Dawid Jaworski",     szkola:"LO3",   pistolet:358.1, karabinek:null  },
-    { imie:"Emilia Adamczyk",    szkola:"LO3",   pistolet:354.6, karabinek:356.3 },
-    { imie:"Franciszek Sikora",  szkola:"LO3",   pistolet:349.9, karabinek:348.0 },
+    { imie:"Aleksandra Michalska",szkola:"LO3",  pistolet:95.6, karabinek:47.4 },
+    { imie:"Mateusz Zając",      szkola:"LO3",   pistolet:90.2, karabinek:45.7 },
+    { imie:"Wiktoria Wróbel",    szkola:"LO3",   pistolet:88.9, karabinek:46.8 },
+    { imie:"Bartosz Kaczmarek",  szkola:"LO3",   pistolet:84.4, karabinek:42.5 },
+    { imie:"Gabriela Olszewska", szkola:"LO3",   pistolet:80.8, karabinek:40.2 },
+    { imie:"Dawid Jaworski",     szkola:"LO3",   pistolet:78.1, karabinek:38.0 },
+    { imie:"Emilia Adamczyk",    szkola:"LO3",   pistolet:76.6, karabinek:39.3 },
+    { imie:"Franciszek Sikora",  szkola:"LO3",   pistolet:73.9, karabinek:36.0 },
 
     // ZSP9
-    { imie:"Natalia Baran",      szkola:"ZSP9",  pistolet:376.7, karabinek:367.9 },
-    { imie:"Tymon Duda",         szkola:"ZSP9",  pistolet:371.3, karabinek:370.1 },
-    { imie:"Zuzanna Kubiak",     szkola:"ZSP9",  pistolet:364.8, karabinek:361.6 },
-    { imie:"Krzysztof Wieczorek",szkola:"ZSP9",  pistolet:362.2, karabinek:359.0 },
-    { imie:"Pola Sadowska",      szkola:"ZSP9",  pistolet:357.5, karabinek:354.4 },
-    { imie:"Adam Wróblewski",    szkola:"ZSP9",  pistolet:353.1, karabinek:null  },
-    { imie:"Laura Włodarczyk",   szkola:"ZSP9",  pistolet:350.4, karabinek:352.7 },
-    { imie:"Kajetan Marciniak",  szkola:"ZSP9",  pistolet:346.0, karabinek:347.3 },
+    { imie:"Natalia Baran",      szkola:"ZSP9",  pistolet:92.7, karabinek:44.9 },
+    { imie:"Tymon Duda",         szkola:"ZSP9",  pistolet:89.3, karabinek:46.1 },
+    { imie:"Zuzanna Kubiak",     szkola:"ZSP9",  pistolet:83.8, karabinek:41.6 },
+    { imie:"Krzysztof Wieczorek",szkola:"ZSP9",  pistolet:82.2, karabinek:40.0 },
+    { imie:"Pola Sadowska",      szkola:"ZSP9",  pistolet:77.5, karabinek:38.4 },
+    { imie:"Adam Wróblewski",    szkola:"ZSP9",  pistolet:75.1, karabinek:37.0 },
+    { imie:"Laura Włodarczyk",   szkola:"ZSP9",  pistolet:74.4, karabinek:38.7 },
+    { imie:"Kajetan Marciniak",  szkola:"ZSP9",  pistolet:72.0, karabinek:36.3 },
 
     // SP199 (słabsza — pokazuje, że jej "jedynka" nie zawsze bije lucky losera z SP26)
-    { imie:"Oliwia Sobczak",     szkola:"SP199", pistolet:368.0, karabinek:364.2 },
-    { imie:"Mikołaj Czarnecki",  szkola:"SP199", pistolet:363.9, karabinek:360.8 },
-    { imie:"Maja Głowacka",      szkola:"SP199", pistolet:359.7, karabinek:356.9 },
-    { imie:"Stanisław Lis",      szkola:"SP199", pistolet:355.2, karabinek:353.0 },
-    { imie:"Kornelia Borkowska", szkola:"SP199", pistolet:351.0, karabinek:349.5 },
-    { imie:"Jakub Sawicki",      szkola:"SP199", pistolet:347.4, karabinek:null  },
-    { imie:"Milena Chmielewska", szkola:"SP199", pistolet:344.1, karabinek:345.8 },
-    { imie:"Leon Włodarski",     szkola:"SP199", pistolet:341.6, karabinek:342.2 },
+    { imie:"Oliwia Sobczak",     szkola:"SP199", pistolet:87.0, karabinek:43.2 },
+    { imie:"Mikołaj Czarnecki",  szkola:"SP199", pistolet:83.9, karabinek:41.8 },
+    { imie:"Maja Głowacka",      szkola:"SP199", pistolet:79.7, karabinek:39.9 },
+    { imie:"Stanisław Lis",      szkola:"SP199", pistolet:75.2, karabinek:38.0 },
+    { imie:"Kornelia Borkowska", szkola:"SP199", pistolet:71.0, karabinek:36.5 },
+    { imie:"Jakub Sawicki",      szkola:"SP199", pistolet:68.4, karabinek:35.1 },
+    { imie:"Milena Chmielewska", szkola:"SP199", pistolet:66.1, karabinek:34.8 },
+    { imie:"Leon Włodarski",     szkola:"SP199", pistolet:64.6, karabinek:33.2 },
   ],
 
   terminarz: [
@@ -452,30 +443,22 @@ const DANE = {
     { data:"2026-04-18", etap:"Etap 3 · Finał", tytul:"Wielki finał — 32 finalistów", miejsce:"Hala MOSiR, Łódź", status:"plan" },
   ],
 
-  // Finał medalowy (ISSF). `serie` sumują się na wynik końcowy; miejsca
-  // ustawiane malejąco. Pistolet — przykład rozegrany; karabinek — przed finałem.
-  finaly: {
-    pistolet: {
-      rozegrany: true,
-      data: "2026-04-18",
-      miejsce: "Hala MOSiR, Łódź",
-      zawodnicy: [
-        { imie:"Antoni Nowak",         serie:[38.4,39.1,38.7,38.9,38.2,38.5] },
-        { imie:"Maja Kowalczyk",       serie:[38.0,38.6,38.9,38.4,38.2,38.4] },
-        { imie:"Aleksandra Michalska", serie:[38.1,37.9,38.5,38.2,38.0,38.2] },
-        { imie:"Natalia Baran",        serie:[37.5,37.9,37.6,38.1,37.4,37.6] },
-        { imie:"Nikola Kozłowska",     serie:[37.2,37.5,37.4,37.6,37.4,37.6] },
-        { imie:"Zofia Wiśniewska",     serie:[37.0,37.2,37.1,37.3,36.8,36.9] },
-        { imie:"Kacper Jankowski",     serie:[36.5,36.7,36.8,36.6,36.5,36.7] },
-        { imie:"Mateusz Zając",        serie:[36.0,36.2,36.1,36.0,36.0,36.1] },
-      ]
-    },
-    karabinek: {
-      rozegrany: false,
-      data: "2026-04-18",
-      miejsce: "Hala MOSiR, Łódź",
-      zawodnicy: []   // przed finałem — aplikacja pokaże ósemkę z kwalifikacji
-    }
+  // Finał medalowy — ósemka strzela jeszcze raz (10× pistolet + 5× karabinek).
+  // O miejscu decyduje suma. Ustaw rozegrany:false, by pokazać ósemkę z kwalifikacji.
+  final: {
+    rozegrany: true,
+    data: "2026-04-18",
+    miejsce: "Hala MOSiR, Łódź",
+    zawodnicy: [
+      { imie:"Antoni Nowak",         pistolet:97.2, karabinek:48.6 },
+      { imie:"Maja Kowalczyk",       pistolet:96.0, karabinek:49.0 },
+      { imie:"Aleksandra Michalska", pistolet:95.1, karabinek:48.1 },
+      { imie:"Zofia Wiśniewska",     pistolet:93.4, karabinek:48.8 },
+      { imie:"Nikola Kozłowska",     pistolet:92.6, karabinek:46.9 },
+      { imie:"Natalia Baran",        pistolet:91.8, karabinek:46.2 },
+      { imie:"Kacper Jankowski",     pistolet:90.3, karabinek:47.1 },
+      { imie:"Mateusz Zając",        pistolet:89.0, karabinek:45.5 },
+    ]
   }
 };
 
@@ -484,42 +467,40 @@ const DANE = {
    ===================================================================== */
 const KOLORY = { green:"var(--laser-green)", blue:"var(--laser-blue)", magenta:"var(--laser-magenta)", orange:"var(--laser-orange)", violet:"var(--laser-violet)" };
 const MEDALE = ["🥇","🥈","🥉"];
-let konkurencja = "pistolet";
 
 const $  = (s,r=document)=>r.querySelector(s);
 const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc = s => String(s).replace(/[&<>"]/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;" }[c]));
 const szkolaById = id => DANE.szkoly.find(s=>s.id===id);
 const szkolaKolor = id => KOLORY[(szkolaById(id)||{}).kolor] || "var(--laser-blue)";
-const wynik = z => z[konkurencja];
+const num = v => (typeof v==="number" && isFinite(v)) ? v : null;
+// Suma łączna: pistolet (10 strzałów) + karabinek (5 strzałów). null, gdy brak obu.
+const sumaOf = (p,k) => (p!=null||k!=null) ? (p||0)+(k||0) : null;
 
-// Ranking dla aktualnej konkurencji: tylko startujący, malejąco.
+// Ranking łączny: suma obu broni, malejąco. Remis → wyżej lepszy pistolet.
 function ranking(){
   return DANE.zawodnicy
-    .filter(z => typeof wynik(z) === "number")
-    .map(z => ({ ...z, w: wynik(z) }))
-    .sort((a,b)=> b.w - a.w);
+    .map(z=>{ const p=num(z.pistolet), k=num(z.karabinek); return { ...z, p, k, s:sumaOf(p,k) }; })
+    .filter(z => z.s != null)
+    .sort((a,b)=> b.s - a.s || (b.p||0) - (a.p||0));
 }
 
 // Kwalifikacja: top 4 z każdej szkoły = awans, potem 12 najlepszych z reszty.
 function kwalifikacja(){
-  const wgSzkoly = {};
-  DANE.szkoly.forEach(s => wgSzkoly[s.id] = []);
-  ranking().forEach(z => wgSzkoly[z.szkola] && wgSzkoly[z.szkola].push(z));
+  const wg = {};
+  DANE.szkoly.forEach(s => wg[s.id] = []);
+  ranking().forEach(z => wg[z.szkola] && wg[z.szkola].push(z));
   const auto = [], reszta = [];
-  DANE.szkoly.forEach(s => {
-    wgSzkoly[s.id].forEach((z,i) => { (i<4 ? auto : reszta).push(z); });
-  });
-  reszta.sort((a,b)=>b.w-a.w);
+  DANE.szkoly.forEach(s => wg[s.id].forEach((z,i)=> (i<4 ? auto : reszta).push(z)));
+  reszta.sort((a,b)=>b.s-a.s);
   const lucky = reszta.slice(0,12);
-  const finalisci = [...auto, ...lucky].sort((a,b)=>b.w-a.w); // rozstawienie wg wyniku
   const luckySet = new Set(lucky);
-  return { wgSzkoly, auto, lucky, luckySet, finalisci };
+  const finalisci = [...auto, ...lucky].sort((a,b)=>b.s-a.s);
+  return { wg, auto, lucky, luckySet, finalisci };
 }
 
 /* ---- RANKING ---- */
 function renderRanking(){
-  $("#rankDisc").textContent = konkurencja;
   const q = ($("#rankSearch").value||"").toLowerCase().trim();
   const sf = $("#schoolFilter").value;
   const full = ranking();                 // pełny ranking = ranga globalna (indeks)
@@ -530,7 +511,7 @@ function renderRanking(){
 
   const body = $("#rankBody");
   if(!rows.length){
-    body.innerHTML = `<tr><td colspan="4"><div class="empty"><div class="big">Brak wyników</div>Dla tej konkurencji nie ma jeszcze pasujących rezultatów.</div></td></tr>`;
+    body.innerHTML = `<tr><td colspan="6"><div class="empty"><div class="big">Brak wyników</div>Nie ma jeszcze pasujących rezultatów.</div></td></tr>`;
   } else {
     body.innerHTML = rows.map(({z,rank})=>{
       const cls = rank<3 ? `top${rank+1}` : "";
@@ -540,7 +521,9 @@ function renderRanking(){
         <td class="rk">${rank+1}</td>
         <td class="who">${medal}${esc(z.imie)}</td>
         <td><span class="chip"><span class="dot" style="color:${szkolaKolor(z.szkola)}"></span>${esc(s.nazwa||z.szkola)}</span></td>
-        <td class="num score">${z.w.toFixed(1)}</td>
+        <td class="num">${z.p!=null?z.p.toFixed(1):"—"}</td>
+        <td class="num">${z.k!=null?z.k.toFixed(1):"—"}</td>
+        <td class="num score">${z.s.toFixed(1)}</td>
       </tr>`;
     }).join("");
   }
@@ -549,22 +532,21 @@ function renderRanking(){
 
 /* ---- AWANS ---- */
 function renderAwans(){
-  const { wgSzkoly, auto, lucky, luckySet, finalisci } = kwalifikacja();
+  const { wg, auto, lucky, luckySet, finalisci } = kwalifikacja();
   $("#tAuto").textContent  = auto.length;
   $("#tLucky").textContent = lucky.length;
   $("#tFinal").textContent = finalisci.length;
 
   $("#schoolsGrid").innerHTML = DANE.szkoly.map(s=>{
-    const list = wgSzkoly[s.id];
-    if(!list.length) return `<div class="school-card" style="--bar:${szkolaKolor(s.id)}"><h3>${esc(s.nazwa)}</h3><div class="sub">${esc(s.dzielnica||"")}</div><div class="more">Brak wyników w tej konkurencji.</div></div>`;
+    const list = wg[s.id];
+    if(!list.length) return `<div class="school-card" style="--bar:${szkolaKolor(s.id)}"><h3>${esc(s.nazwa)}</h3><div class="sub">${esc(s.dzielnica||"")}</div><div class="more">Brak wyników.</div></div>`;
     const shown = list.slice(0,6);
     const rows = shown.map((z,i)=>{
-      const isAuto = i<4;
-      const lucky = luckySet.has(z);
-      const badge = isAuto ? `<span class="badge auto">Awans</span>` : (lucky? `<span class="badge" style="background:rgba(255,138,30,.14);color:var(--laser-orange);border:1px solid rgba(255,138,30,.4)">Lucky</span>`:"");
+      const isAuto = i<4, isLucky = luckySet.has(z);
+      const badge = isAuto ? `<span class="badge auto">Awans</span>` : (isLucky? `<span class="badge" style="background:rgba(255,138,30,.14);color:var(--laser-orange);border:1px solid rgba(255,138,30,.4)">Lucky</span>`:"");
       return `<div class="qrow ${isAuto?'is-auto':''}">
         <span class="qn">${i+1}. ${esc(z.imie)} ${badge}</span>
-        <span class="qs">${z.w.toFixed(1)}</span>
+        <span class="qs">${z.s.toFixed(1)}</span>
       </div>`;
     }).join("");
     const extra = list.length>6 ? `<div class="more">+ ${list.length-6} dalej</div>`:"";
@@ -578,23 +560,17 @@ function renderAwans(){
     return `<div class="lucky-item">
       <span class="ll-rk">${i+1}</span>
       <span class="ll-name">${esc(z.imie)}<span class="ll-sch"> · ${esc(s.nazwa||z.szkola)}</span></span>
-      <span class="ll-sc">${z.w.toFixed(1)}</span>
+      <span class="ll-sc">${z.s.toFixed(1)}</span>
     </div>`;
   }).join("") : `<div class="empty" style="padding:24px">Za mało zawodników poza czwórkami, żeby wyłonić lucky loserów.</div>`;
 }
 
-/* ---- FINAŁ (ISSF) ---- */
-function inicjaly(imie){
-  const cz = String(imie).trim().split(/\s+/);
-  const im = cz[0]||"";
-  const nz = cz.length>1 ? (cz[cz.length-1][0]+".") : "";
-  return (im+" "+nz).trim();
-}
+/* ---- FINAŁ ---- */
 function renderFinal(){
-  const cfg = DANE.finaly[konkurencja] || { rozegrany:false, zawodnicy:[] };
+  const cfg = DANE.final || { rozegrany:false, zawodnicy:[] };
   const status = $("#finalStatus"), wrap = $("#finalBody");
   const top8 = kwalifikacja().finalisci.slice(0,8);
-  const intro = "Finał medalowy: 8 zawodników, formuła ISSF z progresywną eliminacją od 8. miejsca.";
+  const intro = "Ósemka z najlepszą sumą strzela jeszcze raz (10× pistolet + 5× karabinek). O medalach decyduje suma punktów z finału.";
   const gdzie = cfg.miejsce ? ` · ${esc(cfg.miejsce)}` : "";
 
   // Przed finałem — pokaż ósemkę wyłonioną z kwalifikacji.
@@ -610,49 +586,39 @@ function renderFinal(){
           return `<div class="lucky-item">
             <span class="ll-rk" style="color:var(--laser-green)">${i+1}</span>
             <span class="ll-name">${esc(z.imie)}<span class="ll-sch"> · ${esc(s.nazwa||z.szkola)}</span></span>
-            <span class="ll-sc">${z.w.toFixed(1)}</span></div>`;
+            <span class="ll-sc">${z.s.toFixed(1)}</span></div>`;
         }).join("") + `</div>`;
     return;
   }
 
-  // Finał rozegrany — klasyfikacja końcowa wg sumy serii.
+  // Finał rozegrany — klasyfikacja końcowa wg sumy (pistolet + karabinek).
   const rows = cfg.zawodnicy.map(z=>{
-    const serie = (z.serie||[]).map(Number).filter(n=>isFinite(n));
-    const total = serie.reduce((a,b)=>a+b,0);
+    const p = num(z.pistolet), k = num(z.karabinek);
     const info = DANE.zawodnicy.find(x=>x.imie===z.imie) || {};
-    return { imie:z.imie, szkola:info.szkola, serie, total };
-  }).sort((a,b)=>b.total-a.total);
-  const max = rows[0].total || 1;
+    return { imie:z.imie, szkola:info.szkola, p, k, s:sumaOf(p,k)||0 };
+  }).sort((a,b)=> b.s - a.s || (b.p||0)-(a.p||0));
+  const max = rows[0].s || 1;
 
   status.innerHTML = `<span class="pill live">Rozegrany</span> Klasyfikacja końcowa${gdzie}. ${intro}`;
-
-  // Kolejność eliminacji: od ostatniego miejsca w górę, na końcu pojedynek o złoto.
-  const elim = rows.slice().reverse();
-  const elimStrip = `<div class="elim"><b style="color:var(--muted)">Kolejność eliminacji:</b> `
-    + elim.map((r,i)=>{
-        const miejsce = rows.length - i;
-        const gold = miejsce<=2;
-        return `<span class="ec ${gold?'gold':''}">${miejsce}. ${esc(inicjaly(r.imie))}</span>`;
-      }).join(`<span class="arrow">→</span>`)
-    + `<span class="arrow">→</span><span class="ec gold">🏆 złoto</span></div>`;
 
   const body = rows.map((r,i)=>{
     const cls = i<3 ? `top${i+1}` : "";
     const medal = i<3 ? `<span class="medal">${MEDALE[i]}</span>` : "";
     const s = szkolaById(r.szkola)||{};
-    const pct = Math.max(6, Math.round(r.total/max*100));
+    const pct = Math.max(6, Math.round(r.s/max*100));
     return `<tr class="${cls}">
       <td class="rk">${i+1}</td>
       <td class="who">${medal}${esc(r.imie)}</td>
       <td><span class="chip"><span class="dot" style="color:${szkolaKolor(r.szkola)}"></span>${esc(s.nazwa||r.szkola||"")}</span></td>
-      <td class="serie">${r.serie.map(x=>x.toFixed(1)).join(" · ")}</td>
-      <td class="num score">${r.total.toFixed(1)}</td>
+      <td class="num">${r.p!=null?r.p.toFixed(1):"—"}</td>
+      <td class="num">${r.k!=null?r.k.toFixed(1):"—"}</td>
+      <td class="num score">${r.s.toFixed(1)}</td>
       <td class="barcell"><div class="bartrack"><div class="bar" style="width:${pct}%"></div></div></td>
     </tr>`;
   }).join("");
 
-  wrap.innerHTML = elimStrip + `<div class="table-scroll"><table>
-    <thead><tr><th class="rk">#</th><th>Zawodnik</th><th>Szkoła</th><th>Serie</th><th class="num">Wynik</th><th>Progresja</th></tr></thead>
+  wrap.innerHTML = `<div class="table-scroll"><table>
+    <thead><tr><th class="rk">#</th><th>Zawodnik</th><th>Szkoła</th><th class="num">Pistolet</th><th class="num">Karabinek</th><th class="num">Suma</th><th>Progresja</th></tr></thead>
     <tbody>${body}</tbody></table></div>`;
 }
 
@@ -682,13 +648,6 @@ function init(){
   // filtr szkół
   $("#schoolFilter").innerHTML = `<option value="all">Wszystkie szkoły</option>` +
     DANE.szkoly.map(s=>`<option value="${s.id}">${esc(s.nazwa)}</option>`).join("");
-
-  // przełącznik konkurencji
-  $$(".disc button").forEach(b=>b.addEventListener("click",()=>{
-    konkurencja=b.dataset.disc;
-    $$(".disc button").forEach(x=>x.setAttribute("aria-pressed", String(x===b)));
-    renderAll();
-  }));
 
   // taby
   $$(".tab").forEach(t=>t.addEventListener("click",()=>{
