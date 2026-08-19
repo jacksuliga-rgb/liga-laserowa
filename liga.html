@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wyniki i drabinka — Łódzka Liga Strzelectwa Laserowego</title>
+<meta name="description" content="Ranking, awans do finału i drabinka Łódzkiej Ligi Strzelectwa Laserowego Szkół. Trenażery ANSCHÜTZ i PentaShot.">
+<meta name="theme-color" content="#15171c">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://ligalaserowa.2piny.pl/liga.html">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2315171c'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%233aa0ff' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%235dff5d' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23ff2fb3'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --concrete:#15171c;
+    --concrete-2:#1d2026;
+    --fog:#2a2e36;
+    --laser-green:#5dff5d;
+    --laser-magenta:#ff2fb3;
+    --laser-orange:#ff8a1e;
+    --laser-blue:#3aa0ff;
+    --laser-violet:#9b5cff;
+    --ink:#f3f4f6;
+    --muted:#9aa1ad;
+    --line:rgba(255,255,255,.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--concrete);
+    color:var(--ink);
+    font-family:'Archivo',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  ::selection{background:var(--laser-magenta);color:#fff}
+  a{color:inherit}
+
+  /* concrete grain overlay */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(18,20,25,.82);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+    padding:14px 24px;max-width:1180px;margin:0 auto;
+  }
+  .back{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;
+    letter-spacing:.02em;white-space:nowrap;transition:color .15s;
+  }
+  .back:hover{color:var(--laser-green)}
+  .brand{display:flex;align-items:baseline;gap:12px;margin-right:auto}
+  .brand .mark{
+    font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;letter-spacing:.02em;
+  }
+  .brand .mark .a{color:var(--laser-orange)}
+  .brand .mark .b{color:var(--laser-green)}
+  .season{
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    color:var(--laser-blue);border:1px solid rgba(58,160,255,.4);
+    padding:3px 9px;border-radius:999px;letter-spacing:.06em;
+  }
+  /* discipline toggle */
+  .disc{display:inline-flex;background:var(--concrete-2);border:1px solid var(--line);border-radius:999px;padding:4px}
+  .disc button{
+    font:inherit;font-size:13px;font-weight:700;letter-spacing:.02em;
+    background:transparent;color:var(--muted);border:none;cursor:pointer;
+    padding:8px 16px;border-radius:999px;transition:all .15s;white-space:nowrap;
+  }
+  .disc button[aria-pressed="true"]{background:var(--laser-blue);color:#0d0e12}
+  .disc button:not([aria-pressed="true"]):hover{color:var(--ink)}
+
+  /* ---------- PAGE HEAD ---------- */
+  .page-head{padding:44px 0 8px}
+  .page-head h1{
+    font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
+    font-size:clamp(34px,6vw,64px);line-height:.96;letter-spacing:.01em;
+  }
+  .page-head h1 .accent{color:var(--laser-magenta)}
+  .page-head p{color:var(--muted);font-size:17px;margin-top:14px;max-width:640px}
+  .sample-banner{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    margin-top:22px;padding:12px 18px;border-radius:4px;font-size:14px;
+    background:rgba(255,138,30,.09);border:1px solid rgba(255,138,30,.32);color:#f2d3a8;
+  }
+  .sample-banner b{color:var(--laser-orange)}
+
+  /* ---------- TABS ---------- */
+  .tabs{
+    display:flex;gap:4px;margin:34px 0 0;border-bottom:1px solid var(--line);
+    overflow-x:auto;scrollbar-width:none;
+  }
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{
+    font:inherit;font-size:15px;font-weight:700;letter-spacing:.01em;
+    background:transparent;border:none;color:var(--muted);cursor:pointer;
+    padding:14px 20px;position:relative;white-space:nowrap;transition:color .15s;
+  }
+  .tab:hover{color:var(--ink)}
+  .tab[aria-selected="true"]{color:var(--ink)}
+  .tab[aria-selected="true"]::after{
+    content:"";position:absolute;left:14px;right:14px;bottom:-1px;height:3px;border-radius:3px;
+    background:linear-gradient(90deg,var(--laser-green),var(--laser-blue));
+    box-shadow:0 0 14px rgba(93,255,93,.5);
+  }
+  .panel{padding:40px 0 100px;animation:fade .25s ease}
+  .panel[hidden]{display:none}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .panel-head{margin-bottom:26px}
+  .panel-head h2{
+    font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
+    font-size:clamp(24px,3.6vw,38px);line-height:1;letter-spacing:.01em;
+  }
+  .panel-head p{color:var(--muted);font-size:15px;margin-top:10px;max-width:680px}
+
+  /* ---------- RANKING TABLE ---------- */
+  .toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
+  .select,.search{
+    font:inherit;font-size:14px;background:var(--concrete-2);color:var(--ink);
+    border:1px solid var(--line);border-radius:4px;padding:10px 14px;
+  }
+  .search{min-width:200px}
+  .select:focus,.search:focus{outline:2px solid var(--laser-blue);outline-offset:1px}
+  .count{margin-left:auto;font-size:13px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:6px}
+  table{width:100%;border-collapse:collapse;min-width:560px}
+  thead th{
+    text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.1em;
+    color:var(--muted);font-weight:700;padding:14px 16px;background:var(--concrete-2);
+    border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0;
+  }
+  th.num,td.num{text-align:right;font-family:'JetBrains Mono',monospace}
+  tbody td{padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.05);font-size:15px}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:rgba(255,255,255,.025)}
+  .rk{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--muted);width:52px}
+  tr.top1 .rk{color:var(--laser-orange)} tr.top2 .rk{color:#d6d9df} tr.top3 .rk{color:#e0a56a}
+  tr.top1,tr.top2,tr.top3{background:rgba(255,255,255,.03)}
+  .medal{margin-right:6px}
+  .who{font-weight:700}
+  .score{font-weight:700;font-size:16px;color:var(--laser-green)}
+  .chip{
+    display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#cfd4dd;white-space:nowrap;
+  }
+  .chip .dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 8px currentColor}
+  .empty{padding:60px 24px;text-align:center;color:var(--muted)}
+  .empty .big{font-family:'Anton',sans-serif;font-size:28px;color:var(--fog);margin-bottom:10px;text-transform:uppercase}
+
+  /* ---------- AWANS (qualification) ---------- */
+  .legend{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:24px;font-size:13px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:8px}
+  .swatch{width:14px;height:14px;border-radius:3px;flex:none}
+  .sw-auto{background:var(--laser-green);box-shadow:0 0 10px rgba(93,255,93,.5)}
+  .sw-lucky{background:var(--laser-orange);box-shadow:0 0 10px rgba(255,138,30,.5)}
+  .sw-out{background:var(--fog)}
+
+  .schools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:34px}
+  .school-card{
+    background:var(--concrete-2);border:1px solid var(--line);border-radius:6px;
+    padding:18px 18px 8px;position:relative;overflow:hidden;
+  }
+  .school-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--bar,var(--laser-blue));box-shadow:0 0 14px var(--bar,var(--laser-blue))}
+  .school-card h3{font-size:15px;font-weight:800;margin-bottom:2px}
+  .school-card .sub{font-size:12px;color:var(--muted);margin-bottom:12px}
+  .qrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid rgba(255,255,255,.05);font-size:14px}
+  .qrow:first-of-type{border-top:none}
+  .qrow.is-auto .qn{color:var(--laser-green)}
+  .qrow .qn{display:inline-flex;align-items:center;gap:8px}
+  .qrow .badge{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:999px}
+  .badge.auto{background:rgba(93,255,93,.14);color:var(--laser-green);border:1px solid rgba(93,255,93,.4)}
+  .qrow .qs{font-family:'JetBrains Mono',monospace;font-weight:700;color:#cfd4dd}
+  .school-card .more{font-size:12px;color:var(--muted);padding:8px 0}
+
+  .lucky-box{background:linear-gradient(92deg,rgba(255,138,30,.09),rgba(255,47,179,.05));border:1px solid rgba(255,138,30,.28);border-radius:6px;padding:24px}
+  .lucky-box h3{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:22px;color:var(--laser-orange);margin-bottom:4px}
+  .lucky-box p{font-size:14px;color:var(--muted);margin-bottom:16px}
+  .lucky-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+  .lucky-item{display:flex;align-items:center;gap:12px;background:var(--concrete);border:1px solid var(--line);border-radius:5px;padding:10px 14px}
+  .lucky-item .ll-rk{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--laser-orange);width:24px}
+  .lucky-item .ll-name{font-weight:700;font-size:14px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lucky-item .ll-sc{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:#cfd4dd}
+  .lucky-item .ll-sch{font-size:11px;color:var(--muted)}
+
+  .tally{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 30px}
+  .tally .t{background:var(--concrete-2);border:1px solid var(--line);border-radius:6px;padding:16px 22px;min-width:120px}
+  .tally .t .n{font-family:'Anton',sans-serif;font-size:40px;line-height:1}
+  .tally .t .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+  .tally .t.a .n{color:var(--laser-green)} .tally .t.b .n{color:var(--laser-orange)} .tally .t.c .n{color:var(--laser-magenta)}
+
+  /* ---------- BRACKET ---------- */
+  .bracket-status{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px;font-size:14px;color:var(--muted)}
+  .pill{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.04em}
+  .pill.live{color:var(--laser-green);border:1px solid rgba(93,255,93,.4);background:rgba(93,255,93,.08)}
+  .pill.soon{color:var(--laser-orange);border:1px solid rgba(255,138,30,.4);background:rgba(255,138,30,.08)}
+
+  .bracket-scroll{overflow-x:auto;padding-bottom:14px;scrollbar-color:var(--fog) transparent}
+  .bracket{display:flex;gap:0;min-width:max-content}
+  .round{display:flex;flex-direction:column;justify-content:space-around;min-width:210px;padding:0 14px}
+  .round-title{
+    font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:700;
+    color:var(--laser-green);text-align:center;padding-bottom:14px;position:sticky;top:0;
+  }
+  .match{
+    background:var(--concrete-2);border:1px solid var(--line);border-radius:5px;
+    margin:9px 0;position:relative;
+  }
+  /* connector stubs */
+  .round:not(:last-child) .match::after{
+    content:"";position:absolute;right:-14px;top:50%;width:14px;height:1px;background:var(--line);
+  }
+  .slot{
+    display:flex;align-items:center;gap:10px;padding:9px 12px;font-size:13px;
+  }
+  .slot+.slot{border-top:1px solid rgba(255,255,255,.06)}
+  .slot .seed{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);width:20px;flex:none}
+  .slot .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#cfd4dd}
+  .slot .sc{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);flex:none}
+  .slot.win .nm{color:var(--ink);font-weight:800}
+  .slot.win .sc{color:var(--laser-green);font-weight:700}
+  .slot.win::before{content:"";position:absolute;left:0;width:3px;top:0;bottom:0}
+  .slot.bye .nm{color:var(--fog);font-style:italic}
+  .slot.tbd .nm{color:var(--fog)}
+  .match.final-match{border-color:rgba(255,47,179,.4);box-shadow:0 0 24px -6px rgba(255,47,179,.4)}
+  .champion{
+    display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+    min-width:210px;padding:0 14px;
+  }
+  .champ-card{
+    background:linear-gradient(160deg,rgba(93,255,93,.12),rgba(58,160,255,.06));
+    border:1px solid rgba(93,255,93,.4);border-radius:8px;padding:26px 18px;width:100%;
+  }
+  .champ-card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--laser-green);font-weight:700}
+  .champ-card .trophy{font-size:34px;margin:8px 0}
+  .champ-card .nm{font-family:'Anton',sans-serif;font-size:22px;line-height:1.05;text-transform:uppercase}
+  .champ-card .sch{font-size:12px;color:var(--muted);margin-top:6px}
+  .champ-card .tbd{color:var(--fog);font-family:'Anton',sans-serif;font-size:22px;text-transform:uppercase}
+
+  /* ---------- SCHEDULE ---------- */
+  .timeline{position:relative;margin-left:8px;padding-left:30px}
+  .timeline::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--laser-blue),var(--laser-magenta))}
+  .ev{position:relative;padding:0 0 30px}
+  .ev:last-child{padding-bottom:0}
+  .ev::before{content:"";position:absolute;left:-30px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--concrete);border:2px solid var(--dotc,var(--laser-blue));box-shadow:0 0 10px var(--dotc,var(--laser-blue))}
+  .ev.done::before{background:var(--laser-green);border-color:var(--laser-green)}
+  .ev .date{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--laser-blue);font-weight:700}
+  .ev .stage-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:700;margin:2px 0}
+  .ev h3{font-size:18px;font-weight:800;margin:4px 0}
+  .ev .meta{font-size:14px;color:var(--muted)}
+  .ev .st{display:inline-block;margin-top:8px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:999px}
+  .st.done{background:rgba(93,255,93,.14);color:var(--laser-green)}
+  .st.live{background:rgba(255,47,179,.16);color:var(--laser-magenta)}
+  .st.plan{background:rgba(154,161,173,.14);color:var(--muted)}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;text-align:center;color:var(--muted);font-size:14px;margin-top:20px}
+  footer strong{color:var(--ink)}
+  footer a{color:var(--laser-green);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  a:focus-visible,button:focus-visible,.tab:focus-visible{outline:3px solid var(--laser-blue);outline-offset:2px;border-radius:3px}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
+  @media(max-width:640px){
+    .brand{width:100%;order:-1}
+    .page-head{padding-top:30px}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="back" href="index.html">← Strona główna</a>
+    <div class="brand">
+      <span class="mark"><span class="a">LIGA</span> <span class="b">LASEROWA</span></span>
+      <span class="season" id="seasonBadge">SEZON —</span>
+    </div>
+    <div class="disc" role="group" aria-label="Wybór konkurencji">
+      <button type="button" data-disc="pistolet" aria-pressed="true">Pistolet</button>
+      <button type="button" data-disc="karabinek" aria-pressed="false">Karabinek</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="page-head">
+    <h1>Wyniki i <span class="accent">drabinka</span></h1>
+    <p>Ranking zawodników, awans do finału i drabinka pucharowa Łódzkiej Ligi Strzelectwa Laserowego Szkół. Przełącznik na górze zmienia konkurencję.</p>
+    <div class="sample-banner" id="sampleBanner">
+      <span>🎯 <b>Dane przykładowe.</b> To makieta z przykładowymi wynikami — podmień je w sekcji <code>DANE</code> na początku pliku <code>liga.html</code>. Jak, opisano w komentarzach w kodzie.</span>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Sekcje ligi">
+    <button class="tab" role="tab" aria-selected="true"  aria-controls="p-ranking" id="t-ranking">Ranking</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-awans"   id="t-awans">Awans do finału</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-drabinka"id="t-drabinka">Drabinka finału</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-terminarz" id="t-terminarz">Terminarz</button>
+  </div>
+
+  <!-- RANKING -->
+  <section class="panel" id="p-ranking" role="tabpanel" aria-labelledby="t-ranking">
+    <div class="panel-head">
+      <h2>Ranking — <span id="rankDisc">pistolet</span></h2>
+      <p>Zestawienie wyników kwalifikacyjnych. Najlepszy rezultat każdego zawodnika. Punktacja w stylu ISSF (40 strzałów, dziesiętne).</p>
+    </div>
+    <div class="toolbar">
+      <select class="select" id="schoolFilter" aria-label="Filtruj po szkole"></select>
+      <input class="search" id="rankSearch" type="search" placeholder="Szukaj zawodnika…" aria-label="Szukaj zawodnika">
+      <span class="count" id="rankCount"></span>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th class="rk">#</th><th>Zawodnik</th><th>Szkoła</th><th class="num">Wynik</th></tr></thead>
+        <tbody id="rankBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- AWANS -->
+  <section class="panel" id="p-awans" role="tabpanel" aria-labelledby="t-awans" hidden>
+    <div class="panel-head">
+      <h2>Kto jedzie na finał</h2>
+      <p>Z każdej szkoły <b>4 najlepszych</b> wchodzi z automatu. Do tego <b>12 lucky loserów</b> — najlepsze wyniki spośród reszty, ze wszystkich szkół razem. Razem <b>32 finalistów</b>. Liczone automatycznie z rankingu.</p>
+    </div>
+    <div class="tally">
+      <div class="t a"><div class="n" id="tAuto">0</div><div class="l">Awans bezpośredni</div></div>
+      <div class="t b"><div class="n" id="tLucky">0</div><div class="l">Lucky loserzy</div></div>
+      <div class="t c"><div class="n" id="tFinal">0</div><div class="l">Finalistów</div></div>
+    </div>
+    <div class="legend">
+      <span><i class="swatch sw-auto"></i>Awans bezpośredni (top 4 w szkole)</span>
+      <span><i class="swatch sw-lucky"></i>Lucky loser</span>
+      <span><i class="swatch sw-out"></i>Poza finałem</span>
+    </div>
+    <div class="schools-grid" id="schoolsGrid"></div>
+    <div class="lucky-box">
+      <h3>Lucky loserzy</h3>
+      <p>Dwunastu z najlepszymi wynikami spośród tych, którzy nie weszli z automatu. Bo piąte miejsce w mocnej szkole bije pierwsze w słabszej.</p>
+      <div class="lucky-list" id="luckyList"></div>
+    </div>
+  </section>
+
+  <!-- DRABINKA -->
+  <section class="panel" id="p-drabinka" role="tabpanel" aria-labelledby="t-drabinka" hidden>
+    <div class="panel-head">
+      <h2>Drabinka finału</h2>
+      <p>32 finalistów, rozstawienie według wyniku kwalifikacyjnego (nr 1 = najlepszy wynik). Pojedyncza eliminacja. Zwycięzców uzupełnia się w danych po każdej rundzie.</p>
+    </div>
+    <div class="bracket-status" id="bracketStatus"></div>
+    <div class="bracket-scroll">
+      <div class="bracket" id="bracket"></div>
+    </div>
+  </section>
+
+  <!-- TERMINARZ -->
+  <section class="panel" id="p-terminarz" role="tabpanel" aria-labelledby="t-terminarz" hidden>
+    <div class="panel-head">
+      <h2>Terminarz</h2>
+      <p>Eliminacje w szkołach, awans i finał. Daty i miejsca uzupełniasz w danych.</p>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <strong>Stowarzyszenie 2piny</strong> · Łódź · <a href="mailto:kontakt@2piny.pl">kontakt@2piny.pl</a> · 663 882 124<br>
+    <a href="index.html">← Wróć na stronę główną</a>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   DANE LIGI  —  edytuj tylko tę sekcję
+   =====================================================================
+   Wszystko poniżej to zwykły obiekt. Nie trzeba nic instalować ani
+   kompilować — zapisz plik i odśwież stronę. Działa też offline
+   (po dwukliku w plik), bo dane siedzą w środku, nie w osobnym pliku.
+
+   • sezon        – napis pokazywany na górze.
+   • daneTestowe  – ustaw na false, gdy wpiszesz prawdziwe wyniki
+                    (znika pomarańczowy baner "Dane przykładowe").
+   • szkoly       – lista szkół. `id` musi być unikalne i krótkie,
+                    bo odwołują się do niego zawodnicy. `kolor`: green,
+                    blue, magenta, orange, violet.
+   • zawodnicy    – lista uczniów. `szkola` = id szkoły.
+                    `pistolet` / `karabinek` = wynik (liczba) albo null,
+                    jeśli ktoś nie startuje w tej konkurencji.
+   • terminarz    – wydarzenia. `status`: 'done' | 'live' | 'plan'.
+   • finalWyniki  – wyniki meczów drabinki, osobno dla konkurencji.
+                    Klucz = id meczu ('r0-m0' = runda 1, mecz 1).
+                    `win`: 'a' (górny) albo 'b' (dolny) = kto wygrał.
+                    `sa`,`sb` = wyniki. Puste {} = drabinka jeszcze nie ruszyła.
+   ===================================================================== */
+const DANE = {
+  sezon: "2026",
+  daneTestowe: true,
+
+  szkoly: [
+    { id:"SP26",  nazwa:"Szkoła Podstawowa nr 26",  dzielnica:"Bałuty",   kolor:"green"   },
+    { id:"SP81",  nazwa:"Szkoła Podstawowa nr 81",  dzielnica:"Górna",    kolor:"blue"    },
+    { id:"LO3",   nazwa:"III Liceum Ogólnokształcące", dzielnica:"Śródmieście", kolor:"magenta" },
+    { id:"ZSP9",  nazwa:"Zespół Szkół nr 9",        dzielnica:"Widzew",   kolor:"orange"  },
+    { id:"SP199", nazwa:"Szkoła Podstawowa nr 199", dzielnica:"Polesie",  kolor:"violet"  },
+  ],
+
+  zawodnicy: [
+    // SP26 (mocna szkoła — jej "piątki" wchodzą jako lucky loserzy)
+    { imie:"Maja Kowalczyk",     szkola:"SP26",  pistolet:381.4, karabinek:376.2 },
+    { imie:"Antoni Nowak",       szkola:"SP26",  pistolet:378.9, karabinek:371.0 },
+    { imie:"Zofia Wiśniewska",   szkola:"SP26",  pistolet:375.1, karabinek:379.4 },
+    { imie:"Jan Lewandowski",    szkola:"SP26",  pistolet:372.6, karabinek:368.8 },
+    { imie:"Lena Zielińska",     szkola:"SP26",  pistolet:370.2, karabinek:366.1 },
+    { imie:"Filip Szymański",    szkola:"SP26",  pistolet:369.5, karabinek:362.3 },
+    { imie:"Alicja Dąbrowska",   szkola:"SP26",  pistolet:367.8, karabinek:null  },
+    { imie:"Szymon Woźniak",     szkola:"SP26",  pistolet:null,  karabinek:364.7 },
+
+    // SP81
+    { imie:"Nikola Kozłowska",   szkola:"SP81",  pistolet:377.3, karabinek:370.5 },
+    { imie:"Kacper Jankowski",   szkola:"SP81",  pistolet:374.0, karabinek:373.9 },
+    { imie:"Hanna Mazur",        szkola:"SP81",  pistolet:368.4, karabinek:365.0 },
+    { imie:"Igor Krawczyk",      szkola:"SP81",  pistolet:366.1, karabinek:360.2 },
+    { imie:"Julia Piotrowska",   szkola:"SP81",  pistolet:361.7, karabinek:358.9 },
+    { imie:"Oskar Grabowski",    szkola:"SP81",  pistolet:359.3, karabinek:355.6 },
+    { imie:"Amelia Nowakowska",  szkola:"SP81",  pistolet:356.0, karabinek:null  },
+    { imie:"Wiktor Pawlak",      szkola:"SP81",  pistolet:352.8, karabinek:351.4 },
+
+    // LO3
+    { imie:"Aleksandra Michalska",szkola:"LO3",  pistolet:379.6, karabinek:374.1 },
+    { imie:"Mateusz Zając",      szkola:"LO3",   pistolet:373.2, karabinek:369.7 },
+    { imie:"Wiktoria Wróbel",    szkola:"LO3",   pistolet:370.9, karabinek:372.8 },
+    { imie:"Bartosz Kaczmarek",  szkola:"LO3",   pistolet:365.4, karabinek:363.5 },
+    { imie:"Gabriela Olszewska", szkola:"LO3",   pistolet:360.8, karabinek:357.2 },
+    { imie:"Dawid Jaworski",     szkola:"LO3",   pistolet:358.1, karabinek:null  },
+    { imie:"Emilia Adamczyk",    szkola:"LO3",   pistolet:354.6, karabinek:356.3 },
+    { imie:"Franciszek Sikora",  szkola:"LO3",   pistolet:349.9, karabinek:348.0 },
+
+    // ZSP9
+    { imie:"Natalia Baran",      szkola:"ZSP9",  pistolet:376.7, karabinek:367.9 },
+    { imie:"Tymon Duda",         szkola:"ZSP9",  pistolet:371.3, karabinek:370.1 },
+    { imie:"Zuzanna Kubiak",     szkola:"ZSP9",  pistolet:364.8, karabinek:361.6 },
+    { imie:"Krzysztof Wieczorek",szkola:"ZSP9",  pistolet:362.2, karabinek:359.0 },
+    { imie:"Pola Sadowska",      szkola:"ZSP9",  pistolet:357.5, karabinek:354.4 },
+    { imie:"Adam Wróblewski",    szkola:"ZSP9",  pistolet:353.1, karabinek:null  },
+    { imie:"Laura Włodarczyk",   szkola:"ZSP9",  pistolet:350.4, karabinek:352.7 },
+    { imie:"Kajetan Marciniak",  szkola:"ZSP9",  pistolet:346.0, karabinek:347.3 },
+
+    // SP199 (słabsza — pokazuje, że jej "jedynka" nie zawsze bije lucky losera z SP26)
+    { imie:"Oliwia Sobczak",     szkola:"SP199", pistolet:368.0, karabinek:364.2 },
+    { imie:"Mikołaj Czarnecki",  szkola:"SP199", pistolet:363.9, karabinek:360.8 },
+    { imie:"Maja Głowacka",      szkola:"SP199", pistolet:359.7, karabinek:356.9 },
+    { imie:"Stanisław Lis",      szkola:"SP199", pistolet:355.2, karabinek:353.0 },
+    { imie:"Kornelia Borkowska", szkola:"SP199", pistolet:351.0, karabinek:349.5 },
+    { imie:"Jakub Sawicki",      szkola:"SP199", pistolet:347.4, karabinek:null  },
+    { imie:"Milena Chmielewska", szkola:"SP199", pistolet:344.1, karabinek:345.8 },
+    { imie:"Leon Włodarski",     szkola:"SP199", pistolet:341.6, karabinek:342.2 },
+  ],
+
+  terminarz: [
+    { data:"2026-03-14", etap:"Etap 1 · Eliminacje", tytul:"Eliminacje — SP 26 i SP 81", miejsce:"Sale gimnastyczne szkół", status:"done" },
+    { data:"2026-03-21", etap:"Etap 1 · Eliminacje", tytul:"Eliminacje — LO III, ZSP 9, SP 199", miejsce:"Sale gimnastyczne szkół", status:"done" },
+    { data:"2026-03-28", etap:"Etap 2 · Awans", tytul:"Ogłoszenie awansów i lucky loserów", miejsce:"Online", status:"live" },
+    { data:"2026-04-18", etap:"Etap 3 · Finał", tytul:"Wielki finał — 32 finalistów", miejsce:"Hala MOSiR, Łódź", status:"plan" },
+  ],
+
+  // Wyniki drabinki. Klucz meczu: r{runda}-m{numer}, licząc od 0.
+  // Runda 1 (32→16) ma mecze r0-m0 … r0-m15.
+  finalWyniki: {
+    pistolet: {
+      "r0-m0":{win:"a", sa:10.4, sb:9.7}, "r0-m1":{win:"a", sa:10.1, sb:9.9},
+      "r0-m2":{win:"b", sa:9.6,  sb:10.2},"r0-m3":{win:"a", sa:10.5, sb:8.8},
+      "r0-m4":{win:"a", sa:10.0, sb:9.5}, "r0-m5":{win:"b", sa:9.2,  sb:10.3},
+      "r0-m6":{win:"a", sa:10.6, sb:9.1}, "r0-m7":{win:"a", sa:9.8,  sb:9.4},
+      "r0-m8":{win:"a", sa:10.2, sb:9.9}, "r0-m9":{win:"b", sa:9.3,  sb:10.0},
+      "r0-m10":{win:"a",sa:10.7, sb:9.6}, "r0-m11":{win:"a",sa:10.1, sb:8.9},
+      "r0-m12":{win:"a",sa:9.9,  sb:9.7}, "r0-m13":{win:"b",sa:9.0,  sb:10.4},
+      "r0-m14":{win:"a",sa:10.3, sb:9.2}, "r0-m15":{win:"a",sa:10.5, sb:10.1},
+      // Ćwierćfinały (16→8) — kilka rozegranych, reszta czeka
+      "r1-m0":{win:"a", sa:10.6, sb:10.2}, "r1-m1":{win:"b", sa:9.8, sb:10.4},
+      "r1-m2":{win:"a", sa:10.5, sb:9.9},  "r1-m3":{win:"a", sa:10.3, sb:10.0},
+    },
+    karabinek: {}   // drabinka karabinka jeszcze nie ruszyła
+  }
+};
+
+/* =====================================================================
+   SILNIK  —  nie trzeba tu nic zmieniać
+   ===================================================================== */
+const KOLORY = { green:"var(--laser-green)", blue:"var(--laser-blue)", magenta:"var(--laser-magenta)", orange:"var(--laser-orange)", violet:"var(--laser-violet)" };
+const MEDALE = ["🥇","🥈","🥉"];
+let konkurencja = "pistolet";
+
+const $  = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"]/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;" }[c]));
+const szkolaById = id => DANE.szkoly.find(s=>s.id===id);
+const szkolaKolor = id => KOLORY[(szkolaById(id)||{}).kolor] || "var(--laser-blue)";
+const wynik = z => z[konkurencja];
+
+// Ranking dla aktualnej konkurencji: tylko startujący, malejąco.
+function ranking(){
+  return DANE.zawodnicy
+    .filter(z => typeof wynik(z) === "number")
+    .map(z => ({ ...z, w: wynik(z) }))
+    .sort((a,b)=> b.w - a.w);
+}
+
+// Kwalifikacja: top 4 z każdej szkoły = awans, potem 12 najlepszych z reszty.
+function kwalifikacja(){
+  const wgSzkoly = {};
+  DANE.szkoly.forEach(s => wgSzkoly[s.id] = []);
+  ranking().forEach(z => wgSzkoly[z.szkola] && wgSzkoly[z.szkola].push(z));
+  const auto = [], reszta = [];
+  DANE.szkoly.forEach(s => {
+    wgSzkoly[s.id].forEach((z,i) => { (i<4 ? auto : reszta).push(z); });
+  });
+  reszta.sort((a,b)=>b.w-a.w);
+  const lucky = reszta.slice(0,12);
+  const finalisci = [...auto, ...lucky].sort((a,b)=>b.w-a.w); // rozstawienie wg wyniku
+  const luckySet = new Set(lucky);
+  return { wgSzkoly, auto, lucky, luckySet, finalisci };
+}
+
+/* ---- RANKING ---- */
+function renderRanking(){
+  $("#rankDisc").textContent = konkurencja;
+  const q = ($("#rankSearch").value||"").toLowerCase().trim();
+  const sf = $("#schoolFilter").value;
+  const full = ranking();                 // pełny ranking = ranga globalna (indeks)
+  let rows = full.map((z,idx)=>({ z, rank:idx }));
+  const total = full.length;
+  if(sf!=="all") rows = rows.filter(r=>r.z.szkola===sf);
+  if(q) rows = rows.filter(r=>r.z.imie.toLowerCase().includes(q));
+
+  const body = $("#rankBody");
+  if(!rows.length){
+    body.innerHTML = `<tr><td colspan="4"><div class="empty"><div class="big">Brak wyników</div>Dla tej konkurencji nie ma jeszcze pasujących rezultatów.</div></td></tr>`;
+  } else {
+    body.innerHTML = rows.map(({z,rank})=>{
+      const cls = rank<3 ? `top${rank+1}` : "";
+      const medal = rank<3 ? `<span class="medal">${MEDALE[rank]}</span>`:"";
+      const s = szkolaById(z.szkola)||{};
+      return `<tr class="${cls}">
+        <td class="rk">${rank+1}</td>
+        <td class="who">${medal}${esc(z.imie)}</td>
+        <td><span class="chip"><span class="dot" style="color:${szkolaKolor(z.szkola)}"></span>${esc(s.nazwa||z.szkola)}</span></td>
+        <td class="num score">${z.w.toFixed(1)}</td>
+      </tr>`;
+    }).join("");
+  }
+  $("#rankCount").textContent = `${rows.length} / ${total} zawodników`;
+}
+
+/* ---- AWANS ---- */
+function renderAwans(){
+  const { wgSzkoly, auto, lucky, luckySet, finalisci } = kwalifikacja();
+  $("#tAuto").textContent  = auto.length;
+  $("#tLucky").textContent = lucky.length;
+  $("#tFinal").textContent = finalisci.length;
+
+  $("#schoolsGrid").innerHTML = DANE.szkoly.map(s=>{
+    const list = wgSzkoly[s.id];
+    if(!list.length) return `<div class="school-card" style="--bar:${szkolaKolor(s.id)}"><h3>${esc(s.nazwa)}</h3><div class="sub">${esc(s.dzielnica||"")}</div><div class="more">Brak wyników w tej konkurencji.</div></div>`;
+    const shown = list.slice(0,6);
+    const rows = shown.map((z,i)=>{
+      const isAuto = i<4;
+      const lucky = luckySet.has(z);
+      const badge = isAuto ? `<span class="badge auto">Awans</span>` : (lucky? `<span class="badge" style="background:rgba(255,138,30,.14);color:var(--laser-orange);border:1px solid rgba(255,138,30,.4)">Lucky</span>`:"");
+      return `<div class="qrow ${isAuto?'is-auto':''}">
+        <span class="qn">${i+1}. ${esc(z.imie)} ${badge}</span>
+        <span class="qs">${z.w.toFixed(1)}</span>
+      </div>`;
+    }).join("");
+    const extra = list.length>6 ? `<div class="more">+ ${list.length-6} dalej</div>`:"";
+    return `<div class="school-card" style="--bar:${szkolaKolor(s.id)}">
+      <h3>${esc(s.nazwa)}</h3><div class="sub">${esc(s.dzielnica||"")} · ${list.length} startujących</div>
+      ${rows}${extra}</div>`;
+  }).join("");
+
+  $("#luckyList").innerHTML = lucky.length ? lucky.map((z,i)=>{
+    const s = szkolaById(z.szkola)||{};
+    return `<div class="lucky-item">
+      <span class="ll-rk">${i+1}</span>
+      <span class="ll-name">${esc(z.imie)}<span class="ll-sch"> · ${esc(s.nazwa||z.szkola)}</span></span>
+      <span class="ll-sc">${z.w.toFixed(1)}</span>
+    </div>`;
+  }).join("") : `<div class="empty" style="padding:24px">Za mało zawodników poza czwórkami, żeby wyłonić lucky loserów.</div>`;
+}
+
+/* ---- DRABINKA ---- */
+function seedOrder(n){
+  let seeds=[1,2];
+  while(seeds.length<n){
+    const sum=seeds.length*2+1, next=[];
+    seeds.forEach(s=>{ next.push(s); next.push(sum-s); });
+    seeds=next;
+  }
+  return seeds;
+}
+function buildBracket(finalisci, wyniki){
+  const N=32, order=seedOrder(N);
+  // Runda 0 — pary wg rozstawienia
+  let rounds=[];
+  let r0=[];
+  for(let i=0;i<N/2;i++){
+    const sa=order[2*i], sb=order[2*i+1];
+    r0.push({ a: finalisci[sa-1]||null, b: finalisci[sb-1]||null, seedA:sa, seedB:sb });
+  }
+  rounds.push(r0);
+  // Kolejne rundy z wyników / bye
+  let size=N/2, ri=0;
+  while(size>1){
+    const cur=rounds[ri], next=[];
+    for(let i=0;i<cur.length;i+=2){
+      next.push({ a: winnerOf(cur[i], `r${ri}-m${i}`, wyniki), b: winnerOf(cur[i+1], `r${ri}-m${i+1}`, wyniki), seedA:null, seedB:null });
+    }
+    rounds.push(next); size/=2; ri++;
+  }
+  return rounds;
+}
+function winnerOf(match, id, wyniki){
+  if(!match) return null;
+  // bye: jeden zawodnik obecny, drugi nie -> awansuje obecny
+  if(match.a && !match.b) return match.a;
+  if(match.b && !match.a) return match.b;
+  const res = wyniki[id];
+  if(!res) return null;
+  return res.win==="a" ? match.a : match.b;
+}
+function renderDrabinka(){
+  const { finalisci } = kwalifikacja();
+  const wyniki = (DANE.finalWyniki[konkurencja])||{};
+  const status = $("#bracketStatus");
+  if(finalisci.length < 2){
+    $("#bracket").innerHTML="";
+    status.innerHTML = `<span class="pill soon">Przed startem</span> Za mało finalistów, żeby zbudować drabinkę.`;
+    return;
+  }
+  const played = Object.keys(wyniki).length;
+  status.innerHTML = played
+    ? `<span class="pill live">W trakcie</span> Rozegrano ${played} ${played===1?'mecz':'mecz(e/ów)'}. Rozstawienie wg wyniku kwalifikacyjnego.`
+    : `<span class="pill soon">Przed startem</span> Drabinka rozstawiona (${Math.min(finalisci.length,32)} finalistów). Wyniki pojawią się po pierwszej rundzie.`;
+
+  const rounds = buildBracket(finalisci, wyniki);
+  const nazwy = ["1/16","1/8","Ćwierćfinał","Półfinał","Finał"];
+  let html="";
+  rounds.forEach((round,ri)=>{
+    const finalRound = ri===rounds.length-1;
+    html += `<div class="round"><div class="round-title">${nazwy[ri]||("Runda "+(ri+1))}</div>`;
+    round.forEach((m,mi)=>{
+      const id=`r${ri}-m${mi}`, res=(wyniki[id])||{};
+      html += `<div class="match ${finalRound?'final-match':''}">
+        ${slotHTML(m.a, m.seedA, res.win==="a", res.sa, m)}
+        ${slotHTML(m.b, m.seedB, res.win==="b", res.sb, m)}
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  // Zwycięzca finału
+  const finalMatch = rounds[rounds.length-1][0];
+  const champ = winnerOf(finalMatch, `r${rounds.length-1}-m0`, wyniki);
+  html += `<div class="champion"><div class="champ-card"><div class="lbl">Mistrz ligi</div><div class="trophy">🏆</div>`;
+  html += champ ? `<div class="nm">${esc(champ.imie)}</div><div class="sch">${esc((szkolaById(champ.szkola)||{}).nazwa||"")}</div>` : `<div class="tbd">— TBD —</div>`;
+  html += `</div></div>`;
+  $("#bracket").innerHTML = html;
+}
+function slotHTML(z, seed, won, sc, match){
+  if(!z){
+    const isBye = match && ((match.a&&!match.b)||(match.b&&!match.a));
+    return `<div class="slot ${isBye?'bye':'tbd'}"><span class="seed">${seed||""}</span><span class="nm">${isBye?'wolny los':'—'}</span><span class="sc"></span></div>`;
+  }
+  const col = szkolaKolor(z.szkola);
+  return `<div class="slot ${won?'win':''}" ${won?`style="--x:${col}"`:''}>
+    ${won?`<span style="position:absolute;left:0;top:0;bottom:0;width:3px;background:${col};box-shadow:0 0 10px ${col}"></span>`:''}
+    <span class="seed">${seed||""}</span>
+    <span class="nm">${esc(z.imie)}</span>
+    <span class="sc">${typeof sc==="number"?sc.toFixed(1):""}</span>
+  </div>`;
+}
+
+/* ---- TERMINARZ ---- */
+function renderTerminarz(){
+  const stColor = { done:"var(--laser-green)", live:"var(--laser-magenta)", plan:"var(--laser-blue)" };
+  const stName  = { done:"Zakończone", live:"W toku", plan:"Planowane" };
+  $("#timeline").innerHTML = DANE.terminarz.map(e=>{
+    const d = new Date(e.data+"T00:00:00");
+    const data = isNaN(d) ? esc(e.data) : d.toLocaleDateString("pl-PL",{day:"numeric",month:"long",year:"numeric"});
+    return `<div class="ev ${e.status==='done'?'done':''}" style="--dotc:${stColor[e.status]||'var(--laser-blue)'}">
+      <div class="date">${data}</div>
+      <div class="stage-lbl">${esc(e.etap||"")}</div>
+      <h3>${esc(e.tytul)}</h3>
+      <div class="meta">${esc(e.miejsce||"")}</div>
+      <span class="st ${e.status||'plan'}">${stName[e.status]||"Planowane"}</span>
+    </div>`;
+  }).join("");
+}
+
+/* ---- INIT ---- */
+function renderAll(){ renderRanking(); renderAwans(); renderDrabinka(); }
+function init(){
+  $("#seasonBadge").textContent = "SEZON "+DANE.sezon;
+  if(!DANE.daneTestowe) $("#sampleBanner").hidden = true;
+
+  // filtr szkół
+  $("#schoolFilter").innerHTML = `<option value="all">Wszystkie szkoły</option>` +
+    DANE.szkoly.map(s=>`<option value="${s.id}">${esc(s.nazwa)}</option>`).join("");
+
+  // przełącznik konkurencji
+  $$(".disc button").forEach(b=>b.addEventListener("click",()=>{
+    konkurencja=b.dataset.disc;
+    $$(".disc button").forEach(x=>x.setAttribute("aria-pressed", String(x===b)));
+    renderAll();
+  }));
+
+  // taby
+  $$(".tab").forEach(t=>t.addEventListener("click",()=>{
+    $$(".tab").forEach(x=>x.setAttribute("aria-selected", String(x===t)));
+    $$(".panel").forEach(p=>p.hidden = (p.id !== t.getAttribute("aria-controls")));
+  }));
+  // klawiatura w tabach
+  const tabs=$$(".tab");
+  tabs.forEach((t,i)=>t.addEventListener("keydown",e=>{
+    let j=null;
+    if(e.key==="ArrowRight") j=(i+1)%tabs.length;
+    if(e.key==="ArrowLeft")  j=(i-1+tabs.length)%tabs.length;
+    if(j!==null){ e.preventDefault(); tabs[j].focus(); tabs[j].click(); }
+  }));
+
+  $("#rankSearch").addEventListener("input", renderRanking);
+  $("#schoolFilter").addEventListener("change", renderRanking);
+
+  renderTerminarz();
+  renderAll();
+}
+document.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
