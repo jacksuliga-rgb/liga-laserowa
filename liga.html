@@ -542,8 +542,16 @@ const MEDALE = ["🥇","🥈","🥉"];
 const LS_DANE = "ligaLaserowa.dane.v1";
 const LS_EDIT = "ligaLaserowa.edit.v1";
 const klonSeed = () => JSON.parse(JSON.stringify(DANE_SEED));
-function wczytajDane(){
-  try{ const r = localStorage.getItem(LS_DANE); if(r) return JSON.parse(r); }catch(e){}
+const poprawneDane = o => o && Array.isArray(o.szkoly) && Array.isArray(o.zawodnicy);
+function wczytajLokalne(){ try{ const r = localStorage.getItem(LS_DANE); if(r) return JSON.parse(r); }catch(e){} return null; }
+// Kolejność źródeł: 1) Twoje lokalne edycje, 2) opublikowany dane.json, 3) dane przykładowe.
+async function startupDane(){
+  const local = wczytajLokalne();
+  if(poprawneDane(local)) return local;
+  try{
+    const resp = await fetch("dane.json", { cache:"no-store" });
+    if(resp.ok){ const j = await resp.json(); if(poprawneDane(j)) return j; }
+  }catch(e){}
   return klonSeed();
 }
 function zapiszDane(){
@@ -553,7 +561,7 @@ function zapiszDane(){
   if(el){ el.textContent = ok ? "Zapisano w przeglądarce ✓" : "Nie udało się zapisać (tryb prywatny?)"; el.className = "save-note " + (ok?"ok":"err"); }
   return ok;
 }
-let DANE = wczytajDane();
+let DANE = klonSeed();   // zastąpione w init() przez startupDane()
 
 const $  = (s,r=document)=>r.querySelector(s);
 const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
@@ -814,14 +822,16 @@ function renderEditor(){
     <p class="hint">Zmiany zapisują się w tej przeglądarce automatycznie. Żeby wyniki zobaczyli wszyscy na stronie, opublikuj je jednym ze sposobów niżej.</p>
     <div class="ed-actions"><span id="zapisStatus" class="save-note ok">Zapisano w przeglądarce ✓</span></div>
     <div class="ed-actions">
-      <button class="btn-ed primary" data-act="download-json">⬇ Pobierz dane (JSON)</button>
-      <button class="btn-ed" data-act="show-code">&lt;/&gt; Pokaż kod do wklejenia</button>
+      <button class="btn-ed primary" data-act="download-json">⬇ Pobierz dane.json</button>
+      <button class="btn-ed" data-act="load-published">↻ Wczytaj opublikowany dane.json</button>
       <label class="btn-ed" style="cursor:pointer">⬆ Wczytaj z pliku JSON<input type="file" accept=".json,application/json" id="importFile" hidden></label>
+      <button class="btn-ed" data-act="show-code">&lt;/&gt; Pokaż kod do wklejenia</button>
       <button class="btn-ed warn" data-act="reset">↺ Przywróć dane przykładowe</button>
     </div>
     <ol class="pub-steps">
-      <li><b>Najprościej:</b> „Pobierz dane (JSON)" i przekaż plik, albo wgraj go do repozytorium jako <code>dane.json</code>.</li>
-      <li><b>Albo:</b> „Pokaż kod do wklejenia", skopiuj i podmień w pliku <code>liga.html</code> blok zaczynający się od <code>const DANE_SEED = {</code>, zapisz i wypchnij.</li>
+      <li><b>Publikacja (zalecane):</b> „Pobierz dane.json" i wgraj plik <code>dane.json</code> do repozytorium, do tego samego folderu co <code>liga.html</code>. Strona wczyta go automatycznie i wszyscy zobaczą wyniki.</li>
+      <li><b>Kolejność wczytywania:</b> najpierw Twoje lokalne edycje z tej przeglądarki, potem opublikowany <code>dane.json</code>, na końcu dane przykładowe. Dzięki temu robocze wpisy nie znikają. Przyciskiem „Wczytaj opublikowany dane.json" wciągniesz wersję ze strony (nadpisze lokalne).</li>
+      <li><b>Alternatywa bez pliku:</b> „Pokaż kod do wklejenia" — podmień w <code>liga.html</code> blok od <code>const DANE_SEED = {</code>.</li>
     </ol>
     <textarea class="code-out" id="codeOut" hidden readonly></textarea></div>`;
 
@@ -874,9 +884,10 @@ function onEdClick(e){
   else if(act==="add-final"){ ensureFinal(); DANE.final.zawodnicy.push({imie:"", pistolet:null, karabinek:null}); afterStruct(); }
   else if(act==="del-final"){ ensureFinal(); DANE.final.zawodnicy.splice(+b.closest('[data-fi]').dataset.fi,1); afterStruct(); }
   else if(act==="load-eight"){ ladujOsemke(); }
+  else if(act==="load-published"){ wczytajOpublikowane(); }
   else if(act==="download-json"){ pobierzJSON(); }
   else if(act==="show-code"){ pokazKod(); }
-  else if(act==="reset"){ if(confirm("Przywrócić dane przykładowe? Twoje wpisy w tej przeglądarce zostaną skasowane.")){ DANE=klonSeed(); zapiszDane(); renderAll(); renderEditor(); } }
+  else if(act==="reset"){ if(confirm("Przywrócić dane przykładowe? Twoje wpisy w tej przeglądarce zostaną skasowane.")){ DANE=klonSeed(); zapiszDane(); applyChrome(); renderAll(); renderEditor(); } }
 }
 
 function ladujOsemke(){
@@ -905,9 +916,24 @@ function pokazKod(){
 function importJSON(file){
   if(!file) return;
   const r=new FileReader();
-  r.onload=()=>{ try{ const o=JSON.parse(r.result); if(!o||!Array.isArray(o.szkoly)||!Array.isArray(o.zawodnicy)) throw 0; DANE=o; ensureFinal(); zapiszDane(); renderAll(); renderEditor(); alert("Wczytano dane z pliku."); }
+  r.onload=()=>{ try{ const o=JSON.parse(r.result); if(!poprawneDane(o)) throw 0; DANE=o; ensureFinal(); zapiszDane(); applyChrome(); renderAll(); renderEditor(); alert("Wczytano dane z pliku."); }
     catch(e){ alert("Nie udało się wczytać — to nie jest poprawny plik dane.json."); } };
   r.readAsText(file);
+}
+async function wczytajOpublikowane(){
+  if(!confirm("Wczytać opublikowany plik dane.json ze strony? Zastąpi bieżące wpisy w tej przeglądarce.")) return;
+  try{
+    const resp = await fetch("dane.json", { cache:"no-store" });
+    if(!resp.ok) throw 0;
+    const j = await resp.json();
+    if(!poprawneDane(j)) throw 0;
+    DANE = j; ensureFinal(); zapiszDane(); applyChrome(); renderAll(); renderEditor();
+    alert("Wczytano opublikowany dane.json.");
+  }catch(e){ alert("Nie znaleziono pliku dane.json (albo jest niepoprawny). Najpierw opublikuj go w repozytorium."); }
+}
+function applyChrome(){
+  const b=$("#seasonBadge"); if(b) b.textContent="SEZON "+(DANE.sezon||"");
+  const sb=$("#sampleBanner"); if(sb) sb.hidden = !DANE.daneTestowe;
 }
 function setEdit(on){
   trybEdycji = on;
@@ -920,9 +946,9 @@ function setEdit(on){
 
 /* ---- INIT ---- */
 function renderAll(){ renderRanking(); renderAwans(); renderFinal(); }
-function init(){
-  $("#seasonBadge").textContent = "SEZON "+DANE.sezon;
-  if(!DANE.daneTestowe) $("#sampleBanner").hidden = true;
+async function init(){
+  DANE = await startupDane();   // localStorage → dane.json → seed
+  applyChrome();
 
   // taby
   $$(".tab").forEach(t=>t.addEventListener("click",()=>{
