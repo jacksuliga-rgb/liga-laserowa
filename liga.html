@@ -84,6 +84,65 @@
     padding:6px 12px;border-radius:999px;letter-spacing:.03em;white-space:nowrap;
   }
   @media(max-width:640px){.format-badge{display:none}}
+  .edit-toggle{
+    font:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;
+    background:var(--concrete-2);color:var(--muted);border:1px solid var(--line);
+    padding:8px 14px;border-radius:999px;transition:all .15s;
+  }
+  .edit-toggle:hover{color:var(--ink);border-color:rgba(255,255,255,.25)}
+  .edit-toggle[aria-pressed="true"]{background:var(--laser-magenta);color:#fff;border-color:var(--laser-magenta)}
+  .tab-edit[aria-selected="true"]::after{background:linear-gradient(90deg,var(--laser-magenta),var(--laser-orange));box-shadow:0 0 14px rgba(255,47,179,.5)}
+
+  /* ---------- EDYTOR ---------- */
+  .ed-block{background:var(--concrete-2);border:1px solid var(--line);border-radius:8px;padding:22px;margin-bottom:22px}
+  .ed-block > h3{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:20px;letter-spacing:.02em;margin-bottom:4px}
+  .ed-block > .hint{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .ed-grid{display:grid;gap:10px}
+  .ed-field{display:flex;flex-direction:column;gap:5px}
+  .ed-field label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+  .ed-inline{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+  .ed-inline .ed-field{min-width:120px}
+  input[type=text].ed-in,input[type=number].ed-in,input[type=date].ed-in,select.ed-in{
+    font:inherit;font-size:14px;background:var(--concrete);color:var(--ink);
+    border:1px solid var(--line);border-radius:5px;padding:9px 11px;width:100%;
+  }
+  input.ed-in:focus,select.ed-in:focus{outline:2px solid var(--laser-blue);outline-offset:1px}
+  input[type=number].ed-in{font-family:'JetBrains Mono',monospace}
+
+  .ed-table{overflow-x:auto;border:1px solid var(--line);border-radius:6px}
+  table.ed{width:100%;border-collapse:collapse;min-width:640px}
+  table.ed th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;text-align:left;padding:10px 12px;background:var(--concrete);border-bottom:1px solid var(--line);white-space:nowrap}
+  table.ed td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle}
+  table.ed tr:last-child td{border-bottom:none}
+  table.ed .col-num{width:120px}
+  table.ed input.ed-in,table.ed select.ed-in{padding:7px 9px}
+
+  .btn-ed{
+    font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+    background:var(--concrete);color:var(--ink);border:1px solid var(--line);
+    padding:9px 15px;border-radius:5px;transition:all .15s;display:inline-flex;align-items:center;gap:7px;
+  }
+  .btn-ed:hover{border-color:rgba(255,255,255,.28)}
+  .btn-ed.primary{background:var(--laser-green);color:#0d0e12;border-color:var(--laser-green)}
+  .btn-ed.primary:hover{filter:brightness(1.08)}
+  .btn-ed.warn{color:#f2b8b8;border-color:rgba(255,80,80,.4)}
+  .btn-ed.warn:hover{background:rgba(255,80,80,.1)}
+  .btn-x{
+    font:inherit;font-size:16px;line-height:1;cursor:pointer;color:var(--muted);
+    background:transparent;border:1px solid var(--line);border-radius:5px;padding:6px 10px;transition:all .15s;
+  }
+  .btn-x:hover{color:#ff7676;border-color:rgba(255,80,80,.5)}
+  .ed-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .save-note{font-size:13px;font-weight:700}
+  .save-note.ok{color:var(--laser-green)} .save-note.err{color:#ff7676}
+  .code-out{width:100%;min-height:200px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.5;
+    background:var(--concrete);color:#cfd4dd;border:1px solid var(--line);border-radius:6px;padding:14px;margin-top:12px;resize:vertical;white-space:pre}
+  .switch{display:inline-flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;user-select:none}
+  .switch input{width:18px;height:18px;accent-color:var(--laser-green);cursor:pointer}
+  .pub-steps{font-size:14px;color:#c8cdd6;margin-top:10px;padding-left:20px}
+  .pub-steps li{margin:6px 0}
+  .pub-steps code{background:var(--concrete);padding:2px 6px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:12px}
 
   /* ---------- PAGE HEAD ---------- */
   .page-head{padding:44px 0 8px}
@@ -255,6 +314,7 @@
       <span class="season" id="seasonBadge">SEZON —</span>
     </div>
     <span class="format-badge">10× pistolet + 5× karabinek · suma</span>
+    <button type="button" id="editToggle" class="edit-toggle" aria-pressed="false">✎ Tryb edycji</button>
   </div>
 </div>
 
@@ -272,6 +332,7 @@
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-awans"   id="t-awans">Awans do finału</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-final" id="t-final">Finał (ISSF)</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-terminarz" id="t-terminarz">Terminarz</button>
+    <button class="tab tab-edit" role="tab" aria-selected="false" aria-controls="p-edycja" id="t-edycja" hidden>✎ Edycja</button>
   </div>
 
   <!-- RANKING -->
@@ -327,6 +388,15 @@
     <div id="finalBody"></div>
   </section>
 
+  <!-- EDYCJA -->
+  <section class="panel" id="p-edycja" role="tabpanel" aria-labelledby="t-edycja" hidden>
+    <div class="panel-head">
+      <h2>Wpisywanie wyników</h2>
+      <p>Ta sama zasada w eliminacjach i finale — liczą się punkty. Wpisz sumę z pistoletu (10 strzałów) i z karabinka (5 strzałów). Zmiany zapisują się w tej przeglądarce automatycznie; żeby opublikować je na stronie, użyj eksportu na dole.</p>
+    </div>
+    <div id="editor"></div>
+  </section>
+
   <!-- TERMINARZ -->
   <section class="panel" id="p-terminarz" role="tabpanel" aria-labelledby="t-terminarz" hidden>
     <div class="panel-head">
@@ -371,7 +441,7 @@
                     i `karabinek`; aplikacja sumuje i ustawia miejsca 1–8.
                     Wpisuj po `imie` dokładnie jak w liście `zawodnicy`.
    ===================================================================== */
-const DANE = {
+const DANE_SEED = {
   sezon: "2026",
   daneTestowe: true,
 
@@ -468,6 +538,23 @@ const DANE = {
 const KOLORY = { green:"var(--laser-green)", blue:"var(--laser-blue)", magenta:"var(--laser-magenta)", orange:"var(--laser-orange)", violet:"var(--laser-violet)" };
 const MEDALE = ["🥇","🥈","🥉"];
 
+/* ---- ZAPIS W PRZEGLĄDARCE (localStorage) ---- */
+const LS_DANE = "ligaLaserowa.dane.v1";
+const LS_EDIT = "ligaLaserowa.edit.v1";
+const klonSeed = () => JSON.parse(JSON.stringify(DANE_SEED));
+function wczytajDane(){
+  try{ const r = localStorage.getItem(LS_DANE); if(r) return JSON.parse(r); }catch(e){}
+  return klonSeed();
+}
+function zapiszDane(){
+  let ok = false;
+  try{ localStorage.setItem(LS_DANE, JSON.stringify(DANE)); ok = true; }catch(e){}
+  const el = document.getElementById("zapisStatus");
+  if(el){ el.textContent = ok ? "Zapisano w przeglądarce ✓" : "Nie udało się zapisać (tryb prywatny?)"; el.className = "save-note " + (ok?"ok":"err"); }
+  return ok;
+}
+let DANE = wczytajDane();
+
 const $  = (s,r=document)=>r.querySelector(s);
 const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc = s => String(s).replace(/[&<>"]/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;" }[c]));
@@ -500,7 +587,15 @@ function kwalifikacja(){
 }
 
 /* ---- RANKING ---- */
+function odswiezFiltrSzkol(){
+  const sel = $("#schoolFilter"); if(!sel) return;
+  const cur = sel.value || "all";
+  sel.innerHTML = `<option value="all">Wszystkie szkoły</option>` +
+    DANE.szkoly.map(s=>`<option value="${esc(s.id)}">${esc(s.nazwa)}</option>`).join("");
+  sel.value = DANE.szkoly.some(s=>s.id===cur) ? cur : "all";
+}
 function renderRanking(){
+  odswiezFiltrSzkol();
   const q = ($("#rankSearch").value||"").toLowerCase().trim();
   const sf = $("#schoolFilter").value;
   const full = ranking();                 // pełny ranking = ranga globalna (indeks)
@@ -639,15 +734,195 @@ function renderTerminarz(){
   }).join("");
 }
 
+/* ---- EDYTOR (tryb wpisywania) ---- */
+let trybEdycji = false;
+const parseNum = v => { v = String(v).trim().replace(",", "."); if(v==="") return null; const n = Number(v); return isFinite(n) ? n : null; };
+const ensureFinal = () => { if(!DANE.final) DANE.final = { rozegrany:false, zawodnicy:[] }; if(!Array.isArray(DANE.final.zawodnicy)) DANE.final.zawodnicy = []; };
+const szkolaOptions = sel => DANE.szkoly.map(s=>`<option value="${esc(s.id)}" ${s.id===sel?"selected":""}>${esc(s.nazwa)}</option>`).join("");
+const kolorOptions  = sel => Object.keys(KOLORY).map(k=>`<option value="${k}" ${k===sel?"selected":""}>${k}</option>`).join("");
+const sumaCell = su => `<td class="num" style="font-family:'JetBrains Mono',monospace;color:var(--laser-green);font-weight:700">${su!=null?su.toFixed(1):"—"}</td>`;
+
+function renderEditor(){
+  const ed = $("#editor"); if(!ed) return;
+  ensureFinal();
+  const s = DANE, f = s.final;
+  let h = "";
+
+  // Ustawienia
+  h += `<div class="ed-block"><h3>Ustawienia</h3>
+    <div class="ed-inline">
+      <div class="ed-field" style="max-width:160px"><label>Sezon</label><input class="ed-in" type="text" data-g="sezon" value="${esc(s.sezon||"")}"></div>
+      <label class="switch"><input type="checkbox" data-g="daneTestowe" ${s.daneTestowe?"checked":""}> Pokazuj baner „Dane przykładowe"</label>
+    </div></div>`;
+
+  // Szkoły
+  h += `<div class="ed-block"><h3>Szkoły</h3>
+    <p class="hint">Nazwy i kolejność szkół. Kolor to akcent na kartach i kropka przy nazwisku.</p>
+    <div class="ed-table"><table class="ed"><thead><tr><th>Nazwa</th><th>Dzielnica</th><th>Kolor</th><th></th></tr></thead><tbody>`;
+  s.szkoly.forEach((sz,i)=>{
+    h += `<tr data-si="${i}">
+      <td><input class="ed-in" type="text" data-f="nazwa" value="${esc(sz.nazwa||"")}"></td>
+      <td><input class="ed-in" type="text" data-f="dzielnica" value="${esc(sz.dzielnica||"")}"></td>
+      <td><select class="ed-in" data-f="kolor">${kolorOptions(sz.kolor)}</select></td>
+      <td><button class="btn-x" data-act="del-szkola" title="Usuń szkołę">✕</button></td></tr>`;
+  });
+  h += `</tbody></table></div><div class="ed-actions"><button class="btn-ed" data-act="add-szkola">+ Dodaj szkołę</button></div></div>`;
+
+  // Zawodnicy
+  h += `<div class="ed-block"><h3>Zawodnicy — eliminacje</h3>
+    <p class="hint">Wpisz sumę punktów: pistolet z 10 strzałów (maks. 109.0), karabinek z 5 strzałów (maks. 54.5). Puste pole = brak wyniku. Można wpisywać z przecinkiem lub kropką.</p>
+    <div class="ed-table"><table class="ed"><thead><tr><th>Imię i nazwisko</th><th>Szkoła</th><th class="col-num">Pistolet</th><th class="col-num">Karabinek</th><th class="col-num">Suma</th><th></th></tr></thead><tbody>`;
+  s.zawodnicy.forEach((z,i)=>{
+    const p=num(z.pistolet), k=num(z.karabinek);
+    h += `<tr data-zi="${i}">
+      <td><input class="ed-in" type="text" data-f="imie" value="${esc(z.imie||"")}"></td>
+      <td><select class="ed-in" data-f="szkola">${szkolaOptions(z.szkola)}</select></td>
+      <td><input class="ed-in num-in" type="text" inputmode="decimal" data-f="pistolet" value="${p!=null?p:""}"></td>
+      <td><input class="ed-in num-in" type="text" inputmode="decimal" data-f="karabinek" value="${k!=null?k:""}"></td>
+      ${sumaCell(sumaOf(p,k))}
+      <td><button class="btn-x" data-act="del-zawodnik" title="Usuń">✕</button></td></tr>`;
+  });
+  h += `</tbody></table></div><div class="ed-actions"><button class="btn-ed" data-act="add-zawodnik">+ Dodaj zawodnika</button></div></div>`;
+
+  // Finał
+  h += `<div class="ed-block"><h3>Finał</h3>
+    <p class="hint">Ta sama zasada — liczą się punkty. Wpisz wyniki finału tej samej ósemki (możesz ją wczytać z kwalifikacji jednym kliknięciem).</p>
+    <div class="ed-inline" style="margin-bottom:14px">
+      <label class="switch"><input type="checkbox" data-fmeta="rozegrany" ${f.rozegrany?"checked":""}> Finał rozegrany (pokaż klasyfikację)</label>
+      <div class="ed-field" style="max-width:240px"><label>Miejsce</label><input class="ed-in" type="text" data-fmeta="miejsce" value="${esc(f.miejsce||"")}"></div>
+      <div class="ed-field" style="max-width:170px"><label>Data</label><input class="ed-in" type="date" data-fmeta="data" value="${esc(f.data||"")}"></div>
+    </div>
+    <div class="ed-table"><table class="ed"><thead><tr><th>Finalista</th><th class="col-num">Pistolet</th><th class="col-num">Karabinek</th><th class="col-num">Suma</th><th></th></tr></thead><tbody>`;
+  f.zawodnicy.forEach((z,i)=>{
+    const p=num(z.pistolet), k=num(z.karabinek);
+    h += `<tr data-fi="${i}">
+      <td><input class="ed-in" type="text" data-f="imie" value="${esc(z.imie||"")}" list="finlist"></td>
+      <td><input class="ed-in num-in" type="text" inputmode="decimal" data-f="pistolet" value="${p!=null?p:""}"></td>
+      <td><input class="ed-in num-in" type="text" inputmode="decimal" data-f="karabinek" value="${k!=null?k:""}"></td>
+      ${sumaCell(sumaOf(p,k))}
+      <td><button class="btn-x" data-act="del-final" title="Usuń">✕</button></td></tr>`;
+  });
+  h += `</tbody></table></div>
+    <datalist id="finlist">${s.zawodnicy.map(z=>`<option value="${esc(z.imie)}">`).join("")}</datalist>
+    <div class="ed-actions">
+      <button class="btn-ed" data-act="add-final">+ Dodaj finalistę</button>
+      <button class="btn-ed" data-act="load-eight">↑ Wczytaj ósemkę z kwalifikacji</button>
+    </div></div>`;
+
+  // Zapis / publikacja
+  h += `<div class="ed-block"><h3>Zapis i publikacja</h3>
+    <p class="hint">Zmiany zapisują się w tej przeglądarce automatycznie. Żeby wyniki zobaczyli wszyscy na stronie, opublikuj je jednym ze sposobów niżej.</p>
+    <div class="ed-actions"><span id="zapisStatus" class="save-note ok">Zapisano w przeglądarce ✓</span></div>
+    <div class="ed-actions">
+      <button class="btn-ed primary" data-act="download-json">⬇ Pobierz dane (JSON)</button>
+      <button class="btn-ed" data-act="show-code">&lt;/&gt; Pokaż kod do wklejenia</button>
+      <label class="btn-ed" style="cursor:pointer">⬆ Wczytaj z pliku JSON<input type="file" accept=".json,application/json" id="importFile" hidden></label>
+      <button class="btn-ed warn" data-act="reset">↺ Przywróć dane przykładowe</button>
+    </div>
+    <ol class="pub-steps">
+      <li><b>Najprościej:</b> „Pobierz dane (JSON)" i przekaż plik, albo wgraj go do repozytorium jako <code>dane.json</code>.</li>
+      <li><b>Albo:</b> „Pokaż kod do wklejenia", skopiuj i podmień w pliku <code>liga.html</code> blok zaczynający się od <code>const DANE_SEED = {</code>, zapisz i wypchnij.</li>
+    </ol>
+    <textarea class="code-out" id="codeOut" hidden readonly></textarea></div>`;
+
+  ed.innerHTML = h;
+}
+
+function afterStruct(){ zapiszDane(); renderAll(); renderEditor(); }
+
+function onEdInput(e){
+  const t = e.target;
+  if(!t.matches('input.ed-in')) return;
+  const f=t.dataset.f, g=t.dataset.g, fmeta=t.dataset.fmeta;
+  const trS=t.closest('[data-si]'), trZ=t.closest('[data-zi]'), trF=t.closest('[data-fi]');
+  if(g==="sezon"){ DANE.sezon=t.value; const b=$("#seasonBadge"); if(b) b.textContent="SEZON "+DANE.sezon; }
+  else if(fmeta){ ensureFinal(); DANE.final[fmeta]=t.value; }
+  else if(trS){ DANE.szkoly[+trS.dataset.si][f]=t.value; }
+  else if(trZ){ const i=+trZ.dataset.zi, z=DANE.zawodnicy[i];
+    z[f] = (f==="pistolet"||f==="karabinek") ? parseNum(t.value) : t.value;
+    const c=trZ.children[4]; if(c) c.textContent = (v=>v!=null?v.toFixed(1):"—")(sumaOf(num(z.pistolet),num(z.karabinek)));
+  }
+  else if(trF){ ensureFinal(); const i=+trF.dataset.fi, z=DANE.final.zawodnicy[i];
+    z[f] = (f==="pistolet"||f==="karabinek") ? parseNum(t.value) : t.value;
+    const c=trF.children[3]; if(c) c.textContent = (v=>v!=null?v.toFixed(1):"—")(sumaOf(num(z.pistolet),num(z.karabinek)));
+  }
+  zapiszDane(); renderAll();
+}
+
+function onEdChange(e){
+  const t = e.target;
+  if(t.id==="importFile"){ importJSON(t.files && t.files[0]); return; }
+  if(t.matches('select.ed-in')){
+    const f=t.dataset.f, trS=t.closest('[data-si]'), trZ=t.closest('[data-zi]');
+    if(trS) DANE.szkoly[+trS.dataset.si][f]=t.value;
+    else if(trZ) DANE.zawodnicy[+trZ.dataset.zi][f]=t.value;
+    zapiszDane(); renderAll(); return;
+  }
+  if(t.matches('input[type=checkbox][data-g]')){ DANE[t.dataset.g]=t.checked; if(t.dataset.g==="daneTestowe"){ const b=$("#sampleBanner"); if(b) b.hidden=!t.checked; } zapiszDane(); renderAll(); return; }
+  if(t.matches('input[type=checkbox][data-fmeta]')){ ensureFinal(); DANE.final[t.dataset.fmeta]=t.checked; zapiszDane(); renderAll(); return; }
+  // zmiana nazwy szkoły (blur) → odśwież listy wyboru szkół u zawodników
+  if(t.matches('input.ed-in') && t.closest('[data-si]') && t.dataset.f==="nazwa"){ renderEditor(); }
+}
+
+function onEdClick(e){
+  const b = e.target.closest('[data-act]'); if(!b) return;
+  const act = b.dataset.act;
+  if(act==="add-szkola"){ let n=DANE.szkoly.length+1, id; do{ id="SZK"+n; n++; }while(DANE.szkoly.some(s=>s.id===id)); DANE.szkoly.push({id, nazwa:"Nowa szkoła", dzielnica:"", kolor:"blue"}); afterStruct(); }
+  else if(act==="del-szkola"){ DANE.szkoly.splice(+b.closest('[data-si]').dataset.si,1); afterStruct(); }
+  else if(act==="add-zawodnik"){ DANE.zawodnicy.unshift({imie:"", szkola:(DANE.szkoly[0]||{}).id||"", pistolet:null, karabinek:null}); afterStruct(); }
+  else if(act==="del-zawodnik"){ DANE.zawodnicy.splice(+b.closest('[data-zi]').dataset.zi,1); afterStruct(); }
+  else if(act==="add-final"){ ensureFinal(); DANE.final.zawodnicy.push({imie:"", pistolet:null, karabinek:null}); afterStruct(); }
+  else if(act==="del-final"){ ensureFinal(); DANE.final.zawodnicy.splice(+b.closest('[data-fi]').dataset.fi,1); afterStruct(); }
+  else if(act==="load-eight"){ ladujOsemke(); }
+  else if(act==="download-json"){ pobierzJSON(); }
+  else if(act==="show-code"){ pokazKod(); }
+  else if(act==="reset"){ if(confirm("Przywrócić dane przykładowe? Twoje wpisy w tej przeglądarce zostaną skasowane.")){ DANE=klonSeed(); zapiszDane(); renderAll(); renderEditor(); } }
+}
+
+function ladujOsemke(){
+  ensureFinal();
+  const top8 = kwalifikacja().finalisci.slice(0,8);
+  if(!top8.length){ alert("Najpierw wpisz wyniki eliminacji — nie ma z kogo wyłonić ósemki."); return; }
+  const prev = DANE.final.zawodnicy || [];
+  DANE.final.zawodnicy = top8.map(z=>{ const ex=prev.find(x=>x.imie===z.imie)||{}; return { imie:z.imie, pistolet:ex.pistolet??null, karabinek:ex.karabinek??null }; });
+  afterStruct();
+}
+function pobierzJSON(){
+  try{
+    const blob=new Blob([JSON.stringify(DANE,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a"); a.href=url; a.download="dane.json"; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }catch(e){ alert("Pobieranie zablokowane w tym widoku. Otwórz stronę bezpośrednio (nie w podglądzie), albo użyj „Pokaż kod do wklejenia\"."); }
+}
+function pokazKod(){
+  const ta=$("#codeOut"); if(!ta) return;
+  ta.value = "const DANE_SEED = " + JSON.stringify(DANE,null,2) + ";";
+  ta.hidden=false; ta.focus(); ta.select();
+  let ok=false; try{ ok=document.execCommand("copy"); }catch(e){}
+  const st=$("#zapisStatus"); if(st){ st.textContent = ok ? "Kod skopiowany do schowka ✓" : "Kod gotowy — zaznacz i skopiuj (Ctrl+C)"; st.className="save-note ok"; }
+}
+function importJSON(file){
+  if(!file) return;
+  const r=new FileReader();
+  r.onload=()=>{ try{ const o=JSON.parse(r.result); if(!o||!Array.isArray(o.szkoly)||!Array.isArray(o.zawodnicy)) throw 0; DANE=o; ensureFinal(); zapiszDane(); renderAll(); renderEditor(); alert("Wczytano dane z pliku."); }
+    catch(e){ alert("Nie udało się wczytać — to nie jest poprawny plik dane.json."); } };
+  r.readAsText(file);
+}
+function setEdit(on){
+  trybEdycji = on;
+  try{ localStorage.setItem(LS_EDIT, on?"1":"0"); }catch(e){}
+  const btn=$("#editToggle"); if(btn){ btn.setAttribute("aria-pressed", String(on)); btn.textContent = on ? "✎ Edycja włączona" : "✎ Tryb edycji"; }
+  const tab=$("#t-edycja"); if(tab) tab.hidden = !on;
+  if(on){ renderEditor(); }
+  else if(tab && tab.getAttribute("aria-selected")==="true"){ $("#t-ranking").click(); }
+}
+
 /* ---- INIT ---- */
 function renderAll(){ renderRanking(); renderAwans(); renderFinal(); }
 function init(){
   $("#seasonBadge").textContent = "SEZON "+DANE.sezon;
   if(!DANE.daneTestowe) $("#sampleBanner").hidden = true;
-
-  // filtr szkół
-  $("#schoolFilter").innerHTML = `<option value="all">Wszystkie szkoły</option>` +
-    DANE.szkoly.map(s=>`<option value="${s.id}">${esc(s.nazwa)}</option>`).join("");
 
   // taby
   $$(".tab").forEach(t=>t.addEventListener("click",()=>{
@@ -665,6 +940,15 @@ function init(){
 
   $("#rankSearch").addEventListener("input", renderRanking);
   $("#schoolFilter").addEventListener("change", renderRanking);
+
+  // tryb edycji + delegacja zdarzeń edytora
+  $("#editToggle").addEventListener("click", ()=> setEdit(!trybEdycji));
+  const edp = $("#p-edycja");
+  edp.addEventListener("input", onEdInput);
+  edp.addEventListener("change", onEdChange);
+  edp.addEventListener("click", onEdClick);
+  let em=false; try{ em = localStorage.getItem(LS_EDIT)==="1"; }catch(e){}
+  setEdit(em);
 
   renderTerminarz();
   renderAll();
