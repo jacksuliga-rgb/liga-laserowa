@@ -568,6 +568,10 @@ const MEDALE = ["🥇","🥈","🥉"];
 /* ---- ZAPIS W PRZEGLĄDARCE (localStorage) ---- */
 const LS_DANE = "ligaLaserowa.dane.v1";
 const LS_EDIT = "ligaLaserowa.edit.v1";
+const LS_AUTH = "ligaLaserowa.auth.v1";
+// SHA-256 kodu dostępu do edycji. Aby zmienić kod: policz nowy hash
+// (np. na https://emn178.github.io/online-tools/sha256.html) i wklej tutaj.
+const KOD_HASH = "2acee0ce6421d1b64d86cc141ef89090305ec18652dcf7d264cb034739e2c1b1";
 const klonSeed = () => JSON.parse(JSON.stringify(DANE_SEED));
 const poprawneDane = o => o && Array.isArray(o.szkoly) && Array.isArray(o.zawodnicy);
 function wczytajLokalne(){ try{ const r = localStorage.getItem(LS_DANE); if(r) return JSON.parse(r); }catch(e){} return null; }
@@ -771,6 +775,32 @@ function renderTerminarz(){
 
 /* ---- EDYTOR (tryb wpisywania) ---- */
 let trybEdycji = false;
+let autoryzacja = false;
+try{ autoryzacja = localStorage.getItem(LS_AUTH)==="1"; }catch(e){}
+async function sha256(str){
+  const buf = new TextEncoder().encode(str);
+  const h = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+async function sprawdzKod(){
+  const kod = prompt("Podaj kod dostępu do edycji:");
+  if(kod==null) return false;
+  let h=null;
+  try{ h = await sha256(kod.trim()); }catch(e){ alert("Weryfikacja kodu wymaga otwarcia strony przez https (nie z pliku na dysku)."); return false; }
+  if(h===KOD_HASH){ autoryzacja=true; try{ localStorage.setItem(LS_AUTH,"1"); }catch(e){} return true; }
+  alert("Nieprawidłowy kod.");
+  return false;
+}
+async function toggleEdit(){
+  if(trybEdycji){ setEdit(false); return; }
+  if(!autoryzacja && !(await sprawdzKod())) return;
+  setEdit(true);
+}
+function zablokujEdycje(){
+  autoryzacja=false;
+  try{ localStorage.removeItem(LS_AUTH); }catch(e){}
+  setEdit(false);
+}
 const parseNum = v => { v = String(v).trim().replace(",", "."); if(v==="") return null; const n = Number(v); return isFinite(n) ? n : null; };
 const ensureFinal = () => { if(!DANE.final) DANE.final = { rozegrany:false, zawodnicy:[] }; if(!Array.isArray(DANE.final.zawodnicy)) DANE.final.zawodnicy = []; };
 const szkolaOptions = sel => DANE.szkoly.map(s=>`<option value="${esc(s.id)}" ${s.id===sel?"selected":""}>${esc(s.nazwa)}</option>`).join("");
@@ -854,6 +884,7 @@ function renderEditor(){
       <label class="btn-ed" style="cursor:pointer">⬆ Wczytaj z pliku JSON<input type="file" accept=".json,application/json" id="importFile" hidden></label>
       <button class="btn-ed" data-act="show-code">&lt;/&gt; Pokaż kod do wklejenia</button>
       <button class="btn-ed warn" data-act="reset">↺ Przywróć dane przykładowe</button>
+      <button class="btn-ed warn" data-act="lock">🔒 Zablokuj edycję (wyloguj)</button>
     </div>
     <ol class="pub-steps">
       <li><b>Publikacja (zalecane):</b> „Pobierz dane.json" i wgraj plik <code>dane.json</code> do repozytorium, do tego samego folderu co <code>liga.html</code>. Strona wczyta go automatycznie i wszyscy zobaczą wyniki.</li>
@@ -915,6 +946,7 @@ function onEdClick(e){
   else if(act==="download-json"){ pobierzJSON(); }
   else if(act==="show-code"){ pokazKod(); }
   else if(act==="reset"){ if(confirm("Przywrócić dane przykładowe? Twoje wpisy w tej przeglądarce zostaną skasowane.")){ DANE=klonSeed(); zapiszDane(); applyChrome(); renderAll(); renderEditor(); } }
+  else if(act==="lock"){ zablokujEdycje(); }
 }
 
 function ladujOsemke(){
@@ -994,14 +1026,15 @@ async function init(){
   $("#rankSearch").addEventListener("input", renderRanking);
   $("#schoolFilter").addEventListener("change", renderRanking);
 
-  // tryb edycji + delegacja zdarzeń edytora
-  $("#editToggle").addEventListener("click", ()=> setEdit(!trybEdycji));
+  // tryb edycji (za kodem) + delegacja zdarzeń edytora
+  $("#editToggle").addEventListener("click", toggleEdit);
   const edp = $("#p-edycja");
   edp.addEventListener("input", onEdInput);
   edp.addEventListener("change", onEdChange);
   edp.addEventListener("click", onEdClick);
+  // przywróć tryb edycji tylko, jeśli wcześniej podano poprawny kod
   let em=false; try{ em = localStorage.getItem(LS_EDIT)==="1"; }catch(e){}
-  setEdit(em);
+  setEdit(em && autoryzacja);
 
   renderTerminarz();
   renderAll();
