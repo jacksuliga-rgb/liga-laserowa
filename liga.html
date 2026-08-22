@@ -760,7 +760,7 @@ function renderFinal(){
 function renderTerminarz(){
   const stColor = { done:"var(--laser-green)", live:"var(--laser-magenta)", plan:"var(--laser-blue)" };
   const stName  = { done:"Zakończone", live:"W toku", plan:"Planowane" };
-  $("#timeline").innerHTML = DANE.terminarz.map(e=>{
+  $("#timeline").innerHTML = (DANE.terminarz||[]).map(e=>{
     const d = new Date(e.data+"T00:00:00");
     const data = isNaN(d) ? esc(e.data) : d.toLocaleDateString("pl-PL",{day:"numeric",month:"long",year:"numeric"});
     return `<div class="ev ${e.status==='done'?'done':''}" style="--dotc:${stColor[e.status]||'var(--laser-blue)'}">
@@ -803,6 +803,8 @@ function zablokujEdycje(){
 }
 const parseNum = v => { v = String(v).trim().replace(",", "."); if(v==="") return null; const n = Number(v); return isFinite(n) ? n : null; };
 const ensureFinal = () => { if(!DANE.final) DANE.final = { rozegrany:false, zawodnicy:[] }; if(!Array.isArray(DANE.final.zawodnicy)) DANE.final.zawodnicy = []; };
+const ensureTerminarz = () => { if(!Array.isArray(DANE.terminarz)) DANE.terminarz = []; };
+const statusOptions = sel => [["done","Zakończone"],["live","W toku"],["plan","Planowane"]].map(([v,l])=>`<option value="${v}" ${v===sel?"selected":""}>${l}</option>`).join("");
 const szkolaOptions = sel => DANE.szkoly.map(s=>`<option value="${esc(s.id)}" ${s.id===sel?"selected":""}>${esc(s.nazwa)}</option>`).join("");
 const kolorOptions  = sel => Object.keys(KOLORY).map(k=>`<option value="${k}" ${k===sel?"selected":""}>${k}</option>`).join("");
 const sumaCell = su => `<td class="num" style="font-family:'JetBrains Mono',monospace;color:var(--laser-green);font-weight:700">${su!=null?su.toFixed(1):"—"}</td>`;
@@ -874,6 +876,22 @@ function renderEditor(){
       <button class="btn-ed" data-act="load-eight">↑ Wczytaj ósemkę z kwalifikacji</button>
     </div></div>`;
 
+  // Terminarz
+  ensureTerminarz();
+  h += `<div class="ed-block"><h3>Terminarz</h3>
+    <p class="hint">Etapy ligi: eliminacje, awans, finał. Status: „Zakończone", „W toku", „Planowane".</p>
+    <div class="ed-table"><table class="ed"><thead><tr><th class="col-num">Data</th><th>Etap</th><th>Tytuł</th><th>Miejsce</th><th>Status</th><th></th></tr></thead><tbody>`;
+  DANE.terminarz.forEach((e,i)=>{
+    h += `<tr data-ti="${i}">
+      <td><input class="ed-in" type="date" data-f="data" value="${esc(e.data||"")}"></td>
+      <td><input class="ed-in" type="text" data-f="etap" value="${esc(e.etap||"")}"></td>
+      <td><input class="ed-in" type="text" data-f="tytul" value="${esc(e.tytul||"")}"></td>
+      <td><input class="ed-in" type="text" data-f="miejsce" value="${esc(e.miejsce||"")}"></td>
+      <td><select class="ed-in" data-f="status">${statusOptions(e.status)}</select></td>
+      <td><button class="btn-x" data-act="del-termin" title="Usuń">✕</button></td></tr>`;
+  });
+  h += `</tbody></table></div><div class="ed-actions"><button class="btn-ed" data-act="add-termin">+ Dodaj wydarzenie</button></div></div>`;
+
   // Zapis / publikacja
   h += `<div class="ed-block"><h3>Zapis i publikacja</h3>
     <p class="hint">Zmiany zapisują się w tej przeglądarce automatycznie. Żeby wyniki zobaczyli wszyscy na stronie, opublikuj je jednym ze sposobów niżej.</p>
@@ -902,9 +920,10 @@ function onEdInput(e){
   const t = e.target;
   if(!t.matches('input.ed-in')) return;
   const f=t.dataset.f, g=t.dataset.g, fmeta=t.dataset.fmeta;
-  const trS=t.closest('[data-si]'), trZ=t.closest('[data-zi]'), trF=t.closest('[data-fi]');
+  const trS=t.closest('[data-si]'), trZ=t.closest('[data-zi]'), trF=t.closest('[data-fi]'), trT=t.closest('[data-ti]');
   if(g==="sezon"){ DANE.sezon=t.value; const b=$("#seasonBadge"); if(b) b.textContent="SEZON "+DANE.sezon; }
   else if(fmeta){ ensureFinal(); DANE.final[fmeta]=t.value; }
+  else if(trT){ ensureTerminarz(); DANE.terminarz[+trT.dataset.ti][f]=t.value; }
   else if(trS){ DANE.szkoly[+trS.dataset.si][f]=t.value; }
   else if(trZ){ const i=+trZ.dataset.zi, z=DANE.zawodnicy[i];
     z[f] = (f==="pistolet"||f==="karabinek") ? parseNum(t.value) : t.value;
@@ -921,9 +940,10 @@ function onEdChange(e){
   const t = e.target;
   if(t.id==="importFile"){ importJSON(t.files && t.files[0]); return; }
   if(t.matches('select.ed-in')){
-    const f=t.dataset.f, trS=t.closest('[data-si]'), trZ=t.closest('[data-zi]');
+    const f=t.dataset.f, trS=t.closest('[data-si]'), trZ=t.closest('[data-zi]'), trT=t.closest('[data-ti]');
     if(trS) DANE.szkoly[+trS.dataset.si][f]=t.value;
     else if(trZ) DANE.zawodnicy[+trZ.dataset.zi][f]=t.value;
+    else if(trT){ ensureTerminarz(); DANE.terminarz[+trT.dataset.ti][f]=t.value; }
     zapiszDane(); renderAll(); return;
   }
   if(t.matches('input[type=checkbox][data-g]')){ DANE[t.dataset.g]=t.checked; if(t.dataset.g==="daneTestowe"){ const b=$("#sampleBanner"); if(b) b.hidden=!t.checked; } zapiszDane(); renderAll(); return; }
@@ -941,6 +961,8 @@ function onEdClick(e){
   else if(act==="del-zawodnik"){ DANE.zawodnicy.splice(+b.closest('[data-zi]').dataset.zi,1); afterStruct(); }
   else if(act==="add-final"){ ensureFinal(); DANE.final.zawodnicy.push({imie:"", pistolet:null, karabinek:null}); afterStruct(); }
   else if(act==="del-final"){ ensureFinal(); DANE.final.zawodnicy.splice(+b.closest('[data-fi]').dataset.fi,1); afterStruct(); }
+  else if(act==="add-termin"){ ensureTerminarz(); DANE.terminarz.push({data:"", etap:"", tytul:"Nowe wydarzenie", miejsce:"", status:"plan"}); afterStruct(); }
+  else if(act==="del-termin"){ ensureTerminarz(); DANE.terminarz.splice(+b.closest('[data-ti]').dataset.ti,1); afterStruct(); }
   else if(act==="load-eight"){ ladujOsemke(); }
   else if(act==="load-published"){ wczytajOpublikowane(); }
   else if(act==="download-json"){ pobierzJSON(); }
@@ -1004,7 +1026,7 @@ function setEdit(on){
 }
 
 /* ---- INIT ---- */
-function renderAll(){ renderRanking(); renderAwans(); renderFinal(); }
+function renderAll(){ renderRanking(); renderAwans(); renderFinal(); renderTerminarz(); }
 async function init(){
   DANE = await startupDane();   // localStorage → dane.json → seed
   applyChrome();
