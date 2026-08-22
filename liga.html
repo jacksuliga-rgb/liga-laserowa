@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wyniki i finał — Łódzka Liga Strzelectwa Laserowego</title>
+<meta name="description" content="Ranking, awans do finału i finał w formule ISSF Łódzkiej Ligi Strzelectwa Laserowego Szkół. Trenażery ANSCHÜTZ i PentaShot.">
+<meta name="theme-color" content="#15171c">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://ligalaserowa.2piny.pl/liga.html">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2315171c'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%233aa0ff' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%235dff5d' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23ff2fb3'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --concrete:#15171c;
+    --concrete-2:#1d2026;
+    --fog:#2a2e36;
+    --laser-green:#5dff5d;
+    --laser-magenta:#ff2fb3;
+    --laser-orange:#ff8a1e;
+    --laser-blue:#3aa0ff;
+    --laser-violet:#9b5cff;
+    --ink:#f3f4f6;
+    --muted:#9aa1ad;
+    --line:rgba(255,255,255,.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--concrete);
+    color:var(--ink);
+    font-family:'Archivo',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  ::selection{background:var(--laser-magenta);color:#fff}
+  a{color:inherit}
+
+  /* concrete grain overlay */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(18,20,25,.82);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+    padding:14px 24px;max-width:1180px;margin:0 auto;
+  }
+  .back{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;
+    letter-spacing:.02em;white-space:nowrap;transition:color .15s;
+  }
+  .back:hover{color:var(--laser-green)}
+  .brand{display:flex;align-items:baseline;gap:12px;margin-right:auto}
+  .brand .mark{
+    font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;letter-spacing:.02em;
+  }
+  .brand .mark .a{color:var(--laser-orange)}
+  .brand .mark .b{color:var(--laser-green)}
+  .season{
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    color:var(--laser-blue);border:1px solid rgba(58,160,255,.4);
+    padding:3px 9px;border-radius:999px;letter-spacing:.06em;
+  }
+  /* format badge */
+  .format-badge{
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    color:var(--laser-green);border:1px solid rgba(93,255,93,.35);background:rgba(93,255,93,.06);
+    padding:6px 12px;border-radius:999px;letter-spacing:.03em;white-space:nowrap;
+  }
+  @media(max-width:640px){.format-badge{display:none}}
+  .edit-toggle{
+    font:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;
+    background:var(--concrete-2);color:var(--muted);border:1px solid var(--line);
+    padding:8px 14px;border-radius:999px;transition:all .15s;
+  }
+  .edit-toggle:hover{color:var(--ink);border-color:rgba(255,255,255,.25)}
+  .edit-toggle[aria-pressed="true"]{background:var(--laser-magenta);color:#fff;border-color:var(--laser-magenta)}
+  .tab-edit[aria-selected="true"]::after{background:linear-gradient(90deg,var(--laser-magenta),var(--laser-orange));box-shadow:0 0 14px rgba(255,47,179,.5)}
+
+  /* ---------- EDYTOR ---------- */
+  .ed-block{background:var(--concrete-2);border:1px solid var(--line);border-radius:8px;padding:22px;margin-bottom:22px}
+  .ed-block > h3{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:20px;letter-spacing:.02em;margin-bottom:4px}
+  .ed-block > .hint{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .ed-grid{display:grid;gap:10px}
+  .ed-field{display:flex;flex-direction:column;gap:5px}
+  .ed-field label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+  .ed-inline{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+  .ed-inline .ed-field{min-width:120px}
+  input[type=text].ed-in,input[type=number].ed-in,input[type=date].ed-in,select.ed-in{
+    font:inherit;font-size:14px;background:var(--concrete);color:var(--ink);
+    border:1px solid var(--line);border-radius:5px;padding:9px 11px;width:100%;
+  }
+  input.ed-in:focus,select.ed-in:focus{outline:2px solid var(--laser-blue);outline-offset:1px}
+  input[type=number].ed-in{font-family:'JetBrains Mono',monospace}
+
+  .ed-table{overflow-x:auto;border:1px solid var(--line);border-radius:6px}
+  table.ed{width:100%;border-collapse:collapse;min-width:640px}
+  table.ed th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;text-align:left;padding:10px 12px;background:var(--concrete);border-bottom:1px solid var(--line);white-space:nowrap}
+  table.ed td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle}
+  table.ed tr:last-child td{border-bottom:none}
+  table.ed .col-num{width:120px}
+  table.ed input.ed-in,table.ed select.ed-in{padding:7px 9px}
+
+  .btn-ed{
+    font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+    background:var(--concrete);color:var(--ink);border:1px solid var(--line);
+    padding:9px 15px;border-radius:5px;transition:all .15s;display:inline-flex;align-items:center;gap:7px;
+  }
+  .btn-ed:hover{border-color:rgba(255,255,255,.28)}
+  .btn-ed.primary{background:var(--laser-green);color:#0d0e12;border-color:var(--laser-green)}
+  .btn-ed.primary:hover{filter:brightness(1.08)}
+  .btn-ed.warn{color:#f2b8b8;border-color:rgba(255,80,80,.4)}
+  .btn-ed.warn:hover{background:rgba(255,80,80,.1)}
+  .btn-x{
+    font:inherit;font-size:16px;line-height:1;cursor:pointer;color:var(--muted);
+    background:transparent;border:1px solid var(--line);border-radius:5px;padding:6px 10px;transition:all .15s;
+  }
+  .btn-x:hover{color:#ff7676;border-color:rgba(255,80,80,.5)}
+  .ed-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+  .save-note{font-size:13px;font-weight:700}
+  .save-note.ok{color:var(--laser-green)} .save-note.err{color:#ff7676}
+  .code-out{width:100%;min-height:200px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.5;
+    background:var(--concrete);color:#cfd4dd;border:1px solid var(--line);border-radius:6px;padding:14px;margin-top:12px;resize:vertical;white-space:pre}
+  .switch{display:inline-flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;user-select:none}
+  .switch input{width:18px;height:18px;accent-color:var(--laser-green);cursor:pointer}
+  .pub-steps{font-size:14px;color:#c8cdd6;margin-top:10px;padding-left:20px}
+  .pub-steps li{margin:6px 0}
+  .pub-steps code{background:var(--concrete);padding:2px 6px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:12px}
+
+  /* ---------- PAGE HEAD ---------- */
+  .page-head{padding:44px 0 8px}
+  .page-head h1{
+    font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
+    font-size:clamp(34px,6vw,64px);line-height:.96;letter-spacing:.01em;
+  }
+  .page-head h1 .accent{color:var(--laser-magenta)}
+  .page-head p{color:var(--muted);font-size:17px;margin-top:14px;max-width:640px}
+  .sample-banner{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    margin-top:22px;padding:12px 18px;border-radius:4px;font-size:14px;
+    background:rgba(255,138,30,.09);border:1px solid rgba(255,138,30,.32);color:#f2d3a8;
+  }
+  .sample-banner b{color:var(--laser-orange)}
+
+  /* ---------- TABS ---------- */
+  .tabs{
+    display:flex;gap:4px;margin:34px 0 0;border-bottom:1px solid var(--line);
+    overflow-x:auto;scrollbar-width:none;
+  }
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{
+    font:inherit;font-size:15px;font-weight:700;letter-spacing:.01em;
+    background:transparent;border:none;color:var(--muted);cursor:pointer;
+    padding:14px 20px;position:relative;white-space:nowrap;transition:color .15s;
+  }
+  .tab:hover{color:var(--ink)}
+  .tab[aria-selected="true"]{color:var(--ink)}
+  .tab[aria-selected="true"]::after{
+    content:"";position:absolute;left:14px;right:14px;bottom:-1px;height:3px;border-radius:3px;
+    background:linear-gradient(90deg,var(--laser-green),var(--laser-blue));
+    box-shadow:0 0 14px rgba(93,255,93,.5);
+  }
+  .panel{padding:40px 0 100px;animation:fade .25s ease}
+  .panel[hidden]{display:none}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .panel-head{margin-bottom:26px}
+  .panel-head h2{
+    font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
+    font-size:clamp(24px,3.6vw,38px);line-height:1;letter-spacing:.01em;
+  }
+  .panel-head p{color:var(--muted);font-size:15px;margin-top:10px;max-width:680px}
+
+  /* ---------- RANKING TABLE ---------- */
+  .toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
+  .select,.search{
+    font:inherit;font-size:14px;background:var(--concrete-2);color:var(--ink);
+    border:1px solid var(--line);border-radius:4px;padding:10px 14px;
+  }
+  .search{min-width:200px}
+  .select:focus,.search:focus{outline:2px solid var(--laser-blue);outline-offset:1px}
+  .count{margin-left:auto;font-size:13px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:6px}
+  table{width:100%;border-collapse:collapse;min-width:560px}
+  thead th{
+    text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.1em;
+    color:var(--muted);font-weight:700;padding:14px 16px;background:var(--concrete-2);
+    border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0;
+  }
+  th.num,td.num{text-align:right;font-family:'JetBrains Mono',monospace}
+  tbody td{padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.05);font-size:15px}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:rgba(255,255,255,.025)}
+  .rk{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--muted);width:52px}
+  tr.top1 .rk{color:var(--laser-orange)} tr.top2 .rk{color:#d6d9df} tr.top3 .rk{color:#e0a56a}
+  tr.top1,tr.top2,tr.top3{background:rgba(255,255,255,.03)}
+  .medal{margin-right:6px}
+  .who{font-weight:700}
+  .score{font-weight:700;font-size:16px;color:var(--laser-green)}
+  .chip{
+    display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#cfd4dd;white-space:nowrap;
+  }
+  .chip .dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 8px currentColor}
+  .empty{padding:60px 24px;text-align:center;color:var(--muted)}
+  .empty .big{font-family:'Anton',sans-serif;font-size:28px;color:var(--fog);margin-bottom:10px;text-transform:uppercase}
+
+  /* ---------- AWANS (qualification) ---------- */
+  .legend{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:24px;font-size:13px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:8px}
+  .swatch{width:14px;height:14px;border-radius:3px;flex:none}
+  .sw-auto{background:var(--laser-green);box-shadow:0 0 10px rgba(93,255,93,.5)}
+  .sw-lucky{background:var(--laser-orange);box-shadow:0 0 10px rgba(255,138,30,.5)}
+  .sw-out{background:var(--fog)}
+
+  .schools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:34px}
+  .school-card{
+    background:var(--concrete-2);border:1px solid var(--line);border-radius:6px;
+    padding:18px 18px 8px;position:relative;overflow:hidden;
+  }
+  .school-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--bar,var(--laser-blue));box-shadow:0 0 14px var(--bar,var(--laser-blue))}
+  .school-card h3{font-size:15px;font-weight:800;margin-bottom:2px}
+  .school-card .sub{font-size:12px;color:var(--muted);margin-bottom:12px}
+  .qrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid rgba(255,255,255,.05);font-size:14px}
+  .qrow:first-of-type{border-top:none}
+  .qrow.is-auto .qn{color:var(--laser-green)}
+  .qrow .qn{display:inline-flex;align-items:center;gap:8px}
+  .qrow .badge{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:999px}
+  .badge.auto{background:rgba(93,255,93,.14);color:var(--laser-green);border:1px solid rgba(93,255,93,.4)}
+  .qrow .qs{font-family:'JetBrains Mono',monospace;font-weight:700;color:#cfd4dd}
+  .school-card .more{font-size:12px;color:var(--muted);padding:8px 0}
+
+  .lucky-box{background:linear-gradient(92deg,rgba(255,138,30,.09),rgba(255,47,179,.05));border:1px solid rgba(255,138,30,.28);border-radius:6px;padding:24px}
+  .lucky-box h3{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:22px;color:var(--laser-orange);margin-bottom:4px}
+  .lucky-box p{font-size:14px;color:var(--muted);margin-bottom:16px}
+  .lucky-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+  .lucky-item{display:flex;align-items:center;gap:12px;background:var(--concrete);border:1px solid var(--line);border-radius:5px;padding:10px 14px}
+  .lucky-item .ll-rk{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--laser-orange);width:24px}
+  .lucky-item .ll-name{font-weight:700;font-size:14px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lucky-item .ll-sc{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:#cfd4dd}
+  .lucky-item .ll-sch{font-size:11px;color:var(--muted)}
+
+  .tally{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 30px}
+  .tally .t{background:var(--concrete-2);border:1px solid var(--line);border-radius:6px;padding:16px 22px;min-width:120px}
+  .tally .t .n{font-family:'Anton',sans-serif;font-size:40px;line-height:1}
+  .tally .t .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+  .tally .t.a .n{color:var(--laser-green)} .tally .t.b .n{color:var(--laser-orange)} .tally .t.c .n{color:var(--laser-magenta)}
+
+  /* ---------- FINAŁ (ISSF) ---------- */
+  .final-status{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px;font-size:14px;color:var(--muted)}
+  .pill{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.04em}
+  .pill.live{color:var(--laser-green);border:1px solid rgba(93,255,93,.4);background:rgba(93,255,93,.08)}
+  .pill.soon{color:var(--laser-orange);border:1px solid rgba(255,138,30,.4);background:rgba(255,138,30,.08)}
+
+  .final-sub{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+  .barcell{min-width:140px}
+  .bartrack{background:var(--fog);border-radius:4px;overflow:hidden;height:8px}
+  .bar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--laser-green),var(--laser-blue))}
+  tr.top1 .bar{background:linear-gradient(90deg,var(--laser-orange),var(--laser-magenta))}
+
+  /* ---------- SCHEDULE ---------- */
+  .timeline{position:relative;margin-left:8px;padding-left:30px}
+  .timeline::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--laser-blue),var(--laser-magenta))}
+  .ev{position:relative;padding:0 0 30px}
+  .ev:last-child{padding-bottom:0}
+  .ev::before{content:"";position:absolute;left:-30px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--concrete);border:2px solid var(--dotc,var(--laser-blue));box-shadow:0 0 10px var(--dotc,var(--laser-blue))}
+  .ev.done::before{background:var(--laser-green);border-color:var(--laser-green)}
+  .ev .date{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--laser-blue);font-weight:700}
+  .ev .stage-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:700;margin:2px 0}
+  .ev h3{font-size:18px;font-weight:800;margin:4px 0}
+  .ev .meta{font-size:14px;color:var(--muted)}
+  .ev .st{display:inline-block;margin-top:8px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:999px}
+  .st.done{background:rgba(93,255,93,.14);color:var(--laser-green)}
+  .st.live{background:rgba(255,47,179,.16);color:var(--laser-magenta)}
+  .st.plan{background:rgba(154,161,173,.14);color:var(--muted)}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;text-align:center;color:var(--muted);font-size:14px;margin-top:20px}
+  footer strong{color:var(--ink)}
+  footer a{color:var(--laser-green);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  a:focus-visible,button:focus-visible,.tab:focus-visible{outline:3px solid var(--laser-blue);outline-offset:2px;border-radius:3px}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
+  @media(max-width:640px){
+    .brand{width:100%;order:-1}
+    .page-head{padding-top:30px}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="back" href="index.html">← Strona główna</a>
+    <div class="brand">
+      <span class="mark"><span class="a">LIGA</span> <span class="b">LASEROWA</span></span>
+      <span class="season" id="seasonBadge">SEZON —</span>
+    </div>
+    <span class="format-badge">10× pistolet + 5× karabinek · suma</span>
+    <button type="button" id="editToggle" class="edit-toggle" aria-pressed="false">✎ Tryb edycji</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="page-head">
+    <h1>Wyniki i <span class="accent">finał</span></h1>
+    <p>Ranking zawodników, awans do finału i finał Łódzkiej Ligi Strzelectwa Laserowego Szkół. Każdy oddaje <strong style="color:var(--laser-green)">10 strzałów z pistoletu i 5 z karabinka</strong> — o miejscu decyduje łączna suma punktów.</p>
+    <div class="sample-banner" id="sampleBanner">
+      <span>🎯 <b>Dane przykładowe.</b> To makieta z przykładowymi wynikami — podmień je w sekcji <code>DANE</code> na początku pliku <code>liga.html</code>. Jak, opisano w komentarzach w kodzie.</span>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Sekcje ligi">
+    <button class="tab" role="tab" aria-selected="true"  aria-controls="p-ranking" id="t-ranking">Ranking</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-awans"   id="t-awans">Awans do finału</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-final" id="t-final">Finał (ISSF)</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-terminarz" id="t-terminarz">Terminarz</button>
+    <button class="tab tab-edit" role="tab" aria-selected="false" aria-controls="p-edycja" id="t-edycja" hidden>✎ Edycja</button>
+  </div>
+
+  <!-- RANKING -->
+  <section class="panel" id="p-ranking" role="tabpanel" aria-labelledby="t-ranking">
+    <div class="panel-head">
+      <h2>Ranking łączny</h2>
+      <p>Suma punktów z obu broni: pistolet (10 strzałów) + karabinek (5 strzałów). Sortowanie malejąco po sumie; przy remisie wyżej lepszy wynik z pistoletu.</p>
+    </div>
+    <div class="toolbar">
+      <select class="select" id="schoolFilter" aria-label="Filtruj po szkole"></select>
+      <input class="search" id="rankSearch" type="search" placeholder="Szukaj zawodnika…" aria-label="Szukaj zawodnika">
+      <span class="count" id="rankCount"></span>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th class="rk">#</th><th>Zawodnik</th><th>Szkoła</th><th class="num">Pistolet</th><th class="num">Karabinek</th><th class="num">Suma</th></tr></thead>
+        <tbody id="rankBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- AWANS -->
+  <section class="panel" id="p-awans" role="tabpanel" aria-labelledby="t-awans" hidden>
+    <div class="panel-head">
+      <h2>Kto jedzie na finał</h2>
+      <p>Z każdej szkoły <b>4 najlepszych</b> wchodzi z automatu. Do tego <b>12 lucky loserów</b> — najlepsze wyniki spośród reszty, ze wszystkich szkół razem. Razem <b>32 finalistów</b>. Liczone automatycznie z rankingu.</p>
+    </div>
+    <div class="tally">
+      <div class="t a"><div class="n" id="tAuto">0</div><div class="l">Awans bezpośredni</div></div>
+      <div class="t b"><div class="n" id="tLucky">0</div><div class="l">Lucky loserzy</div></div>
+      <div class="t c"><div class="n" id="tFinal">0</div><div class="l">Finalistów</div></div>
+    </div>
+    <div class="legend">
+      <span><i class="swatch sw-auto"></i>Awans bezpośredni (top 4 w szkole)</span>
+      <span><i class="swatch sw-lucky"></i>Lucky loser</span>
+      <span><i class="swatch sw-out"></i>Poza finałem</span>
+    </div>
+    <div class="schools-grid" id="schoolsGrid"></div>
+    <div class="lucky-box">
+      <h3>Lucky loserzy</h3>
+      <p>Dwunastu z najlepszymi wynikami spośród tych, którzy nie weszli z automatu. Bo piąte miejsce w mocnej szkole bije pierwsze w słabszej.</p>
+      <div class="lucky-list" id="luckyList"></div>
+    </div>
+  </section>
+
+  <!-- FINAŁ (ISSF) -->
+  <section class="panel" id="p-final" role="tabpanel" aria-labelledby="t-final" hidden>
+    <div class="panel-head">
+      <h2>Finał medalowy</h2>
+      <p>Ósemka z najlepszą sumą punktów wchodzi do finału i strzela jeszcze raz — 10× pistolet + 5× karabinek. O medalach decyduje suma punktów z finału. Klasyfikacja końcowa 1–8.</p>
+    </div>
+    <div class="final-status" id="finalStatus"></div>
+    <div id="finalBody"></div>
+  </section>
+
+  <!-- EDYCJA -->
+  <section class="panel" id="p-edycja" role="tabpanel" aria-labelledby="t-edycja" hidden>
+    <div class="panel-head">
+      <h2>Wpisywanie wyników</h2>
+      <p>Ta sama zasada w eliminacjach i finale — liczą się punkty. Wpisz sumę z pistoletu (10 strzałów) i z karabinka (5 strzałów). Zmiany zapisują się w tej przeglądarce automatycznie; żeby opublikować je na stronie, użyj eksportu na dole.</p>
+    </div>
+    <div id="editor"></div>
+  </section>
+
+  <!-- TERMINARZ -->
+  <section class="panel" id="p-terminarz" role="tabpanel" aria-labelledby="t-terminarz" hidden>
+    <div class="panel-head">
+      <h2>Terminarz</h2>
+      <p>Eliminacje w szkołach, awans i finał. Daty i miejsca uzupełniasz w danych.</p>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <strong>Stowarzyszenie 2piny</strong> · Łódź · <a href="mailto:kontakt@2piny.pl">kontakt@2piny.pl</a> · 663 882 124<br>
+    <a href="index.html">← Wróć na stronę główną</a>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   DANE LIGI  —  edytuj tylko tę sekcję
+   =====================================================================
+   Wszystko poniżej to zwykły obiekt. Nie trzeba nic instalować ani
+   kompilować — zapisz plik i odśwież stronę. Działa też offline
+   (po dwukliku w plik), bo dane siedzą w środku, nie w osobnym pliku.
+
+   • sezon        – napis pokazywany na górze.
+   • daneTestowe  – ustaw na false, gdy wpiszesz prawdziwe wyniki
+                    (znika pomarańczowy baner "Dane przykładowe").
+   • szkoly       – lista szkół. `id` musi być unikalne i krótkie,
+                    bo odwołują się do niego zawodnicy. `kolor`: green,
+                    blue, magenta, orange, violet.
+   • zawodnicy    – lista uczniów. `szkola` = id szkoły.
+                    `pistolet`  = suma punktów z 10 strzałów z pistoletu.
+                    `karabinek` = suma punktów z 5 strzałów z karabinka.
+                    O miejscu w rankingu decyduje SUMA obu (pistolet+karabinek).
+                    Jeśli ktoś jeszcze nie strzelał z którejś broni, wpisz null.
+   • terminarz    – wydarzenia. `status`: 'done' | 'live' | 'plan'.
+   • final        – finał medalowy (ósemka strzela jeszcze raz).
+                    `rozegrany`: false = pokazuje ósemkę wyłonioną z
+                    kwalifikacji; true = pokazuje klasyfikację końcową.
+                    `zawodnicy`: finaliści z wynikami finału `pistolet`
+                    i `karabinek`; aplikacja sumuje i ustawia miejsca 1–8.
+                    Wpisuj po `imie` dokładnie jak w liście `zawodnicy`.
+   ===================================================================== */
+const DANE_SEED = {
+  sezon: "2026",
+  daneTestowe: true,
+
+  szkoly: [
+    { id:"SP26",  nazwa:"Szkoła Podstawowa nr 26",  dzielnica:"Bałuty",   kolor:"green"   },
+    { id:"SP81",  nazwa:"Szkoła Podstawowa nr 81",  dzielnica:"Górna",    kolor:"blue"    },
+    { id:"LO3",   nazwa:"III Liceum Ogólnokształcące", dzielnica:"Śródmieście", kolor:"magenta" },
+    { id:"ZSP9",  nazwa:"Zespół Szkół nr 9",        dzielnica:"Widzew",   kolor:"orange"  },
+    { id:"SP199", nazwa:"Szkoła Podstawowa nr 199", dzielnica:"Polesie",  kolor:"violet"  },
+  ],
+
+  // pistolet = suma 10 strzałów (maks. 109.0), karabinek = suma 5 strzałów (maks. 54.5)
+  zawodnicy: [
+    // SP26 (mocna szkoła — jej "piątki" wchodzą jako lucky loserzy)
+    { imie:"Maja Kowalczyk",     szkola:"SP26",  pistolet:96.4, karabinek:48.2 },
+    { imie:"Antoni Nowak",       szkola:"SP26",  pistolet:94.1, karabinek:47.0 },
+    { imie:"Zofia Wiśniewska",   szkola:"SP26",  pistolet:92.8, karabinek:49.1 },
+    { imie:"Jan Lewandowski",    szkola:"SP26",  pistolet:90.5, karabinek:45.3 },
+    { imie:"Lena Zielińska",     szkola:"SP26",  pistolet:89.7, karabinek:44.6 },
+    { imie:"Filip Szymański",    szkola:"SP26",  pistolet:88.9, karabinek:43.1 },
+    { imie:"Alicja Dąbrowska",   szkola:"SP26",  pistolet:87.4, karabinek:42.5 },
+    { imie:"Szymon Woźniak",     szkola:"SP26",  pistolet:85.2, karabinek:44.0 },
+
+    // SP81
+    { imie:"Nikola Kozłowska",   szkola:"SP81",  pistolet:93.3, karabinek:46.5 },
+    { imie:"Kacper Jankowski",   szkola:"SP81",  pistolet:91.0, karabinek:47.9 },
+    { imie:"Hanna Mazur",        szkola:"SP81",  pistolet:86.4, karabinek:43.0 },
+    { imie:"Igor Krawczyk",      szkola:"SP81",  pistolet:84.1, karabinek:41.2 },
+    { imie:"Julia Piotrowska",   szkola:"SP81",  pistolet:81.7, karabinek:39.8 },
+    { imie:"Oskar Grabowski",    szkola:"SP81",  pistolet:79.3, karabinek:38.6 },
+    { imie:"Amelia Nowakowska",  szkola:"SP81",  pistolet:78.0, karabinek:40.1 },
+    { imie:"Wiktor Pawlak",      szkola:"SP81",  pistolet:76.8, karabinek:37.4 },
+
+    // LO3
+    { imie:"Aleksandra Michalska",szkola:"LO3",  pistolet:95.6, karabinek:47.4 },
+    { imie:"Mateusz Zając",      szkola:"LO3",   pistolet:90.2, karabinek:45.7 },
+    { imie:"Wiktoria Wróbel",    szkola:"LO3",   pistolet:88.9, karabinek:46.8 },
+    { imie:"Bartosz Kaczmarek",  szkola:"LO3",   pistolet:84.4, karabinek:42.5 },
+    { imie:"Gabriela Olszewska", szkola:"LO3",   pistolet:80.8, karabinek:40.2 },
+    { imie:"Dawid Jaworski",     szkola:"LO3",   pistolet:78.1, karabinek:38.0 },
+    { imie:"Emilia Adamczyk",    szkola:"LO3",   pistolet:76.6, karabinek:39.3 },
+    { imie:"Franciszek Sikora",  szkola:"LO3",   pistolet:73.9, karabinek:36.0 },
+
+    // ZSP9
+    { imie:"Natalia Baran",      szkola:"ZSP9",  pistolet:92.7, karabinek:44.9 },
+    { imie:"Tymon Duda",         szkola:"ZSP9",  pistolet:89.3, karabinek:46.1 },
+    { imie:"Zuzanna Kubiak",     szkola:"ZSP9",  pistolet:83.8, karabinek:41.6 },
+    { imie:"Krzysztof Wieczorek",szkola:"ZSP9",  pistolet:82.2, karabinek:40.0 },
+    { imie:"Pola Sadowska",      szkola:"ZSP9",  pistolet:77.5, karabinek:38.4 },
+    { imie:"Adam Wróblewski",    szkola:"ZSP9",  pistolet:75.1, karabinek:37.0 },
+    { imie:"Laura Włodarczyk",   szkola:"ZSP9",  pistolet:74.4, karabinek:38.7 },
+    { imie:"Kajetan Marciniak",  szkola:"ZSP9",  pistolet:72.0, karabinek:36.3 },
+
+    // SP199 (słabsza — pokazuje, że jej "jedynka" nie zawsze bije lucky losera z SP26)
+    { imie:"Oliwia Sobczak",     szkola:"SP199", pistolet:87.0, karabinek:43.2 },
+    { imie:"Mikołaj Czarnecki",  szkola:"SP199", pistolet:83.9, karabinek:41.8 },
+    { imie:"Maja Głowacka",      szkola:"SP199", pistolet:79.7, karabinek:39.9 },
+    { imie:"Stanisław Lis",      szkola:"SP199", pistolet:75.2, karabinek:38.0 },
+    { imie:"Kornelia Borkowska", szkola:"SP199", pistolet:71.0, karabinek:36.5 },
+    { imie:"Jakub Sawicki",      szkola:"SP199", pistolet:68.4, karabinek:35.1 },
+    { imie:"Milena Chmielewska", szkola:"SP199", pistolet:66.1, karabinek:34.8 },
+    { imie:"Leon Włodarski",     szkola:"SP199", pistolet:64.6, karabinek:33.2 },
+  ],
+
+  terminarz: [
+    { data:"2026-03-14", etap:"Etap 1 · Eliminacje", tytul:"Eliminacje — SP 26 i SP 81", miejsce:"Sale gimnastyczne szkół", status:"done" },
+    { data:"2026-03-21", etap:"Etap 1 · Eliminacje", tytul:"Eliminacje — LO III, ZSP 9, SP 199", miejsce:"Sale gimnastyczne szkół", status:"done" },
+    { data:"2026-03-28", etap:"Etap 2 · Awans", tytul:"Ogłoszenie awansów i lucky loserów", miejsce:"Online", status:"live" },
+    { data:"2026-04-18", etap:"Etap 3 · Finał", tytul:"Wielki finał — 32 finalistów", miejsce:"Hala MOSiR, Łódź", status:"plan" },
+  ],
+
+  // Finał medalowy — ósemka strzela jeszcze raz (10× pistolet + 5× karabinek).
+  // O miejscu decyduje suma. Ustaw rozegrany:false, by pokazać ósemkę z kwalifikacji.
+  final: {
+    rozegrany: true,
+    data: "2026-04-18",
+    miejsce: "Hala MOSiR, Łódź",
+    zawodnicy: [
+      { imie:"Antoni Nowak",         pistolet:97.2, karabinek:48.6 },
+      { imie:"Maja Kowalczyk",       pistolet:96.0, karabinek:49.0 },
+      { imie:"Aleksandra Michalska", pistolet:95.1, karabinek:48.1 },
+      { imie:"Zofia Wiśniewska",     pistolet:93.4, karabinek:48.8 },
+      { imie:"Nikola Kozłowska",     pistolet:92.6, karabinek:46.9 },
+      { imie:"Natalia Baran",        pistolet:91.8, karabinek:46.2 },
+      { imie:"Kacper Jankowski",     pistolet:90.3, karabinek:47.1 },
+      { imie:"Mateusz Zając",        pistolet:89.0, karabinek:45.5 },
+    ]
+  }
+};
+
+/* =====================================================================
+   SILNIK  —  nie trzeba tu nic zmieniać
+   ===================================================================== */
+const KOLORY = { green:"var(--laser-green)", blue:"var(--laser-blue)", magenta:"var(--laser-magenta)", orange:"var(--laser-orange)", violet:"var(--laser-violet)" };
+const MEDALE = ["🥇","🥈","🥉"];
+
+/* ---- ZAPIS W PRZEGLĄDARCE (localStorage) ---- */
+const LS_DANE = "ligaLaserowa.dane.v1";
+const LS_EDIT = "ligaLaserowa.edit.v1";
+const klonSeed = () => JSON.parse(JSON.stringify(DANE_SEED));
+const poprawneDane = o => o && Array.isArray(o.szkoly) && Array.isArray(o.zawodnicy);
+function wczytajLokalne(){ try{ const r = localStorage.getItem(LS_DANE); if(r) return JSON.parse(r); }catch(e){} return null; }
+// Kolejność źródeł: 1) Twoje lokalne edycje, 2) opublikowany dane.json, 3) dane przykładowe.
+async function startupDane(){
+  const local = wczytajLokalne();
+  if(poprawneDane(local)) return local;
+  try{
+    const resp = await fetch("dane.json", { cache:"no-store" });
+    if(resp.ok){ const j = await resp.json(); if(poprawneDane(j)) return j; }
+  }catch(e){}
+  return klonSeed();
+}
+function zapiszDane(){
+  let ok = false;
+  try{ localStorage.setItem(LS_DANE, JSON.stringify(DANE)); ok = true; }catch(e){}
+  const el = document.getElementById("zapisStatus");
+  if(el){ el.textContent = ok ? "Zapisano w przeglądarce ✓" : "Nie udało się zapisać (tryb prywatny?)"; el.className = "save-note " + (ok?"ok":"err"); }
+  return ok;
+}
+let DANE = klonSeed();   // zastąpione w init() przez startupDane()
+
+const $  = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"]/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;" }[c]));
+const szkolaById = id => DANE.szkoly.find(s=>s.id===id);
+const szkolaKolor = id => KOLORY[(szkolaById(id)||{}).kolor] || "var(--laser-blue)";
+const num = v => (typeof v==="number" && isFinite(v)) ? v : null;
+// Suma łączna: pistolet (10 strzałów) + karabinek (5 strzałów). null, gdy brak obu.
+const sumaOf = (p,k) => (p!=null||k!=null) ? (p||0)+(k||0) : null;
+
+// Ranking łączny: suma obu broni, malejąco. Remis → wyżej lepszy pistolet.
+function ranking(){
+  return DANE.zawodnicy
+    .map(z=>{ const p=num(z.pistolet), k=num(z.karabinek); return { ...z, p, k, s:sumaOf(p,k) }; })
+    .filter(z => z.s != null)
+    .sort((a,b)=> b.s - a.s || (b.p||0) - (a.p||0));
+}
+
+// Kwalifikacja: top 4 z każdej szkoły = awans, potem 12 najlepszych z reszty.
+function kwalifikacja(){
+  const wg = {};
+  DANE.szkoly.forEach(s => wg[s.id] = []);
+  ranking().forEach(z => wg[z.szkola] && wg[z.szkola].push(z));
+  const auto = [], reszta = [];
+  DANE.szkoly.forEach(s => wg[s.id].forEach((z,i)=> (i<4 ? auto : reszta).push(z)));
+  reszta.sort((a,b)=>b.s-a.s);
+  const lucky = reszta.slice(0,12);
+  const luckySet = new Set(lucky);
+  const finalisci = [...auto, ...lucky].sort((a,b)=>b.s-a.s);
+  return { wg, auto, lucky, luckySet, finalisci };
+}
+
+/* ---- RANKING ---- */
+function odswiezFiltrSzkol(){
+  const sel = $("#schoolFilter"); if(!sel) return;
+  const cur = sel.value || "all";
+  sel.innerHTML = `<option value="all">Wszystkie szkoły</option>` +
+    DANE.szkoly.map(s=>`<option value="${esc(s.id)}">${esc(s.nazwa)}</option>`).join("");
+  sel.value = DANE.szkoly.some(s=>s.id===cur) ? cur : "all";
+}
+function renderRanking(){
+  odswiezFiltrSzkol();
+  const q = ($("#rankSearch").value||"").toLowerCase().trim();
+  const sf = $("#schoolFilter").value;
+  const full = ranking();                 // pełny ranking = ranga globalna (indeks)
+  let rows = full.map((z,idx)=>({ z, rank:idx }));
+  const total = full.length;
+  if(sf!=="all") rows = rows.filter(r=>r.z.szkola===sf);
+  if(q) rows = rows.filter(r=>r.z.imie.toLowerCase().includes(q));
+
+  const body = $("#rankBody");
+  if(!rows.length){
+    body.innerHTML = `<tr><td colspan="6"><div class="empty"><div class="big">Brak wyników</div>Nie ma jeszcze pasujących rezultatów.</div></td></tr>`;
+  } else {
+    body.innerHTML = rows.map(({z,rank})=>{
+      const cls = rank<3 ? `top${rank+1}` : "";
+      const medal = rank<3 ? `<span class="medal">${MEDALE[rank]}</span>`:"";
+      const s = szkolaById(z.szkola)||{};
+      return `<tr class="${cls}">
+        <td class="rk">${rank+1}</td>
+        <td class="who">${medal}${esc(z.imie)}</td>
+        <td><span class="chip"><span class="dot" style="color:${szkolaKolor(z.szkola)}"></span>${esc(s.nazwa||z.szkola)}</span></td>
+        <td class="num">${z.p!=null?z.p.toFixed(1):"—"}</td>
+        <td class="num">${z.k!=null?z.k.toFixed(1):"—"}</td>
+        <td class="num score">${z.s.toFixed(1)}</td>
+      </tr>`;
+    }).join("");
+  }
+  $("#rankCount").textContent = `${rows.length} / ${total} zawodników`;
+}
+
+/* ---- AWANS ---- */
+function renderAwans(){
+  const { wg, auto, lucky, luckySet, finalisci } = kwalifikacja();
+  $("#tAuto").textContent  = auto.length;
+  $("#tLucky").textContent = lucky.length;
+  $("#tFinal").textContent = finalisci.length;
+
+  $("#schoolsGrid").innerHTML = DANE.szkoly.map(s=>{
+    const list = wg[s.id];
+    if(!list.length) return `<div class="school-card" style="--bar:${szkolaKolor(s.id)}"><h3>${esc(s.nazwa)}</h3><div class="sub">${esc(s.dzielnica||"")}</div><div class="more">Brak wyników.</div></div>`;
+    const shown = list.slice(0,6);
+    const rows = shown.map((z,i)=>{
+      const isAuto = i<4, isLucky = luckySet.has(z);
+      const badge = isAuto ? `<span class="badge auto">Awans</span>` : (isLucky? `<span class="badge" style="background:rgba(255,138,30,.14);color:var(--laser-orange);border:1px solid rgba(255,138,30,.4)">Lucky</span>`:"");
+      return `<div class="qrow ${isAuto?'is-auto':''}">
+        <span class="qn">${i+1}. ${esc(z.imie)} ${badge}</span>
+        <span class="qs">${z.s.toFixed(1)}</span>
+      </div>`;
+    }).join("");
+    const extra = list.length>6 ? `<div class="more">+ ${list.length-6} dalej</div>`:"";
+    return `<div class="school-card" style="--bar:${szkolaKolor(s.id)}">
+      <h3>${esc(s.nazwa)}</h3><div class="sub">${esc(s.dzielnica||"")} · ${list.length} startujących</div>
+      ${rows}${extra}</div>`;
+  }).join("");
+
+  $("#luckyList").innerHTML = lucky.length ? lucky.map((z,i)=>{
+    const s = szkolaById(z.szkola)||{};
+    return `<div class="lucky-item">
+      <span class="ll-rk">${i+1}</span>
+      <span class="ll-name">${esc(z.imie)}<span class="ll-sch"> · ${esc(s.nazwa||z.szkola)}</span></span>
+      <span class="ll-sc">${z.s.toFixed(1)}</span>
+    </div>`;
+  }).join("") : `<div class="empty" style="padding:24px">Za mało zawodników poza czwórkami, żeby wyłonić lucky loserów.</div>`;
+}
+
+/* ---- FINAŁ ---- */
+function renderFinal(){
+  const cfg = DANE.final || { rozegrany:false, zawodnicy:[] };
+  const status = $("#finalStatus"), wrap = $("#finalBody");
+  const top8 = kwalifikacja().finalisci.slice(0,8);
+  const intro = "Ósemka z najlepszą sumą strzela jeszcze raz (10× pistolet + 5× karabinek). O medalach decyduje suma punktów z finału.";
+  const gdzie = cfg.miejsce ? ` · ${esc(cfg.miejsce)}` : "";
+
+  // Przed finałem — pokaż ósemkę wyłonioną z kwalifikacji.
+  if(!cfg.rozegrany || !(cfg.zawodnicy||[]).length){
+    status.innerHTML = `<span class="pill soon">Przed finałem</span> ${intro}`;
+    if(top8.length < 2){
+      wrap.innerHTML = `<div class="empty"><div class="big">Brak finalistów</div>Ósemka finałowa pojawi się, gdy będą wyniki kwalifikacji.</div>`;
+      return;
+    }
+    wrap.innerHTML = `<div class="final-sub">Ósemka finałowa — awans z kwalifikacji${gdzie}</div>`
+      + `<div class="lucky-list">` + top8.map((z,i)=>{
+          const s = szkolaById(z.szkola)||{};
+          return `<div class="lucky-item">
+            <span class="ll-rk" style="color:var(--laser-green)">${i+1}</span>
+            <span class="ll-name">${esc(z.imie)}<span class="ll-sch"> · ${esc(s.nazwa||z.szkola)}</span></span>
+            <span class="ll-sc">${z.s.toFixed(1)}</span></div>`;
+        }).join("") + `</div>`;
+    return;
+  }
+
+  // Finał rozegrany — klasyfikacja końcowa wg sumy (pistolet + karabinek).
+  const rows = cfg.zawodnicy.map(z=>{
+    const p = num(z.pistolet), k = num(z.karabinek);
+    const info = DANE.zawodnicy.find(x=>x.imie===z.imie) || {};
+    return { imie:z.imie, szkola:info.szkola, p, k, s:sumaOf(p,k)||0 };
+  }).sort((a,b)=> b.s - a.s || (b.p||0)-(a.p||0));
+  const max = rows[0].s || 1;
+
+  status.innerHTML = `<span class="pill live">Rozegrany</span> Klasyfikacja końcowa${gdzie}. ${intro}`;
+
+  const body = rows.map((r,i)=>{
+    const cls = i<3 ? `top${i+1}` : "";
+    const medal = i<3 ? `<span class="medal">${MEDALE[i]}</span>` : "";
+    const s = szkolaById(r.szkola)||{};
+    const pct = Math.max(6, Math.round(r.s/max*100));
+    return `<tr class="${cls}">
+      <td class="rk">${i+1}</td>
+      <td class="who">${medal}${esc(r.imie)}</td>
+      <td><span class="chip"><span class="dot" style="color:${szkolaKolor(r.szkola)}"></span>${esc(s.nazwa||r.szkola||"")}</span></td>
+      <td class="num">${r.p!=null?r.p.toFixed(1):"—"}</td>
+      <td class="num">${r.k!=null?r.k.toFixed(1):"—"}</td>
+      <td class="num score">${r.s.toFixed(1)}</td>
+      <td class="barcell"><div class="bartrack"><div class="bar" style="width:${pct}%"></div></div></td>
+    </tr>`;
+  }).join("");
+
+  wrap.innerHTML = `<div class="table-scroll"><table>
+    <thead><tr><th class="rk">#</th><th>Zawodnik</th><th>Szkoła</th><th class="num">Pistolet</th><th class="num">Karabinek</th><th class="num">Suma</th><th>Progresja</th></tr></thead>
+    <tbody>${body}</tbody></table></div>`;
+}
+
+/* ---- TERMINARZ ---- */
+function renderTerminarz(){
+  const stColor = { done:"var(--laser-green)", live:"var(--laser-magenta)", plan:"var(--laser-blue)" };
+  const stName  = { done:"Zakończone", live:"W toku", plan:"Planowane" };
+  $("#timeline").innerHTML = DANE.terminarz.map(e=>{
+    const d = new Date(e.data+"T00:00:00");
+    const data = isNaN(d) ? esc(e.data) : d.toLocaleDateString("pl-PL",{day:"numeric",month:"long",year:"numeric"});
+    return `<div class="ev ${e.status==='done'?'done':''}" style="--dotc:${stColor[e.status]||'var(--laser-blue)'}">
+      <div class="date">${data}</div>
+      <div class="stage-lbl">${esc(e.etap||"")}</div>
+      <h3>${esc(e.tytul)}</h3>
+      <div class="meta">${esc(e.miejsce||"")}</div>
+      <span class="st ${e.status||'plan'}">${stName[e.status]||"Planowane"}</span>
+    </div>`;
+  }).join("");
+}
+
+/* ---- EDYTOR (tryb wpisywania) ---- */
+let trybEdycji = false;
+const parseNum = v => { v = String(v).trim().replace(",", "."); if(v==="") return null; const n = Number(v); return isFinite(n) ? n : null; };
+const ensureFinal = () => { if(!DANE.final) DANE.final = { rozegrany:false, zawodnicy:[] }; if(!Array.isArray(DANE.final.zawodnicy)) DANE.final.zawodnicy = []; };
+const szkolaOptions = sel => DANE.szkoly.map(s=>`<option value="${esc(s.id)}" ${s.id===sel?"selected":""}>${esc(s.nazwa)}</option>`).join("");
+const kolorOptions  = sel => Object.keys(KOLORY).map(k=>`<option value="${k}" ${k===sel?"selected":""}>${k}</option>`).join("");
+const sumaCell = su => `<td class="num" style="font-family:'JetBrains Mono',monospace;color:var(--laser-green);font-weight:700">${su!=null?su.toFixed(1):"—"}</td>`;
+
+function renderEditor(){
+  const ed = $("#editor"); if(!ed) return;
+  ensureFinal();
+  const s = DANE, f = s.final;
+  let h = "";
+
+  // Ustawienia
+  h += `<div class="ed-block"><h3>Ustawienia</h3>
+    <div class="ed-inline">
+      <div class="ed-field" style="max-width:160px"><label>Sezon</label><input class="ed-in" type="text" data-g="sezon" value="${esc(s.sezon||"")}"></div>
+      <label class="switch"><input type="checkbox" data-g="daneTestowe" ${s.daneTestowe?"checked":""}> Pokazuj baner „Dane przykładowe"</label>
+    </div></div>`;
+
+  // Szkoły
+  h += `<div class="ed-block"><h3>Szkoły</h3>
+    <p class="hint">Nazwy i kolejność szkół. Kolor to akcent na kartach i kropka przy nazwisku.</p>
+    <div class="ed-table"><table class="ed"><thead><tr><th>Nazwa</th><th>Dzielnica</th><th>Kolor</th><th></th></tr></thead><tbody>`;
+  s.szkoly.forEach((sz,i)=>{
+    h += `<tr data-si="${i}">
+      <td><input class="ed-in" type="text" data-f="nazwa" value="${esc(sz.nazwa||"")}"></td>
+      <td><input class="ed-in" type="text" data-f="dzielnica" value="${esc(sz.dzielnica||"")}"></td>
+      <td><select class="ed-in" data-f="kolor">${kolorOptions(sz.kolor)}</select></td>
+      <td><button class="btn-x" data-act="del-szkola" title="Usuń szkołę">✕</button></td></tr>`;
+  });
+  h += `</tbody></table></div><div class="ed-actions"><button class="btn-ed" data-act="add-szkola">+ Dodaj szkołę</button></div></div>`;
+
+  // Zawodnicy
+  h += `<div class="ed-block"><h3>Zawodnicy — eliminacje</h3>
+    <p class="hint">Wpisz sumę punktów: pistolet z 10 strzałów (maks. 109.0), karabinek z 5 strzałów (maks. 54.5). Puste pole = brak wyniku. Można wpisywać z przecinkiem lub kropką.</p>
+    <div class="ed-table"><table class="ed"><thead><tr><th>Imię i nazwisko</th><th>Szkoła</th><th class="col-num">Pistolet</th><th class="col-num">Karabinek</th><th class="col-num">Suma</th><th></th></tr></thead><tbody>`;
+  s.zawodnicy.forEach((z,i)=>{
+    const p=num(z.pistolet), k=num(z.karabinek);
+    h += `<tr data-zi="${i}">
+      <td><input class="ed-in" type="text" data-f="imie" value="${esc(z.imie||"")}"></td>
+      <td><select class="ed-in" data-f="szkola">${szkolaOptions(z.szkola)}</select></td>
+      <td><input class="ed-in num-in" type="text" inputmode="decimal" data-f="pistolet" value="${p!=null?p:""}"></td>
+      <td><input class="ed-in num-in" type="text" inputmode="decimal" data-f="karabinek" value="${k!=null?k:""}"></td>
+      ${sumaCell(sumaOf(p,k))}
+      <td><button class="btn-x" data-act="del-zawodnik" title="Usuń">✕</button></td></tr>`;
+  });
+  h += `</tbody></table></div><div class="ed-actions"><button class="btn-ed" data-act="add-zawodnik">+ Dodaj zawodnika</button></div></div>`;
+
+  // Finał
+  h += `<div class="ed-block"><h3>Finał</h3>
+    <p class="hint">Ta sama zasada — liczą się punkty. Wpisz wyniki finału tej samej ósemki (możesz ją wczytać z kwalifikacji jednym kliknięciem).</p>
+    <div class="ed-inline" style="margin-bottom:14px">
+      <label class="switch"><input type="checkbox" data-fmeta="rozegrany" ${f.rozegrany?"checked":""}> Finał rozegrany (pokaż klasyfikację)</label>
+      <div class="ed-field" style="max-width:240px"><label>Miejsce</label><input class="ed-in" type="text" data-fmeta="miejsce" value="${esc(f.miejsce||"")}"></div>
+      <div class="ed-field" style="max-width:170px"><label>Data</label><input class="ed-in" type="date" data-fmeta="data" value="${esc(f.data||"")}"></div>
+    </div>
+    <div class="ed-table"><table class="ed"><thead><tr><th>Finalista</th><th class="col-num">Pistolet</th><th class="col-num">Karabinek</th><th class="col-num">Suma</th><th></th></tr></thead><tbody>`;
+  f.zawodnicy.forEach((z,i)=>{
+    const p=num(z.pistolet), k=num(z.karabinek);
+    h += `<tr data-fi="${i}">
+      <td><input class="ed-in" type="text" data-f="imie" value="${esc(z.imie||"")}" list="finlist"></td>
+      <td><input class="ed-in num-in" type="text" inputmode="decimal" data-f="pistolet" value="${p!=null?p:""}"></td>
+      <td><input class="ed-in num-in" type="text" inputmode="decimal" data-f="karabinek" value="${k!=null?k:""}"></td>
+      ${sumaCell(sumaOf(p,k))}
+      <td><button class="btn-x" data-act="del-final" title="Usuń">✕</button></td></tr>`;
+  });
+  h += `</tbody></table></div>
+    <datalist id="finlist">${s.zawodnicy.map(z=>`<option value="${esc(z.imie)}">`).join("")}</datalist>
+    <div class="ed-actions">
+      <button class="btn-ed" data-act="add-final">+ Dodaj finalistę</button>
+      <button class="btn-ed" data-act="load-eight">↑ Wczytaj ósemkę z kwalifikacji</button>
+    </div></div>`;
+
+  // Zapis / publikacja
+  h += `<div class="ed-block"><h3>Zapis i publikacja</h3>
+    <p class="hint">Zmiany zapisują się w tej przeglądarce automatycznie. Żeby wyniki zobaczyli wszyscy na stronie, opublikuj je jednym ze sposobów niżej.</p>
+    <div class="ed-actions"><span id="zapisStatus" class="save-note ok">Zapisano w przeglądarce ✓</span></div>
+    <div class="ed-actions">
+      <button class="btn-ed primary" data-act="download-json">⬇ Pobierz dane.json</button>
+      <button class="btn-ed" data-act="load-published">↻ Wczytaj opublikowany dane.json</button>
+      <label class="btn-ed" style="cursor:pointer">⬆ Wczytaj z pliku JSON<input type="file" accept=".json,application/json" id="importFile" hidden></label>
+      <button class="btn-ed" data-act="show-code">&lt;/&gt; Pokaż kod do wklejenia</button>
+      <button class="btn-ed warn" data-act="reset">↺ Przywróć dane przykładowe</button>
+    </div>
+    <ol class="pub-steps">
+      <li><b>Publikacja (zalecane):</b> „Pobierz dane.json" i wgraj plik <code>dane.json</code> do repozytorium, do tego samego folderu co <code>liga.html</code>. Strona wczyta go automatycznie i wszyscy zobaczą wyniki.</li>
+      <li><b>Kolejność wczytywania:</b> najpierw Twoje lokalne edycje z tej przeglądarki, potem opublikowany <code>dane.json</code>, na końcu dane przykładowe. Dzięki temu robocze wpisy nie znikają. Przyciskiem „Wczytaj opublikowany dane.json" wciągniesz wersję ze strony (nadpisze lokalne).</li>
+      <li><b>Alternatywa bez pliku:</b> „Pokaż kod do wklejenia" — podmień w <code>liga.html</code> blok od <code>const DANE_SEED = {</code>.</li>
+    </ol>
+    <textarea class="code-out" id="codeOut" hidden readonly></textarea></div>`;
+
+  ed.innerHTML = h;
+}
+
+function afterStruct(){ zapiszDane(); renderAll(); renderEditor(); }
+
+function onEdInput(e){
+  const t = e.target;
+  if(!t.matches('input.ed-in')) return;
+  const f=t.dataset.f, g=t.dataset.g, fmeta=t.dataset.fmeta;
+  const trS=t.closest('[data-si]'), trZ=t.closest('[data-zi]'), trF=t.closest('[data-fi]');
+  if(g==="sezon"){ DANE.sezon=t.value; const b=$("#seasonBadge"); if(b) b.textContent="SEZON "+DANE.sezon; }
+  else if(fmeta){ ensureFinal(); DANE.final[fmeta]=t.value; }
+  else if(trS){ DANE.szkoly[+trS.dataset.si][f]=t.value; }
+  else if(trZ){ const i=+trZ.dataset.zi, z=DANE.zawodnicy[i];
+    z[f] = (f==="pistolet"||f==="karabinek") ? parseNum(t.value) : t.value;
+    const c=trZ.children[4]; if(c) c.textContent = (v=>v!=null?v.toFixed(1):"—")(sumaOf(num(z.pistolet),num(z.karabinek)));
+  }
+  else if(trF){ ensureFinal(); const i=+trF.dataset.fi, z=DANE.final.zawodnicy[i];
+    z[f] = (f==="pistolet"||f==="karabinek") ? parseNum(t.value) : t.value;
+    const c=trF.children[3]; if(c) c.textContent = (v=>v!=null?v.toFixed(1):"—")(sumaOf(num(z.pistolet),num(z.karabinek)));
+  }
+  zapiszDane(); renderAll();
+}
+
+function onEdChange(e){
+  const t = e.target;
+  if(t.id==="importFile"){ importJSON(t.files && t.files[0]); return; }
+  if(t.matches('select.ed-in')){
+    const f=t.dataset.f, trS=t.closest('[data-si]'), trZ=t.closest('[data-zi]');
+    if(trS) DANE.szkoly[+trS.dataset.si][f]=t.value;
+    else if(trZ) DANE.zawodnicy[+trZ.dataset.zi][f]=t.value;
+    zapiszDane(); renderAll(); return;
+  }
+  if(t.matches('input[type=checkbox][data-g]')){ DANE[t.dataset.g]=t.checked; if(t.dataset.g==="daneTestowe"){ const b=$("#sampleBanner"); if(b) b.hidden=!t.checked; } zapiszDane(); renderAll(); return; }
+  if(t.matches('input[type=checkbox][data-fmeta]')){ ensureFinal(); DANE.final[t.dataset.fmeta]=t.checked; zapiszDane(); renderAll(); return; }
+  // zmiana nazwy szkoły (blur) → odśwież listy wyboru szkół u zawodników
+  if(t.matches('input.ed-in') && t.closest('[data-si]') && t.dataset.f==="nazwa"){ renderEditor(); }
+}
+
+function onEdClick(e){
+  const b = e.target.closest('[data-act]'); if(!b) return;
+  const act = b.dataset.act;
+  if(act==="add-szkola"){ let n=DANE.szkoly.length+1, id; do{ id="SZK"+n; n++; }while(DANE.szkoly.some(s=>s.id===id)); DANE.szkoly.push({id, nazwa:"Nowa szkoła", dzielnica:"", kolor:"blue"}); afterStruct(); }
+  else if(act==="del-szkola"){ DANE.szkoly.splice(+b.closest('[data-si]').dataset.si,1); afterStruct(); }
+  else if(act==="add-zawodnik"){ DANE.zawodnicy.unshift({imie:"", szkola:(DANE.szkoly[0]||{}).id||"", pistolet:null, karabinek:null}); afterStruct(); }
+  else if(act==="del-zawodnik"){ DANE.zawodnicy.splice(+b.closest('[data-zi]').dataset.zi,1); afterStruct(); }
+  else if(act==="add-final"){ ensureFinal(); DANE.final.zawodnicy.push({imie:"", pistolet:null, karabinek:null}); afterStruct(); }
+  else if(act==="del-final"){ ensureFinal(); DANE.final.zawodnicy.splice(+b.closest('[data-fi]').dataset.fi,1); afterStruct(); }
+  else if(act==="load-eight"){ ladujOsemke(); }
+  else if(act==="load-published"){ wczytajOpublikowane(); }
+  else if(act==="download-json"){ pobierzJSON(); }
+  else if(act==="show-code"){ pokazKod(); }
+  else if(act==="reset"){ if(confirm("Przywrócić dane przykładowe? Twoje wpisy w tej przeglądarce zostaną skasowane.")){ DANE=klonSeed(); zapiszDane(); applyChrome(); renderAll(); renderEditor(); } }
+}
+
+function ladujOsemke(){
+  ensureFinal();
+  const top8 = kwalifikacja().finalisci.slice(0,8);
+  if(!top8.length){ alert("Najpierw wpisz wyniki eliminacji — nie ma z kogo wyłonić ósemki."); return; }
+  const prev = DANE.final.zawodnicy || [];
+  DANE.final.zawodnicy = top8.map(z=>{ const ex=prev.find(x=>x.imie===z.imie)||{}; return { imie:z.imie, pistolet:ex.pistolet??null, karabinek:ex.karabinek??null }; });
+  afterStruct();
+}
+function pobierzJSON(){
+  try{
+    const blob=new Blob([JSON.stringify(DANE,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a"); a.href=url; a.download="dane.json"; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }catch(e){ alert("Pobieranie zablokowane w tym widoku. Otwórz stronę bezpośrednio (nie w podglądzie), albo użyj „Pokaż kod do wklejenia\"."); }
+}
+function pokazKod(){
+  const ta=$("#codeOut"); if(!ta) return;
+  ta.value = "const DANE_SEED = " + JSON.stringify(DANE,null,2) + ";";
+  ta.hidden=false; ta.focus(); ta.select();
+  let ok=false; try{ ok=document.execCommand("copy"); }catch(e){}
+  const st=$("#zapisStatus"); if(st){ st.textContent = ok ? "Kod skopiowany do schowka ✓" : "Kod gotowy — zaznacz i skopiuj (Ctrl+C)"; st.className="save-note ok"; }
+}
+function importJSON(file){
+  if(!file) return;
+  const r=new FileReader();
+  r.onload=()=>{ try{ const o=JSON.parse(r.result); if(!poprawneDane(o)) throw 0; DANE=o; ensureFinal(); zapiszDane(); applyChrome(); renderAll(); renderEditor(); alert("Wczytano dane z pliku."); }
+    catch(e){ alert("Nie udało się wczytać — to nie jest poprawny plik dane.json."); } };
+  r.readAsText(file);
+}
+async function wczytajOpublikowane(){
+  if(!confirm("Wczytać opublikowany plik dane.json ze strony? Zastąpi bieżące wpisy w tej przeglądarce.")) return;
+  try{
+    const resp = await fetch("dane.json", { cache:"no-store" });
+    if(!resp.ok) throw 0;
+    const j = await resp.json();
+    if(!poprawneDane(j)) throw 0;
+    DANE = j; ensureFinal(); zapiszDane(); applyChrome(); renderAll(); renderEditor();
+    alert("Wczytano opublikowany dane.json.");
+  }catch(e){ alert("Nie znaleziono pliku dane.json (albo jest niepoprawny). Najpierw opublikuj go w repozytorium."); }
+}
+function applyChrome(){
+  const b=$("#seasonBadge"); if(b) b.textContent="SEZON "+(DANE.sezon||"");
+  const sb=$("#sampleBanner"); if(sb) sb.hidden = !DANE.daneTestowe;
+}
+function setEdit(on){
+  trybEdycji = on;
+  try{ localStorage.setItem(LS_EDIT, on?"1":"0"); }catch(e){}
+  const btn=$("#editToggle"); if(btn){ btn.setAttribute("aria-pressed", String(on)); btn.textContent = on ? "✎ Edycja włączona" : "✎ Tryb edycji"; }
+  const tab=$("#t-edycja"); if(tab) tab.hidden = !on;
+  if(on){ renderEditor(); }
+  else if(tab && tab.getAttribute("aria-selected")==="true"){ $("#t-ranking").click(); }
+}
+
+/* ---- INIT ---- */
+function renderAll(){ renderRanking(); renderAwans(); renderFinal(); }
+async function init(){
+  DANE = await startupDane();   // localStorage → dane.json → seed
+  applyChrome();
+
+  // taby
+  $$(".tab").forEach(t=>t.addEventListener("click",()=>{
+    $$(".tab").forEach(x=>x.setAttribute("aria-selected", String(x===t)));
+    $$(".panel").forEach(p=>p.hidden = (p.id !== t.getAttribute("aria-controls")));
+  }));
+  // klawiatura w tabach
+  const tabs=$$(".tab");
+  tabs.forEach((t,i)=>t.addEventListener("keydown",e=>{
+    let j=null;
+    if(e.key==="ArrowRight") j=(i+1)%tabs.length;
+    if(e.key==="ArrowLeft")  j=(i-1+tabs.length)%tabs.length;
+    if(j!==null){ e.preventDefault(); tabs[j].focus(); tabs[j].click(); }
+  }));
+
+  $("#rankSearch").addEventListener("input", renderRanking);
+  $("#schoolFilter").addEventListener("change", renderRanking);
+
+  // tryb edycji + delegacja zdarzeń edytora
+  $("#editToggle").addEventListener("click", ()=> setEdit(!trybEdycji));
+  const edp = $("#p-edycja");
+  edp.addEventListener("input", onEdInput);
+  edp.addEventListener("change", onEdChange);
+  edp.addEventListener("click", onEdClick);
+  let em=false; try{ em = localStorage.getItem(LS_EDIT)==="1"; }catch(e){}
+  setEdit(em);
+
+  renderTerminarz();
+  renderAll();
+}
+document.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>

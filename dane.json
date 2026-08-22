@@ -1,0 +1,355 @@
+{
+  "sezon": "2026",
+  "daneTestowe": true,
+  "szkoly": [
+    {
+      "id": "SP26",
+      "nazwa": "Szkoła Podstawowa nr 26",
+      "dzielnica": "Bałuty",
+      "kolor": "green"
+    },
+    {
+      "id": "SP81",
+      "nazwa": "Szkoła Podstawowa nr 81",
+      "dzielnica": "Górna",
+      "kolor": "blue"
+    },
+    {
+      "id": "LO3",
+      "nazwa": "III Liceum Ogólnokształcące",
+      "dzielnica": "Śródmieście",
+      "kolor": "magenta"
+    },
+    {
+      "id": "ZSP9",
+      "nazwa": "Zespół Szkół nr 9",
+      "dzielnica": "Widzew",
+      "kolor": "orange"
+    },
+    {
+      "id": "SP199",
+      "nazwa": "Szkoła Podstawowa nr 199",
+      "dzielnica": "Polesie",
+      "kolor": "violet"
+    }
+  ],
+  "zawodnicy": [
+    {
+      "imie": "Maja Kowalczyk",
+      "szkola": "SP26",
+      "pistolet": 96.4,
+      "karabinek": 48.2
+    },
+    {
+      "imie": "Antoni Nowak",
+      "szkola": "SP26",
+      "pistolet": 94.1,
+      "karabinek": 47
+    },
+    {
+      "imie": "Zofia Wiśniewska",
+      "szkola": "SP26",
+      "pistolet": 92.8,
+      "karabinek": 49.1
+    },
+    {
+      "imie": "Jan Lewandowski",
+      "szkola": "SP26",
+      "pistolet": 90.5,
+      "karabinek": 45.3
+    },
+    {
+      "imie": "Lena Zielińska",
+      "szkola": "SP26",
+      "pistolet": 89.7,
+      "karabinek": 44.6
+    },
+    {
+      "imie": "Filip Szymański",
+      "szkola": "SP26",
+      "pistolet": 88.9,
+      "karabinek": 43.1
+    },
+    {
+      "imie": "Alicja Dąbrowska",
+      "szkola": "SP26",
+      "pistolet": 87.4,
+      "karabinek": 42.5
+    },
+    {
+      "imie": "Szymon Woźniak",
+      "szkola": "SP26",
+      "pistolet": 85.2,
+      "karabinek": 44
+    },
+    {
+      "imie": "Nikola Kozłowska",
+      "szkola": "SP81",
+      "pistolet": 93.3,
+      "karabinek": 46.5
+    },
+    {
+      "imie": "Kacper Jankowski",
+      "szkola": "SP81",
+      "pistolet": 91,
+      "karabinek": 47.9
+    },
+    {
+      "imie": "Hanna Mazur",
+      "szkola": "SP81",
+      "pistolet": 86.4,
+      "karabinek": 43
+    },
+    {
+      "imie": "Igor Krawczyk",
+      "szkola": "SP81",
+      "pistolet": 84.1,
+      "karabinek": 41.2
+    },
+    {
+      "imie": "Julia Piotrowska",
+      "szkola": "SP81",
+      "pistolet": 81.7,
+      "karabinek": 39.8
+    },
+    {
+      "imie": "Oskar Grabowski",
+      "szkola": "SP81",
+      "pistolet": 79.3,
+      "karabinek": 38.6
+    },
+    {
+      "imie": "Amelia Nowakowska",
+      "szkola": "SP81",
+      "pistolet": 78,
+      "karabinek": 40.1
+    },
+    {
+      "imie": "Wiktor Pawlak",
+      "szkola": "SP81",
+      "pistolet": 76.8,
+      "karabinek": 37.4
+    },
+    {
+      "imie": "Aleksandra Michalska",
+      "szkola": "LO3",
+      "pistolet": 95.6,
+      "karabinek": 47.4
+    },
+    {
+      "imie": "Mateusz Zając",
+      "szkola": "LO3",
+      "pistolet": 90.2,
+      "karabinek": 45.7
+    },
+    {
+      "imie": "Wiktoria Wróbel",
+      "szkola": "LO3",
+      "pistolet": 88.9,
+      "karabinek": 46.8
+    },
+    {
+      "imie": "Bartosz Kaczmarek",
+      "szkola": "LO3",
+      "pistolet": 84.4,
+      "karabinek": 42.5
+    },
+    {
+      "imie": "Gabriela Olszewska",
+      "szkola": "LO3",
+      "pistolet": 80.8,
+      "karabinek": 40.2
+    },
+    {
+      "imie": "Dawid Jaworski",
+      "szkola": "LO3",
+      "pistolet": 78.1,
+      "karabinek": 38
+    },
+    {
+      "imie": "Emilia Adamczyk",
+      "szkola": "LO3",
+      "pistolet": 76.6,
+      "karabinek": 39.3
+    },
+    {
+      "imie": "Franciszek Sikora",
+      "szkola": "LO3",
+      "pistolet": 73.9,
+      "karabinek": 36
+    },
+    {
+      "imie": "Natalia Baran",
+      "szkola": "ZSP9",
+      "pistolet": 92.7,
+      "karabinek": 44.9
+    },
+    {
+      "imie": "Tymon Duda",
+      "szkola": "ZSP9",
+      "pistolet": 89.3,
+      "karabinek": 46.1
+    },
+    {
+      "imie": "Zuzanna Kubiak",
+      "szkola": "ZSP9",
+      "pistolet": 83.8,
+      "karabinek": 41.6
+    },
+    {
+      "imie": "Krzysztof Wieczorek",
+      "szkola": "ZSP9",
+      "pistolet": 82.2,
+      "karabinek": 40
+    },
+    {
+      "imie": "Pola Sadowska",
+      "szkola": "ZSP9",
+      "pistolet": 77.5,
+      "karabinek": 38.4
+    },
+    {
+      "imie": "Adam Wróblewski",
+      "szkola": "ZSP9",
+      "pistolet": 75.1,
+      "karabinek": 37
+    },
+    {
+      "imie": "Laura Włodarczyk",
+      "szkola": "ZSP9",
+      "pistolet": 74.4,
+      "karabinek": 38.7
+    },
+    {
+      "imie": "Kajetan Marciniak",
+      "szkola": "ZSP9",
+      "pistolet": 72,
+      "karabinek": 36.3
+    },
+    {
+      "imie": "Oliwia Sobczak",
+      "szkola": "SP199",
+      "pistolet": 87,
+      "karabinek": 43.2
+    },
+    {
+      "imie": "Mikołaj Czarnecki",
+      "szkola": "SP199",
+      "pistolet": 83.9,
+      "karabinek": 41.8
+    },
+    {
+      "imie": "Maja Głowacka",
+      "szkola": "SP199",
+      "pistolet": 79.7,
+      "karabinek": 39.9
+    },
+    {
+      "imie": "Stanisław Lis",
+      "szkola": "SP199",
+      "pistolet": 75.2,
+      "karabinek": 38
+    },
+    {
+      "imie": "Kornelia Borkowska",
+      "szkola": "SP199",
+      "pistolet": 71,
+      "karabinek": 36.5
+    },
+    {
+      "imie": "Jakub Sawicki",
+      "szkola": "SP199",
+      "pistolet": 68.4,
+      "karabinek": 35.1
+    },
+    {
+      "imie": "Milena Chmielewska",
+      "szkola": "SP199",
+      "pistolet": 66.1,
+      "karabinek": 34.8
+    },
+    {
+      "imie": "Leon Włodarski",
+      "szkola": "SP199",
+      "pistolet": 64.6,
+      "karabinek": 33.2
+    }
+  ],
+  "terminarz": [
+    {
+      "data": "2026-03-14",
+      "etap": "Etap 1 · Eliminacje",
+      "tytul": "Eliminacje — SP 26 i SP 81",
+      "miejsce": "Sale gimnastyczne szkół",
+      "status": "done"
+    },
+    {
+      "data": "2026-03-21",
+      "etap": "Etap 1 · Eliminacje",
+      "tytul": "Eliminacje — LO III, ZSP 9, SP 199",
+      "miejsce": "Sale gimnastyczne szkół",
+      "status": "done"
+    },
+    {
+      "data": "2026-03-28",
+      "etap": "Etap 2 · Awans",
+      "tytul": "Ogłoszenie awansów i lucky loserów",
+      "miejsce": "Online",
+      "status": "live"
+    },
+    {
+      "data": "2026-04-18",
+      "etap": "Etap 3 · Finał",
+      "tytul": "Wielki finał — 32 finalistów",
+      "miejsce": "Hala MOSiR, Łódź",
+      "status": "plan"
+    }
+  ],
+  "final": {
+    "rozegrany": true,
+    "data": "2026-04-18",
+    "miejsce": "Hala MOSiR, Łódź",
+    "zawodnicy": [
+      {
+        "imie": "Antoni Nowak",
+        "pistolet": 97.2,
+        "karabinek": 48.6
+      },
+      {
+        "imie": "Maja Kowalczyk",
+        "pistolet": 96,
+        "karabinek": 49
+      },
+      {
+        "imie": "Aleksandra Michalska",
+        "pistolet": 95.1,
+        "karabinek": 48.1
+      },
+      {
+        "imie": "Zofia Wiśniewska",
+        "pistolet": 93.4,
+        "karabinek": 48.8
+      },
+      {
+        "imie": "Nikola Kozłowska",
+        "pistolet": 92.6,
+        "karabinek": 46.9
+      },
+      {
+        "imie": "Natalia Baran",
+        "pistolet": 91.8,
+        "karabinek": 46.2
+      },
+      {
+        "imie": "Kacper Jankowski",
+        "pistolet": 90.3,
+        "karabinek": 47.1
+      },
+      {
+        "imie": "Mateusz Zając",
+        "pistolet": 89,
+        "karabinek": 45.5
+      }
+    ]
+  }
+}
