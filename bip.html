@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIP — Niepubliczna Szkoła Podstawowa Fundacji Przyszłość dla Edukacji</title>
+<meta name="description" content="Biuletyn Informacji Publicznej Niepublicznej Szkoły Podstawowej Fundacji Przyszłość dla Edukacji w Łodzi.">
+<meta name="theme-color" content="#0b5cad">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b5cad'/%3E%3Ctext x='16' y='21' font-family='Arial,sans-serif' font-size='11' font-weight='700' fill='white' text-anchor='middle'%3EBIP%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bip:#0b5cad;          /* urzędowy niebieski BIP */
+    --bip-dark:#084a8c;
+    --bip-soft:#eaf2fb;
+    --ink:#1f2937;
+    --gray:#4b5563;
+    --muted:#6b7280;
+    --line:#dbe4ee;
+    --paper:#ffffff;
+    --bg:#f4f7fb;
+    --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--bip);text-decoration:none}
+  a:hover{text-decoration:underline}
+  h1,h2,h3{line-height:1.2;font-weight:800;letter-spacing:-.01em}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+
+  /* topbar */
+  .top{background:var(--bip);color:#fff}
+  .top-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+  .top .logo{display:flex;align-items:center;gap:12px;font-weight:800}
+  .top .logo .badge{background:#fff;color:var(--bip);border-radius:8px;padding:4px 9px;font-size:.95rem;font-weight:800;letter-spacing:.5px}
+  .top .logo small{display:block;font-weight:500;font-size:.72rem;color:#cfe0f5}
+  .top a.back{color:#fff;font-size:.9rem;font-weight:600;border:1.5px solid rgba(255,255,255,.55);padding:8px 16px;border-radius:999px}
+  .top a.back:hover{background:rgba(255,255,255,.15);text-decoration:none}
+
+  /* header */
+  .head{background:var(--paper);border-bottom:1px solid var(--line)}
+  .head-inner{padding:34px 0 30px}
+  .head h1{font-size:clamp(1.5rem,3.2vw,2rem);margin-bottom:8px}
+  .head p{color:var(--muted)}
+
+  /* layout */
+  .grid{display:grid;grid-template-columns:250px 1fr;gap:30px;padding:34px 0 60px;align-items:start}
+  nav.toc{position:sticky;top:16px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+  nav.toc b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:6px 10px}
+  nav.toc a{display:block;padding:8px 10px;border-radius:8px;color:var(--gray);font-size:.92rem;font-weight:500}
+  nav.toc a:hover{background:var(--bip-soft);color:var(--bip);text-decoration:none}
+
+  main{display:grid;gap:20px}
+  section.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;scroll-margin-top:16px}
+  section.card h2{font-size:1.2rem;color:var(--bip-dark);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  section.card h2 .n{background:var(--bip-soft);color:var(--bip);width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:.85rem;flex:0 0 auto}
+  section.card p{color:var(--gray);margin-bottom:12px}
+  section.card p:last-child{margin-bottom:0}
+  ul.clean{list-style:none;display:grid;gap:8px}
+  ul.clean li{padding-left:20px;position:relative;color:var(--gray)}
+  ul.clean li::before{content:"›";position:absolute;left:4px;color:var(--bip);font-weight:800}
+
+  /* tabela danych */
+  table.data{width:100%;border-collapse:collapse}
+  table.data th,table.data td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:.95rem}
+  table.data th{width:38%;color:var(--muted);font-weight:600}
+  table.data td{color:var(--ink)}
+  @media (max-width:520px){table.data th{width:44%}}
+
+  /* placeholder wyróżnienie */
+  .todo{background:#fff8e6;border:1px dashed #e6b800;color:#8a6d00;border-radius:6px;padding:1px 8px;font-size:.85rem;font-weight:600;display:inline-block}
+  .note{background:var(--bip-soft);border-left:4px solid var(--bip);border-radius:8px;padding:14px 16px;color:var(--bip-dark);font-size:.92rem}
+
+  .btn{display:inline-flex;align-items:center;gap:.4em;background:var(--bip);color:#fff;padding:11px 20px;border-radius:999px;font-weight:700;font-size:.95rem}
+  .btn:hover{background:var(--bip-dark);text-decoration:none}
+
+  footer.ft{background:#0e1726;color:#c3cfe0;padding:30px 0;font-size:.9rem}
+  footer.ft .ft-inner{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+  footer.ft a{color:#9fc0ee}
+
+  @media (max-width:820px){
+    .grid{grid-template-columns:1fr}
+    nav.toc{position:static}
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap top-inner">
+    <a href="bip.html" class="logo" style="color:#fff">
+      <span class="badge">BIP</span>
+      <span>Biuletyn Informacji Publicznej<small>Fundacja Przyszłość dla Edukacji</small></span>
+    </a>
+    <a href="szkola.html" class="back">← Strona szkoły</a>
+  </div>
+</div>
+
+<div class="head">
+  <div class="wrap head-inner">
+    <h1>Niepubliczna Szkoła Podstawowa Fundacji Przyszłość dla Edukacji</h1>
+    <p>Biuletyn Informacji Publicznej · ul. Piękna 30/32, Łódź</p>
+  </div>
+</div>
+
+<div class="wrap grid">
+
+  <nav class="toc" aria-label="Spis treści BIP">
+    <b>Spis treści</b>
+    <a href="#dane">Dane podstawowe</a>
+    <a href="#status">Status prawny</a>
+    <a href="#organ">Organ prowadzący</a>
+    <a href="#dzialalnosc">Przedmiot działalności</a>
+    <a href="#organy">Organy szkoły</a>
+    <a href="#statut">Statut i dokumenty</a>
+    <a href="#majatek">Majątek i finanse</a>
+    <a href="#sprawy">Załatwianie spraw</a>
+    <a href="#rejestry">Rejestry i ewidencje</a>
+    <a href="#rodo">Ochrona danych (RODO)</a>
+    <a href="#dostepnosc">Dostępność</a>
+    <a href="#redakcja">Redakcja BIP</a>
+  </nav>
+
+  <main>
+    <div class="note">
+      Poniższe pola oznaczone jako <span class="todo">DO UZUPEŁNIENIA</span> należy wypełnić rzeczywistymi danymi szkoły przed publikacją (m.in. NIP, REGON, numer RSPO, numer wpisu do ewidencji, dane inspektora ochrony danych, treść statutu).
+    </div>
+
+    <section class="card" id="dane">
+      <h2><span class="n">1</span> Dane podstawowe</h2>
+      <table class="data">
+        <tr><th>Pełna nazwa</th><td>Niepubliczna Szkoła Podstawowa Fundacji Przyszłość dla Edukacji</td></tr>
+        <tr><th>Adres</th><td>ul. Piękna 30/32, Łódź</td></tr>
+        <tr><th>Telefon</th><td><a href="tel:+48666666666">+48 666 666 666</a></td></tr>
+        <tr><th>E-mail</th><td><a href="mailto:przyszloscdlaedukacji@gmail.com">przyszloscdlaedukacji@gmail.com</a></td></tr>
+        <tr><th>Strona WWW</th><td><a href="szkola.html">strona szkoły</a></td></tr>
+        <tr><th>NIP</th><td><span class="todo">DO UZUPEŁNIENIA</span></td></tr>
+        <tr><th>REGON</th><td><span class="todo">DO UZUPEŁNIENIA</span></td></tr>
+        <tr><th>Numer RSPO</th><td><span class="todo">DO UZUPEŁNIENIA</span></td></tr>
+        <tr><th>Godziny pracy sekretariatu</th><td>Poniedziałek – Piątek: 8:00 – 16:00</td></tr>
+      </table>
+    </section>
+
+    <section class="card" id="status">
+      <h2><span class="n">2</span> Status prawny i podstawa działania</h2>
+      <p>Szkoła jest szkołą niepubliczną w rozumieniu ustawy z dnia 14 grudnia 2016 r. — Prawo oświatowe, posiadającą uprawnienia szkoły publicznej i realizującą podstawę programową kształcenia ogólnego określoną przez Ministra Edukacji.</p>
+      <ul class="clean">
+        <li>Wpis do ewidencji szkół i placówek niepublicznych prowadzonej przez Miasto Łódź — nr wpisu: <span class="todo">DO UZUPEŁNIENIA</span></li>
+        <li>Organ sprawujący nadzór pedagogiczny: Łódzki Kurator Oświaty</li>
+        <li>Data rozpoczęcia działalności: <span class="todo">DO UZUPEŁNIENIA</span></li>
+      </ul>
+    </section>
+
+    <section class="card" id="organ">
+      <h2><span class="n">3</span> Organ prowadzący</h2>
+      <table class="data">
+        <tr><th>Nazwa</th><td>Fundacja Przyszłość dla Edukacji</td></tr>
+        <tr><th>Adres</th><td><span class="todo">DO UZUPEŁNIENIA</span></td></tr>
+        <tr><th>Numer KRS</th><td><span class="todo">DO UZUPEŁNIENIA</span></td></tr>
+        <tr><th>Zarząd Fundacji</th><td><span class="todo">DO UZUPEŁNIENIA</span></td></tr>
+      </table>
+    </section>
+
+    <section class="card" id="dzialalnosc">
+      <h2><span class="n">4</span> Przedmiot i zakres działalności</h2>
+      <p>Szkoła prowadzi kształcenie na poziomie szkoły podstawowej (klasy 1–8), realizując zadania dydaktyczne, wychowawcze i opiekuńcze zgodnie z przepisami prawa oświatowego oraz statutem.</p>
+      <ul class="clean">
+        <li>Edukacja wczesnoszkolna (klasy 1–3) prowadzona metodą Montessori</li>
+        <li>Nauczanie przedmiotowe w klasach 4–8</li>
+        <li>Ocenianie opisowe wspierające rozwój ucznia</li>
+        <li>Zajęcia dodatkowe, opieka świetlicowa i specjalistyczna (m.in. integracja sensoryczna)</li>
+      </ul>
+    </section>
+
+    <section class="card" id="organy">
+      <h2><span class="n">5</span> Organy szkoły</h2>
+      <ul class="clean">
+        <li><strong>Dyrektor szkoły</strong> — <span class="todo">imię i nazwisko DO UZUPEŁNIENIA</span></li>
+        <li><strong>Rada Pedagogiczna</strong></li>
+        <li><strong>Samorząd Uczniowski</strong> <span class="muted">(jeśli powołany)</span></li>
+        <li><strong>Rada Rodziców</strong> <span class="muted">(jeśli powołana)</span></li>
+      </ul>
+    </section>
+
+    <section class="card" id="statut">
+      <h2><span class="n">6</span> Statut i dokumenty wewnętrzne</h2>
+      <ul class="clean">
+        <li>Statut szkoły — <span class="todo">wgraj plik statut.pdf i podlinkuj</span></li>
+        <li>Regulaminy (świetlicy, oceniania, wewnątrzszkolnego systemu oceniania) — <span class="todo">DO UZUPEŁNIENIA</span></li>
+        <li>Procedury bezpieczeństwa — <span class="todo">DO UZUPEŁNIENIA</span></li>
+      </ul>
+      <p class="note" style="margin-top:14px">Wskazówka: dokumenty publikuj jako pliki PDF w tym samym folderze i podmieniaj etykiety na linki, np. <code>&lt;a href="statut.pdf"&gt;Statut szkoły (PDF)&lt;/a&gt;</code>.</p>
+    </section>
+
+    <section class="card" id="majatek">
+      <h2><span class="n">7</span> Majątek i finansowanie</h2>
+      <p>Działalność szkoły finansowana jest z dotacji z budżetu Miasta Łodzi (na podstawie ustawy o finansowaniu zadań oświatowych) oraz z opłat (czesne) i środków organu prowadzącego.</p>
+      <ul class="clean">
+        <li>Informacja o dotacji na bieżący rok — <span class="todo">DO UZUPEŁNIENIA</span></li>
+        <li>Sprawozdania finansowe organu prowadzącego — <span class="todo">DO UZUPEŁNIENIA</span></li>
+      </ul>
+    </section>
+
+    <section class="card" id="sprawy">
+      <h2><span class="n">8</span> Sposób przyjmowania i załatwiania spraw</h2>
+      <p>Sprawy przyjmowane są w sekretariacie szkoły w godzinach jego pracy, a także drogą telefoniczną i elektroniczną. Wnioski o udostępnienie informacji publicznej można składać:</p>
+      <ul class="clean">
+        <li>osobiście lub pisemnie: ul. Piękna 30/32, Łódź</li>
+        <li>e-mailowo: <a href="mailto:przyszloscdlaedukacji@gmail.com">przyszloscdlaedukacji@gmail.com</a></li>
+      </ul>
+      <p>Informacja publiczna, która nie została udostępniona w niniejszym Biuletynie, jest udostępniana na wniosek zgodnie z ustawą z dnia 6 września 2001 r. o dostępie do informacji publicznej.</p>
+    </section>
+
+    <section class="card" id="rejestry">
+      <h2><span class="n">9</span> Rejestry, ewidencje i archiwa</h2>
+      <ul class="clean">
+        <li>Księga uczniów i księga ewidencji dzieci</li>
+        <li>Ewidencja pracowników</li>
+        <li>Rejestr wydanych dokumentów (legitymacje, zaświadczenia)</li>
+      </ul>
+      <p>Dane z rejestrów udostępniane są wyłącznie w zakresie i na zasadach określonych w przepisach prawa.</p>
+    </section>
+
+    <section class="card" id="rodo">
+      <h2><span class="n">10</span> Ochrona danych osobowych (RODO)</h2>
+      <table class="data">
+        <tr><th>Administrator danych</th><td>Niepubliczna Szkoła Podstawowa Fundacji Przyszłość dla Edukacji, ul. Piękna 30/32, Łódź</td></tr>
+        <tr><th>Inspektor Ochrony Danych (IOD)</th><td><span class="todo">imię, nazwisko i e-mail DO UZUPEŁNIENIA</span></td></tr>
+        <tr><th>Klauzula informacyjna</th><td><span class="todo">wgraj i podlinkuj dokument</span></td></tr>
+      </table>
+    </section>
+
+    <section class="card" id="dostepnosc">
+      <h2><span class="n">11</span> Deklaracja dostępności</h2>
+      <p>Szkoła dąży do zapewnienia dostępności swojej strony internetowej zgodnie z ustawą z dnia 4 kwietnia 2019 r. o dostępności cyfrowej stron internetowych i aplikacji mobilnych podmiotów publicznych.</p>
+      <ul class="clean">
+        <li>Status zgodności, data publikacji i przeglądu — <span class="todo">DO UZUPEŁNIENIA</span></li>
+        <li>Dane kontaktowe do zgłaszania problemów z dostępnością — sekretariat szkoły</li>
+      </ul>
+    </section>
+
+    <section class="card" id="redakcja">
+      <h2><span class="n">12</span> Redakcja Biuletynu</h2>
+      <table class="data">
+        <tr><th>Podmiot udostępniający</th><td>Niepubliczna Szkoła Podstawowa Fundacji Przyszłość dla Edukacji</td></tr>
+        <tr><th>Osoba odpowiedzialna za treść</th><td><span class="todo">DO UZUPEŁNIENIA</span></td></tr>
+        <tr><th>Osoba wprowadzająca</th><td><span class="todo">DO UZUPEŁNIENIA</span></td></tr>
+        <tr><th>Data ostatniej aktualizacji</th><td><span id="upd"></span></td></tr>
+      </table>
+      <p style="margin-top:16px"><a href="szkola.html" class="btn">← Powrót na stronę szkoły</a></p>
+    </section>
+  </main>
+</div>
+
+<footer class="ft">
+  <div class="wrap ft-inner">
+    <span>© <span id="year"></span> Niepubliczna Szkoła Podstawowa Fundacji Przyszłość dla Edukacji</span>
+    <span><a href="szkola.html">Strona szkoły</a> · <a href="https://portal.librus.pl/rodzina/synergia/loguj" target="_blank" rel="noopener">Librus Synergia ↗</a></span>
+  </div>
+</footer>
+
+<script>
+  var y=new Date();
+  document.getElementById('year').textContent=y.getFullYear();
+  document.getElementById('upd').textContent=y.toLocaleDateString('pl-PL');
+</script>
+</body>
+</html>
