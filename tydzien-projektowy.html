@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generator pomysłów na tydzień projektowy · Liga Strzelectwa Laserowego</title>
+<meta name="description" content="Generator interdyscyplinarnych pomysłów na tydzień projektowy wokół strzelectwa laserowego. Tematy z przedmiotów, powiązania z podstawą programową i gotowe scenariusze zajęć.">
+<meta name="theme-color" content="#15171c">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2315171c'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%233aa0ff' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%235dff5d' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23ff2fb3'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --concrete:#15171c;
+    --concrete-2:#1d2026;
+    --fog:#2a2e36;
+    --laser-green:#5dff5d;
+    --laser-magenta:#ff2fb3;
+    --laser-orange:#ff8a1e;
+    --laser-blue:#3aa0ff;
+    --laser-violet:#9b5cff;
+    --ink:#f3f4f6;
+    --muted:#9aa1ad;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--concrete);
+    color:var(--ink);
+    font-family:'Archivo',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--laser-magenta);color:#fff}
+  a{color:var(--laser-blue)}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  /* ---- top bar ---- */
+  header.top{
+    position:sticky;top:0;z-index:20;
+    background:rgba(21,23,28,.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--fog);
+  }
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;height:58px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em}
+  .brand .dot{width:14px;height:14px;border-radius:50%;background:var(--laser-magenta);box-shadow:0 0 14px var(--laser-magenta)}
+  .brand small{color:var(--muted);font-weight:600}
+  .top-links{display:flex;gap:8px;flex-wrap:wrap}
+  .top-links a{
+    color:var(--ink);text-decoration:none;font-weight:700;font-size:.86rem;
+    padding:7px 12px;border:1px solid var(--fog);border-radius:999px;
+  }
+  .top-links a:hover{border-color:var(--laser-green);color:var(--laser-green)}
+
+  /* ---- hero ---- */
+  .hero{padding:52px 0 30px;position:relative;overflow:hidden}
+  .hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(600px 220px at 12% 0%, rgba(58,160,255,.16), transparent 60%),
+      radial-gradient(520px 220px at 92% 20%, rgba(255,47,179,.14), transparent 60%);
+  }
+  .eyebrow{
+    display:inline-block;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+    font-size:.72rem;color:var(--laser-green);margin-bottom:14px;
+    border:1px solid rgba(93,255,93,.35);border-radius:999px;padding:5px 12px;
+  }
+  h1{
+    font-family:'Anton',sans-serif;font-weight:400;
+    font-size:clamp(2.1rem,6vw,4rem);line-height:.98;text-transform:uppercase;
+    letter-spacing:.005em;
+  }
+  h1 .glow{color:var(--laser-magenta);text-shadow:0 0 24px rgba(255,47,179,.55)}
+  .hero p.lead{max-width:640px;margin-top:16px;color:var(--muted);font-size:1.08rem}
+
+  /* ---- controls ---- */
+  .panel{
+    background:var(--concrete-2);border:1px solid var(--fog);border-radius:18px;
+    padding:20px;margin-top:26px;position:relative;z-index:2;
+  }
+  .controls{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.controls{grid-template-columns:1fr}}
+  .field label{display:block;font-weight:800;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  select{
+    width:100%;appearance:none;background:var(--concrete);color:var(--ink);
+    border:1px solid var(--fog);border-radius:12px;padding:12px 40px 12px 14px;
+    font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%239aa1ad' stroke-width='2'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--laser-blue)}
+  .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+  .btn{
+    font-family:inherit;font-weight:800;font-size:1rem;cursor:pointer;
+    border:none;border-radius:12px;padding:13px 22px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary{background:var(--laser-magenta);color:#fff;box-shadow:0 0 22px rgba(255,47,179,.35)}
+  .btn-primary:hover{filter:brightness(1.08)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--fog)}
+  .btn-ghost:hover{border-color:var(--laser-green);color:var(--laser-green)}
+  .count{color:var(--muted);font-weight:700;font-size:.9rem;align-self:center;margin-left:auto}
+
+  /* ---- results ---- */
+  #results{margin:34px 0 10px;display:grid;gap:24px}
+  .card{
+    background:var(--concrete-2);border:1px solid var(--fog);border-radius:20px;
+    overflow:hidden;
+  }
+  .card-head{padding:22px 24px 18px;border-bottom:1px solid var(--fog);position:relative}
+  .card-head::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent,var(--laser-blue))}
+  .kicker{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.7rem;color:var(--accent,var(--laser-blue))}
+  .card h2{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(1.4rem,3.4vw,2rem);line-height:1.02;margin:8px 0 6px}
+  .haslo{color:var(--muted);font-size:1.02rem}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .chip{font-size:.76rem;font-weight:700;padding:5px 11px;border-radius:999px;border:1px solid var(--fog);color:var(--ink)}
+  .chip.lv{border-color:rgba(93,255,93,.4);color:var(--laser-green)}
+
+  .card-body{padding:22px 24px}
+  .block-title{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.02em;font-size:1.15rem;margin:6px 0 14px;display:flex;align-items:center;gap:10px}
+  .block-title span.bar{width:22px;height:3px;background:var(--accent,var(--laser-blue));border-radius:2px}
+
+  .qa{background:var(--concrete);border:1px solid var(--fog);border-radius:14px;padding:16px 18px;margin-bottom:20px}
+  .qa .q{font-weight:800;color:var(--ink)}
+  .qa .r{color:var(--muted);margin-top:8px}
+  .qa .r b{color:var(--laser-orange)}
+
+  .subjects{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-bottom:26px}
+  .subj{background:var(--concrete);border:1px solid var(--fog);border-radius:14px;padding:15px 16px}
+  .subj h4{font-size:.95rem;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:9px}
+  .subj h4 .ic{width:9px;height:9px;border-radius:2px;flex:none}
+  .subj ul{list-style:none;display:grid;gap:6px}
+  .subj li{position:relative;padding-left:16px;font-size:.86rem;color:var(--muted)}
+  .subj li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--laser-blue);opacity:.7}
+
+  details.les{border:1px solid var(--fog);border-radius:14px;margin-bottom:10px;background:var(--concrete);overflow:hidden}
+  details.les>summary{list-style:none;cursor:pointer;padding:14px 18px;display:flex;align-items:center;gap:12px;font-weight:700}
+  details.les>summary::-webkit-details-marker{display:none}
+  details.les>summary .day{font-family:'Anton',sans-serif;font-size:.82rem;letter-spacing:.06em;color:var(--accent,var(--laser-blue));border:1px solid var(--fog);border-radius:8px;padding:3px 9px;text-transform:uppercase;flex:none}
+  details.les>summary .st{color:var(--muted);font-weight:600;font-size:.82rem;margin-left:auto;flex:none}
+  details.les[open]>summary{border-bottom:1px solid var(--fog)}
+  .les-body{padding:16px 18px 18px}
+  .les-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .les-meta .m{font-size:.74rem;font-weight:700;color:var(--muted);border:1px solid var(--fog);border-radius:999px;padding:4px 10px}
+  .les-body h5{font-size:.76rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--laser-green);margin:14px 0 7px}
+  .les-body h5:first-child{margin-top:0}
+  .les-body ul,.les-body ol{margin-left:18px;display:grid;gap:5px}
+  .les-body li{font-size:.9rem}
+  .les-body p{font-size:.9rem;color:var(--muted)}
+
+  .empty{text-align:center;color:var(--muted);padding:50px 20px;border:1px dashed var(--fog);border-radius:18px}
+
+  footer{border-top:1px solid var(--fog);margin-top:50px;padding:28px 0 60px;color:var(--muted);font-size:.9rem}
+  footer strong{color:var(--ink)}
+  footer a{color:var(--laser-green);text-decoration:none;font-weight:700}
+
+  .print-note{display:none}
+  @media print{
+    header.top,.hero::after,.panel,.top-links,footer a{display:none}
+    body{background:#fff;color:#111}
+    .card,.subj,.qa,details.les,.les-body{background:#fff;border-color:#ccc}
+    .card{break-inside:avoid;page-break-inside:avoid}
+    details.les[open]{break-inside:avoid}
+    details.les:not([open]){display:none}
+    .haslo,.subj li,.les-body p,.les-meta .m,.st{color:#444}
+    h1,.card h2,.block-title,.kicker{color:#111 !important;text-shadow:none}
+    .print-note{display:block;color:#666;font-size:.8rem;margin-top:6px}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span> Liga Laserowa <small>· 2piny</small></div>
+    <nav class="top-links">
+      <a href="index.html">Strona główna</a>
+      <a href="liga.html">Wyniki i finał</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Narzędzie dla nauczycieli</span>
+    <h1>Generator pomysłów na<br><span class="glow">tydzień projektowy</span></h1>
+    <p class="lead">Strzelectwo laserowe to nie tylko sport — to gotowy pretekst do międzyprzedmiotowego projektu. Wybierz poziom i przedmiot wiodący, a wylosujesz temat tygodnia z mapą powiązań między przedmiotami, odniesieniami do podstawy programowej i gotowymi scenariuszami zajęć na każdy dzień.</p>
+
+    <div class="panel">
+      <div class="controls">
+        <div class="field">
+          <label for="poziom">Poziom / etap edukacyjny</label>
+          <select id="poziom">
+            <option value="">Dowolny poziom</option>
+            <option value="SP 4–6">Szkoła podstawowa · klasy 4–6</option>
+            <option value="SP 7–8">Szkoła podstawowa · klasy 7–8</option>
+            <option value="LO">Szkoła ponadpodstawowa (LO / technikum)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="przedmiot">Przedmiot wiodący</label>
+          <select id="przedmiot">
+            <option value="">Dowolny przedmiot</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" id="losuj">🎲 Wylosuj tydzień projektowy</button>
+        <button class="btn btn-ghost" id="pokazWszystkie">Pokaż wszystkie pasujące</button>
+        <button class="btn btn-ghost" id="drukuj">🖨 Drukuj / PDF</button>
+        <span class="count" id="count"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+  <div id="results"></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <strong>Stowarzyszenie 2piny</strong> · Łódź · kontakt@2piny.pl<br>
+    Scenariusze są propozycją do dostosowania — dobierz treści do swojej klasy, planu i podstawy programowej.<br>
+    <a href="index.html">← Wróć na stronę Ligi Strzelectwa Laserowego</a>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   DANE: motywy tygodni projektowych osadzone w temacie
+   szkolnej ligi strzelectwa laserowego (Stowarzyszenie 2piny).
+   Odwołania do przedmiotów i przykładowych tematów z podstawy
+   programowej — do dopasowania przez nauczyciela.
+   ============================================================ */
+
+const KOLORY = {
+  fizyka:'#3aa0ff', matematyka:'#5dff5d', biologia:'#ff8a1e', informatyka:'#9b5cff',
+  polski:'#ff2fb3', wf:'#5dff5d', plastyka:'#ff8a1e', historia:'#ff2fb3',
+  wos:'#3aa0ff', chemia:'#9b5cff', geografia:'#5dff5d', przedsiebiorczosc:'#ff8a1e',
+  etyka:'#3aa0ff', angielski:'#9b5cff', technika:'#ff8a1e', wychowawcza:'#ff2fb3'
+};
+const ico = p => KOLORY[p] || '#3aa0ff';
+
+const MOTYWY = [
+  {
+    id:'fizyka-strzalu', akcent:'#3aa0ff',
+    kicker:'Nauki ścisłe',
+    tytul:'Fizyka celnego strzału',
+    haslo:'Dlaczego laser trafia tam, gdzie patrzysz — i co decyduje o dziesiątce.',
+    poziom:['SP 7–8','LO'],
+    wiodacy:['fizyka','matematyka'],
+    produkt:'Plakat naukowy „Anatomia dziesiątki” + pokaz doświadczeń na apelu',
+    pytanie:'Co sprawia, że jeden strzał trafia w środek tarczy, a drugi obok — skoro pocisk jest niewidzialny i nie ma odrzutu?',
+    podsumowanie:'Uczniowie badają światło lasera, tor „strzału”, odczyt elektronicznej tarczy i statystykę wyników. Fizyka staje się namacalna, bo dotyczy sprzętu, z którego naprawdę strzelają na lidze.',
+    przedmioty:[
+      {p:'fizyka', name:'Fizyka', tematy:[
+        'Światło: źródła, rozchodzenie się w linii prostej, wiązka laserowa',
+        'Odbicie i rozproszenie światła na tarczy',
+        'Ruch prostoliniowy i pojęcie toru; prędkość światła',
+        'Czujniki i przetwarzanie sygnału — jak tarcza „widzi” trafienie']},
+      {p:'matematyka', name:'Matematyka', tematy:[
+        'Współrzędne na płaszczyźnie — położenie trafienia względem środka',
+        'Odległość punktu od punktu (środek tarczy = 10)',
+        'Średnia arytmetyczna serii strzałów',
+        'Skala i proporcje przy odmierzaniu dystansu 10 m']},
+      {p:'biologia', name:'Biologia', tematy:[
+        'Budowa oka — jak celujemy, ostrość widzenia',
+        'Odruch i czas reakcji; rola układu nerwowego',
+        'Bezpieczeństwo wzroku a lasery klasy treningowej']},
+      {p:'wf', name:'Wychowanie fizyczne', tematy:[
+        'Postawa strzelecka stojąca, praca oddechu i stabilizacja',
+        'Koordynacja wzrokowo-ruchowa jako cecha motoryczna']}
+    ],
+    scenariusze:[
+      {dzien:'Dzień 1', przedmiot:'fizyka', czas:'45 min', tytul:'Światło, które trafia — czym jest wiązka lasera',
+       cele:['uczeń wyjaśnia, że światło rozchodzi się prostoliniowo','uczeń opisuje różnicę między laserem treningowym a bronią palną'],
+       przebieg:['Wprowadzenie: „strzał, którego nie słychać” — krótka rozmowa o lidze laserowej (5 min).','Doświadczenie: wiązka lasera w zapylonym powietrzu / przez szczelinę — obserwacja linii prostej (10 min).','Mini-wykład: rozchodzenie się światła, odbicie od tarczy (10 min).','Praca w grupach: rysunek toru wiązki od trenażera do tarczy z opisem (15 min).','Podsumowanie i pytanie na kolejny dzień: skąd tarcza wie, że trafiłeś? (5 min).'],
+       materialy:['wskaźnik/trenażer laserowy','tarcza lub biała kartka','przyciemnione pomieszczenie']},
+      {dzien:'Dzień 2', przedmiot:'matematyka', czas:'45 min', tytul:'Gdzie trafiłem? Współrzędne i odległość od środka',
+       cele:['uczeń zaznacza punkt w układzie współrzędnych','uczeń oblicza odległość trafienia od środka tarczy'],
+       przebieg:['Tarcza jako układ współrzędnych — środek to punkt (0,0) (8 min).','Uczniowie nanoszą własne „trafienia” jako punkty i odczytują współrzędne (12 min).','Wprowadzenie odległości między punktami; im bliżej środka, tym wyższy wynik (12 min).','Zadania: przelicz odległość na punkty według skali tarczy (10 min).','Krótkie podsumowanie (3 min).'],
+       materialy:['papier milimetrowy / karty pracy z tarczą','linijki']},
+      {dzien:'Dzień 3', przedmiot:'biologia', czas:'45 min', tytul:'Oko strzelca i czas reakcji',
+       cele:['uczeń wskazuje elementy oka odpowiadające za ostre widzenie','uczeń mierzy własny czas reakcji i interpretuje wynik'],
+       przebieg:['Budowa oka — schemat, rola soczewki i siatkówki (12 min).','Dyskusja: dlaczego przy celowaniu skupiamy wzrok na przyrządzie, nie na tarczy (8 min).','Eksperyment „spadająca linijka” — pomiar czasu reakcji w parach (15 min).','Zapis wyników do wspólnej tabeli (przyda się w informatyce) (7 min).','Wniosek: reakcja i skupienie a celność (3 min).'],
+       materialy:['linijki 30 cm','karta pomiarów']},
+      {dzien:'Dzień 4', przedmiot:'wf', czas:'45 min', tytul:'Postawa, oddech, stabilizacja — trening celności',
+       cele:['uczeń przyjmuje poprawną postawę strzelecką stojącą','uczeń stosuje kontrolę oddechu przy „strzale”'],
+       przebieg:['Rozgrzewka ukierunkowana na stabilizację tułowia i barków (10 min).','Instruktaż postawy stojącej i chwytu trenażera (10 min).','Ćwiczenie: „zatrzymaj oddech i strzel” — seria prób z trenażerów lub markerów (18 min).','Zapis najlepszych serii do tabeli klasowej (5 min).','Wyciszenie i omówienie (2 min).'],
+       materialy:['trenażery laserowe lub atrapy','tarcze']},
+      {dzien:'Dzień 5', przedmiot:'fizyka', czas:'45 min', tytul:'Prezentacja: Anatomia dziesiątki',
+       cele:['uczeń łączy wiedzę z fizyki, matematyki i biologii w jeden przekaz','uczeń prezentuje wynik projektu'],
+       przebieg:['Grupy kończą plakat naukowy łączący światło, współrzędne, oko i postawę (15 min).','Próba pokazu doświadczenia z wiązką lasera (10 min).','Prezentacje grup na forum klasy (15 min).','Głosowanie na najczytelniejszy plakat i podsumowanie tygodnia (5 min).'],
+       materialy:['brystole / plansze','wydruki wykresów z dnia 2 i 3']}
+    ]
+  },
+
+  {
+    id:'statystyka-mistrza', akcent:'#5dff5d',
+    kicker:'Dane i technologia',
+    tytul:'Statystyka mistrza',
+    haslo:'Kto naprawdę jest najlepszy? Liczby z ligi nie kłamią.',
+    poziom:['SP 7–8','LO'],
+    wiodacy:['matematyka','informatyka'],
+    produkt:'Interaktywny arkusz i dashboard wyników klasy + raport „Analiza sezonu”',
+    pytanie:'Jak z listy wyników wyłonić mistrza, dostrzec formę zawodnika i przewidzieć, kto awansuje do finału?',
+    podsumowanie:'Uczniowie pracują na realnych danych ligi (plik dane.json ze strony) — liczą średnie, budują wykresy, sortują ranking i piszą raport. Matematyka spotyka arkusz kalkulacyjny i dziennikarstwo danych.',
+    przedmioty:[
+      {p:'matematyka', name:'Matematyka', tematy:[
+        'Średnia arytmetyczna, mediana, dominanta wyników',
+        'Zakres, wartość najmniejsza i największa serii',
+        'Procenty — udział trafień, poprawa formy w %',
+        'Diagramy słupkowe i odczyt danych z tabeli']},
+      {p:'informatyka', name:'Informatyka', tematy:[
+        'Arkusz kalkulacyjny: formuły SUMA, ŚREDNIA, sortowanie, filtr',
+        'Tworzenie wykresów na podstawie danych',
+        'Format danych (tabela / JSON) i ich odczyt',
+        'Prezentacja danych — czytelny dashboard']},
+      {p:'polski', name:'Język polski', tematy:[
+        'Tekst użytkowy: raport, sprawozdanie sportowe',
+        'Redagowanie wniosków i argumentacja oparta na danych',
+        'Nagłówek prasowy i lead relacji sportowej']},
+      {p:'wf', name:'Wychowanie fizyczne', tematy:[
+        'Samoocena sprawności — pomiar i interpretacja wyniku',
+        'Zasady rywalizacji sportowej i fair play w rankingu']}
+    ],
+    scenariusze:[
+      {dzien:'Dzień 1', przedmiot:'matematyka', czas:'45 min', tytul:'Ranking od zera — co to znaczy „lepszy wynik”',
+       cele:['uczeń oblicza sumę pistolet + karabinek','uczeń porządkuje zawodników według wyniku'],
+       przebieg:['Pokaz strony z wynikami ligi i pytanie: kto wygrał i dlaczego (5 min).','Reguła punktacji: suma dwóch konkurencji (8 min).','Ćwiczenie: policz sumy dla przykładowej ósemki i ustaw ranking (17 min).','Dyskusja: czy zawsze wygrywa najlepszy z pistoletu? (10 min).','Podsumowanie (5 min).'],
+       materialy:['wydruk tabeli wyników (dane.json)','kalkulatory']},
+      {dzien:'Dzień 2', przedmiot:'informatyka', czas:'45 min', tytul:'Arkusz, który liczy za ciebie',
+       cele:['uczeń wprowadza dane i stosuje formuły ŚREDNIA/SUMA','uczeń sortuje tabelę wyników'],
+       przebieg:['Wprowadzenie danych zawodników do arkusza (10 min).','Formuły: suma serii, średnia klasy, min/max (15 min).','Sortowanie i filtrowanie — automatyczny ranking (12 min).','Zapis pliku i porównanie z rankingiem liczonym ręcznie z dnia 1 (8 min).'],
+       materialy:['komputery z arkuszem kalkulacyjnym','plik dane.json lub tabela CSV']},
+      {dzien:'Dzień 3', przedmiot:'matematyka', czas:'45 min', tytul:'Średnia, mediana i forma zawodnika',
+       cele:['uczeń wyznacza medianę i średnią','uczeń interpretuje różnicę między nimi'],
+       przebieg:['Przypomnienie średniej; wprowadzenie mediany i dominanty (12 min).','Ćwiczenie na wynikach szkoły: policz obie miary (13 min).','Analiza: jak jeden świetny wynik podnosi średnią, a nie medianę (12 min).','Wniosek do raportu: która miara lepiej opisuje drużynę (8 min).'],
+       materialy:['karty pracy z danymi szkoły','kalkulatory']},
+      {dzien:'Dzień 4', przedmiot:'informatyka', czas:'45 min', tytul:'Dashboard: wykresy, które mówią',
+       cele:['uczeń tworzy wykres słupkowy i porównawczy','uczeń dobiera typ wykresu do danych'],
+       przebieg:['Od tabeli do wykresu — wybór danych (8 min).','Budowa wykresu słupkowego wyników szkół (15 min).','Wykres porównawczy pistolet vs karabinek (12 min).','Kompozycja prostego dashboardu na jednym ekranie (10 min).'],
+       materialy:['komputery z arkuszem','dane z dnia 2']},
+      {dzien:'Dzień 5', przedmiot:'polski', czas:'45 min', tytul:'Analiza sezonu — raport i nagłówek',
+       cele:['uczeń pisze krótki raport oparty na danych','uczeń formułuje nagłówek relacji sportowej'],
+       przebieg:['Struktura raportu: wstęp, dane, wniosek (8 min).','Pisanie raportu w grupach z użyciem wykresów (18 min).','Tworzenie chwytliwego nagłówka i leadu (10 min).','Prezentacja i publikacja raportów (np. na gazetce) (9 min).'],
+       materialy:['wykresy i tabele z tygodnia','edytor tekstu lub papier']}
+    ]
+  },
+
+  {
+    id:'zaprojektuj-turniej', akcent:'#ff8a1e',
+    kicker:'Organizacja i przedsiębiorczość',
+    tytul:'Zaprojektuj turniej',
+    haslo:'Od pustej sali gimnastycznej do rozgrywek z prawdziwego zdarzenia.',
+    poziom:['SP 4–6','SP 7–8'],
+    wiodacy:['matematyka','przedsiebiorczosc'],
+    produkt:'Kompletny „pakiet organizatora”: regulamin, drabinka, harmonogram, plakat i zaproszenia',
+    pytanie:'Jak zorganizować szkolne eliminacje dla 32 uczestników tak, żeby wszystko zagrało co do minuty?',
+    podsumowanie:'Klasa wciela się w organizatorów eliminacji ligi. Planują drabinkę i harmonogram, piszą regulamin i zaproszenia, projektują plakat i szacują potrzebne zasoby. Projekt uczy współpracy i logistyki.',
+    przedmioty:[
+      {p:'matematyka', name:'Matematyka', tematy:[
+        'Działania na czasie — układanie harmonogramu, doba i minuty',
+        'Drabinka turniejowa — potęgi dwójki (32 → 16 → 8 → 4)',
+        'Obliczenia praktyczne: liczba stanowisk, kolejek, przerw',
+        'Skala i plan sali — rozmieszczenie 10 m dystansu']},
+      {p:'przedsiebiorczosc', name:'Przedsiębiorczość / WOS', tematy:[
+        'Planowanie przedsięwzięcia i podział ról w zespole',
+        'Zasoby: ludzie, sprzęt, czas, miejsce',
+        'Budżet wydarzenia — koszty i pozyskiwanie wsparcia',
+        'Zasady bezpieczeństwa i regulamin imprezy']},
+      {p:'polski', name:'Język polski', tematy:[
+        'Tekst użytkowy: regulamin, zaproszenie, ogłoszenie',
+        'Styl oficjalny i perswazyjny',
+        'Redagowanie komunikatu dla rodziców i uczniów']},
+      {p:'plastyka', name:'Plastyka', tematy:[
+        'Projekt plakatu — kompozycja, hierarchia informacji',
+        'Kolor i kontrast jako nośnik emocji',
+        'Typografia — czytelność napisów']},
+      {p:'informatyka', name:'Informatyka', tematy:[
+        'Edytor grafiki / prezentacji do przygotowania materiałów',
+        'Formularz zgłoszeniowy online',
+        'Dokument współdzielony jako narzędzie pracy zespołu']}
+    ],
+    scenariusze:[
+      {dzien:'Dzień 1', przedmiot:'przedsiebiorczosc', czas:'45 min', tytul:'Sztab organizacyjny — role i plan',
+       cele:['uczeń wskazuje zadania potrzebne do organizacji turnieju','uczeń przyjmuje rolę w zespole projektowym'],
+       przebieg:['Burza mózgów: co jest potrzebne, żeby odbyły się eliminacje (10 min).','Grupowanie zadań: logistyka, promocja, regulamin, sędziowanie (10 min).','Podział na zespoły i przydział ról (10 min).','Ustalenie celu tygodnia i tablicy zadań (12 min).','Zamknięcie (3 min).'],
+       materialy:['duży arkusz / tablica','karteczki samoprzylepne']},
+      {dzien:'Dzień 2', przedmiot:'matematyka', czas:'45 min', tytul:'Drabinka na 32 i harmonogram co do minuty',
+       cele:['uczeń buduje drabinkę turniejową dla 32 zawodników','uczeń układa harmonogram z uwzględnieniem czasu na kolejkę'],
+       przebieg:['32 → 16 → 8 → 4 → 2 — potęgi dwójki i liczba rund (10 min).','Rysowanie drabinki eliminacji (12 min).','Szacowanie czasu jednej kolejki i całości (13 min).','Ułożenie ramowego harmonogramu dnia zawodów (10 min).'],
+       materialy:['karty pracy z drabinką','zegar / stoper do szacowań']},
+      {dzien:'Dzień 3', przedmiot:'polski', czas:'45 min', tytul:'Regulamin i zaproszenie',
+       cele:['uczeń redaguje regulamin w stylu oficjalnym','uczeń pisze zaproszenie/ogłoszenie'],
+       przebieg:['Cechy dobrego regulaminu — analiza przykładu (10 min).','Pisanie punktów regulaminu eliminacji w grupach (18 min).','Redagowanie zaproszenia dla innej klasy/rodziców (12 min).','Wzajemna korekta tekstów (5 min).'],
+       materialy:['przykładowy regulamin','edytor tekstu lub kartki']},
+      {dzien:'Dzień 4', przedmiot:'plastyka', czas:'45 min', tytul:'Plakat, który przyciąga',
+       cele:['uczeń projektuje plakat z hierarchią informacji','uczeń stosuje kontrast i czytelną typografię'],
+       przebieg:['Analiza plakatów sportowych — co działa (8 min).','Szkic kompozycji: co najważniejsze, gdzie data i miejsce (12 min).','Wykonanie plakatu (ręcznie lub w programie) (20 min).','Miniwystawa projektów (5 min).'],
+       materialy:['bloki, markery lub komputer z edytorem grafiki']},
+      {dzien:'Dzień 5', przedmiot:'przedsiebiorczosc', czas:'45 min', tytul:'Prezentacja pakietu organizatora',
+       cele:['uczeń przedstawia spójny plan wydarzenia','uczeń ocenia realność planu'],
+       przebieg:['Zespoły składają całość: regulamin + drabinka + harmonogram + plakat (12 min).','Prezentacje sztabów na forum (18 min).','Ocena koleżeńska wg kryteriów (kompletność, realność) (10 min).','Wybór najlepszego pakietu i refleksja (5 min).'],
+       materialy:['materiały z całego tygodnia','karta oceny']}
+    ]
+  },
+
+  {
+    id:'sport-bez-barier', akcent:'#ff2fb3',
+    kicker:'Człowiek i wartości',
+    tytul:'Sport bez barier',
+    haslo:'Cisza zamiast huku, wózek na równi ze stojącym. Dyscyplina, która nikogo nie skreśla.',
+    poziom:['SP 4–6','SP 7–8','LO'],
+    wiodacy:['biologia','wos'],
+    produkt:'Kampania „Każdy ma szansę”: wystawa, film lub podcast o sporcie włączającym',
+    pytanie:'Dlaczego strzelectwo laserowe otwiera sport dla dzieci z ASD i uczniów na wózkach — i co my możemy zrobić, żeby włączać, a nie wykluczać?',
+    podsumowanie:'Punkt wyjścia to realna cecha ligi: brak huku i odrzutu, start w pozycji stojącej lub siedzącej na wózku. Uczniowie poznają potrzeby różnych osób, projektują działania włączające i tworzą kampanię społeczną.',
+    przedmioty:[
+      {p:'biologia', name:'Biologia', tematy:[
+        'Układ nerwowy — bodźce, wrażliwość na hałas',
+        'Zmysły: słuch i wzrok, nadwrażliwość sensoryczna',
+        'Zdrowie i aktywność fizyczna osób z niepełnosprawnością']},
+      {p:'wos', name:'WOS / wiedza o społeczeństwie', tematy:[
+        'Prawa osób z niepełnosprawnościami; równość szans',
+        'Wykluczenie i włączenie społeczne',
+        'Rola organizacji pozarządowych (przykład: stowarzyszenie)']},
+      {p:'wf', name:'Wychowanie fizyczne', tematy:[
+        'Sport dostępny — adaptacja ćwiczeń do możliwości ucznia',
+        'Zasady fair play i wsparcia w grupie',
+        'Pozycja strzelecka siedząca i stojąca']},
+      {p:'etyka', name:'Etyka / wychowawcza', tematy:[
+        'Empatia i szacunek dla różnorodności',
+        'Język, który nie wyklucza',
+        'Odpowiedzialność za atmosferę w grupie']},
+      {p:'polski', name:'Język polski', tematy:[
+        'Wypowiedź perswazyjna — hasło kampanii',
+        'Wywiad i reportaż jako formy wypowiedzi']}
+    ],
+    scenariusze:[
+      {dzien:'Dzień 1', przedmiot:'biologia', czas:'45 min', tytul:'Dlaczego huk zamyka drzwi do sportu',
+       cele:['uczeń wyjaśnia reakcję organizmu na silny bodziec (hałas)','uczeń rozumie pojęcie nadwrażliwości sensorycznej'],
+       przebieg:['Wprowadzenie: „strzał bez huku” — czym różni się trenażer (7 min).','Jak ucho i układ nerwowy reagują na hałas (13 min).','Dyskusja: co czuje osoba z nadwrażliwością na dźwięk (10 min).','Wniosek: brak huku = dostępność; zapis w notatniku projektu (10 min).','Zamknięcie (5 min).'],
+       materialy:['schemat ucha / układu nerwowego','nagrania różnych poziomów dźwięku (ostrożnie)']},
+      {dzien:'Dzień 2', przedmiot:'wos', czas:'45 min', tytul:'Równość szans w praktyce',
+       cele:['uczeń wskazuje bariery w dostępie do sportu','uczeń podaje przykłady rozwiązań włączających'],
+       przebieg:['Co to znaczy „równe szanse” — rozmowa wprowadzająca (8 min).','Analiza przypadku: start na wózku na równi z innymi (12 min).','Praca w grupach: mapowanie barier i rozwiązań (15 min).','Prezentacja pomysłów (10 min).'],
+       materialy:['karty pracy „bariera–rozwiązanie”']},
+      {dzien:'Dzień 3', przedmiot:'wf', czas:'45 min', tytul:'Ten sam cel, różne drogi — trening dostępny',
+       cele:['uczeń wykonuje ćwiczenie w pozycji stojącej i siedzącej','uczeń dostosowuje zadanie do możliwości partnera'],
+       przebieg:['Rozgrzewka możliwa do wykonania siedząc i stojąc (10 min).','Celowanie z pozycji siedzącej i stojącej — porównanie (18 min).','Zadanie w parach: zaprojektuj wersję ćwiczenia dla kolegi z ograniczeniem (12 min).','Omówienie i refleksja (5 min).'],
+       materialy:['trenażery lub markery','krzesła']},
+      {dzien:'Dzień 4', przedmiot:'etyka', czas:'45 min', tytul:'Język, który włącza',
+       cele:['uczeń rozpoznaje wykluczający i włączający sposób mówienia','uczeń formułuje zasady dobrej atmosfery w grupie'],
+       przebieg:['Ćwiczenie ze słowami: co rani, co wspiera (12 min).','Tworzenie „kodeksu drużyny” (15 min).','Scenki: jak zareagować, gdy ktoś jest pomijany (13 min).','Podsumowanie i zobowiązanie grupy (5 min).'],
+       materialy:['plansza na kodeks drużyny']},
+      {dzien:'Dzień 5', przedmiot:'polski', czas:'45 min', tytul:'Kampania „Każdy ma szansę”',
+       cele:['uczeń tworzy hasło i materiał kampanii społecznej','uczeń prezentuje przekaz publicznie'],
+       przebieg:['Cechy dobrego hasła kampanii (8 min).','Tworzenie hasła + wybór formy: plakat / krótki film / podcast (12 min).','Realizacja materiału w grupach (18 min).','Prezentacja kampanii i głosowanie (7 min).'],
+       materialy:['telefony do nagrań / materiały plastyczne','kodeks i wnioski z tygodnia']}
+    ]
+  },
+
+  {
+    id:'od-luku-do-lasera', akcent:'#9b5cff',
+    kicker:'Historia i kultura',
+    tytul:'Od łuku do lasera',
+    haslo:'Tysiąc lat celowania — i dlaczego dziś strzelamy światłem.',
+    poziom:['SP 7–8','LO'],
+    wiodacy:['historia','wf'],
+    produkt:'Oś czasu strzelectwa + gablota/ekspozycja „Ewolucja celności” i debata o olimpizmie',
+    pytanie:'Jak zmieniało się strzelectwo — od łuku, przez broń palną, po bezpieczny trenażer laserowy — i co to mówi o zmianach w sporcie i technice?',
+    podsumowanie:'Uczniowie śledzą historię dyscyplin celnościowych i idei olimpijskiej, łączą ją z rozwojem techniki i bezpieczeństwa. Efektem jest oś czasu i debata: czy technologia zmienia ducha sportu.',
+    przedmioty:[
+      {p:'historia', name:'Historia', tematy:[
+        'Łucznictwo i broń w dawnych wojskach i na turniejach',
+        'Nowożytne igrzyska olimpijskie i idea olimpizmu',
+        'Rozwój techniki w XIX–XX w. a sport',
+        'Praca ze źródłem historycznym i osią czasu']},
+      {p:'wf', name:'Wychowanie fizyczne', tematy:[
+        'Dyscypliny celnościowe w programie olimpijskim',
+        'Historia i wartości ruchu olimpijskiego (fair play)',
+        'Bezpieczeństwo w sportach strzeleckich']},
+      {p:'fizyka', name:'Fizyka', tematy:[
+        'Dźwięk: powstawanie, natężenie, dlaczego broń palna „huczy”',
+        'Energia i odrzut a trenażer laserowy (brak odrzutu)']},
+      {p:'polski', name:'Język polski', tematy:[
+        'Argumentacja i zasady debaty',
+        'Opis i notatka historyczna, praca z tekstem źródłowym']}
+    ],
+    scenariusze:[
+      {dzien:'Dzień 1', przedmiot:'historia', czas:'45 min', tytul:'Zanim wynaleziono spust — łuk i celność',
+       cele:['uczeń umieszcza wynalazki celnościowe na osi czasu','uczeń korzysta ze źródeł ikonograficznych'],
+       przebieg:['Wprowadzenie: po co ludziom była celność (7 min).','Analiza źródeł: łucznictwo, kusza, wczesna broń (15 min).','Budowa wspólnej osi czasu — pierwsze wpisy (15 min).','Podsumowanie (8 min).'],
+       materialy:['reprodukcje źródeł','długa taśma/oś czasu na ścianie']},
+      {dzien:'Dzień 2', przedmiot:'wf', czas:'45 min', tytul:'Olimpizm i strzelectwo w igrzyskach',
+       cele:['uczeń wyjaśnia ideę olimpizmu','uczeń wskazuje dyscypliny celnościowe na igrzyskach'],
+       przebieg:['Krótka historia nowożytnych igrzysk (10 min).','Strzelectwo olimpijskie dziś — konkurencje (10 min).','Rozmowa o wartościach: fair play, szacunek, dążenie do mistrzostwa (15 min).','Zapis wniosków do osi czasu (10 min).'],
+       materialy:['materiały o igrzyskach','oś czasu']},
+      {dzien:'Dzień 3', przedmiot:'fizyka', czas:'45 min', tytul:'Skąd huk i odrzut — i dlaczego laser ich nie ma',
+       cele:['uczeń wyjaśnia powstawanie dźwięku i pojęcie natężenia','uczeń porównuje broń palną z trenażerem pod kątem bezpieczeństwa'],
+       przebieg:['Powstawanie dźwięku, natężenie hałasu (12 min).','Dlaczego wystrzał „huczy” i kopie — zasada akcji i reakcji (13 min).','Porównanie: trenażer laserowy bez huku i odrzutu (10 min).','Notatka do ekspozycji (10 min).'],
+       materialy:['proste źródła dźwięku do demonstracji']},
+      {dzien:'Dzień 4', przedmiot:'historia', czas:'45 min', tytul:'Ewolucja celności — budujemy ekspozycję',
+       cele:['uczeń porządkuje wydarzenia chronologicznie','uczeń tworzy opis eksponatu'],
+       przebieg:['Uzupełnienie osi czasu o technikę XIX–XXI w. (12 min).','Podział na sekcje ekspozycji i przydział zadań (10 min).','Tworzenie plansz/opisów eksponatów (18 min).','Ustawienie ekspozycji (5 min).'],
+       materialy:['plansze, wydruki, materiały z poprzednich dni']},
+      {dzien:'Dzień 5', przedmiot:'polski', czas:'45 min', tytul:'Debata: technologia zmienia ducha sportu?',
+       cele:['uczeń formułuje argumenty i kontrargumenty','uczeń bierze udział w kulturalnej debacie'],
+       przebieg:['Przypomnienie zasad debaty i podział na strony (8 min).','Przygotowanie argumentów w grupach (12 min).','Debata: „Technologia (np. laser) zmienia sport na lepsze” (18 min).','Podsumowanie, głosowanie i zwiedzanie ekspozycji (7 min).'],
+       materialy:['karty argumentów','gotowa ekspozycja']}
+    ]
+  },
+
+  {
+    id:'puls-na-celowniku', akcent:'#ff8a1e',
+    kicker:'Człowiek i nauki przyrodnicze',
+    tytul:'Puls na celowniku',
+    haslo:'Serce bije, ręka drży — mistrz strzela między uderzeniami.',
+    poziom:['SP 7–8','LO'],
+    wiodacy:['biologia','wf'],
+    produkt:'Raport „Ciało pod kontrolą” z pomiarami tętna i oddechu + mini-trening koncentracji',
+    pytanie:'Jak stan naszego ciała — tętno, oddech, napięcie mięśni — wpływa na celność, i czy można to opanować?',
+    podsumowanie:'Uczniowie badają fizjologię skupienia: mierzą tętno przed i po wysiłku, ćwiczą oddech i obserwują, jak wpływa to na spokój ręki. Biologia i WF spotykają się z matematycznym opracowaniem wyników.',
+    przedmioty:[
+      {p:'biologia', name:'Biologia', tematy:[
+        'Układ krążenia — praca serca, tętno',
+        'Układ oddechowy i kontrola oddechu',
+        'Układ nerwowy: stres, koncentracja, napięcie mięśni',
+        'Homeostaza i reakcja organizmu na wysiłek']},
+      {p:'wf', name:'Wychowanie fizyczne', tematy:[
+        'Pomiar tętna i interpretacja stref wysiłku',
+        'Techniki oddechowe i relaksacyjne',
+        'Koordynacja i stabilizacja w postawie strzeleckiej']},
+      {p:'matematyka', name:'Matematyka', tematy:[
+        'Zbieranie danych i obliczanie średniej tętna',
+        'Wykres zmian tętna w czasie',
+        'Porównywanie wyników przed i po ćwiczeniu (różnica, %)']},
+      {p:'informatyka', name:'Informatyka', tematy:[
+        'Zapis pomiarów w arkuszu i automatyczny wykres',
+        'Prosta wizualizacja danych biometrycznych']}
+    ],
+    scenariusze:[
+      {dzien:'Dzień 1', przedmiot:'biologia', czas:'45 min', tytul:'Serce, które zdradza napięcie',
+       cele:['uczeń wyjaśnia, czym jest tętno','uczeń poprawnie mierzy tętno na tętnicy'],
+       przebieg:['Praca serca i krążenie — wprowadzenie (12 min).','Nauka pomiaru tętna spoczynkowego (10 min).','Pomiar w parach i zapis wyników (13 min).','Dyskusja: dlaczego przy stresie tętno rośnie (10 min).'],
+       materialy:['stopery/telefony','karta pomiarów']},
+      {dzien:'Dzień 2', przedmiot:'wf', czas:'45 min', tytul:'Oddech pod kontrolą',
+       cele:['uczeń stosuje technikę spokojnego oddechu','uczeń obserwuje wpływ oddechu na spokój ręki'],
+       przebieg:['Krótki wysiłek i ponowny pomiar tętna (10 min).','Nauka oddechu przeponowego i „pauzy strzeleckiej” (12 min).','Ćwiczenie celowania po uspokojeniu oddechu (18 min).','Zapis obserwacji (5 min).'],
+       materialy:['trenażery lub markery','maty']},
+      {dzien:'Dzień 3', przedmiot:'biologia', czas:'45 min', tytul:'Nerwy, mięśnie i koncentracja',
+       cele:['uczeń opisuje rolę układu nerwowego w kontroli ruchu','uczeń wskazuje sposoby radzenia sobie ze stresem'],
+       przebieg:['Układ nerwowy a napięcie mięśni (13 min).','Stres a wynik — mechanizm walcz-lub-uciekaj w wersji szkolnej (12 min).','Ćwiczenia koncentracji (np. skupienie wzroku, wizualizacja) (15 min).','Notatka do raportu (5 min).'],
+       materialy:['schemat układu nerwowego']},
+      {dzien:'Dzień 4', przedmiot:'matematyka', czas:'45 min', tytul:'Twoje dane pod lupą',
+       cele:['uczeń oblicza średnią i różnicę tętna przed/po wysiłku','uczeń przedstawia dane na wykresie'],
+       przebieg:['Zebranie pomiarów z całego tygodnia (8 min).','Obliczenie średnich i różnic, przeliczenie na procenty (15 min).','Rysowanie wykresu zmian tętna (14 min).','Wniosek: jak ćwiczenia oddechowe zmieniły wyniki (8 min).'],
+       materialy:['karty pomiarów','papier milimetrowy lub arkusz']},
+      {dzien:'Dzień 5', przedmiot:'informatyka', czas:'45 min', tytul:'Raport „Ciało pod kontrolą”',
+       cele:['uczeń tworzy czytelny raport z wykresem','uczeń formułuje wniosek oparty na danych'],
+       przebieg:['Przeniesienie danych do arkusza i auto-wykres (15 min).','Złożenie raportu: pomiary + wykres + wniosek (15 min).','Prezentacja wyników grup (12 min).','Podsumowanie tygodnia (3 min).'],
+       materialy:['komputery z arkuszem','dane z dnia 4']}
+    ]
+  },
+
+  {
+    id:'neon-i-beton', akcent:'#3aa0ff',
+    kicker:'Sztuka i design',
+    tytul:'Neon i beton — identyfikacja ligi',
+    haslo:'Jak jeden znak i trzy kolory sprawiają, że liga wygląda jak marka.',
+    poziom:['SP 4–6','SP 7–8'],
+    wiodacy:['plastyka','informatyka'],
+    produkt:'Księga znaku klasowej drużyny: logo, kolory, plakat i awatar do sieci',
+    pytanie:'Co sprawia, że logo zapada w pamięć — i jak zaprojektować spójną identyfikację naszej szkolnej drużyny?',
+    podsumowanie:'Inspiracją jest neonowo-betonowa estetyka ligi (tarcza, laser, mocne kolory). Uczniowie uczą się podstaw designu: kompozycji, koloru, geometrii znaku i typografii, tworząc identyfikację wizualną własnej drużyny.',
+    przedmioty:[
+      {p:'plastyka', name:'Plastyka', tematy:[
+        'Kompozycja i równowaga w projekcie graficznym',
+        'Koło barw, kontrast, barwy neonowe',
+        'Znak graficzny (logo) — synteza i czytelność',
+        'Typografia jako element plastyczny']},
+      {p:'matematyka', name:'Matematyka', tematy:[
+        'Symetria osiowa i środkowa w budowie znaku',
+        'Figury geometryczne i okręgi (tarcza)',
+        'Skala i proporcje przy zmianie rozmiaru logo']},
+      {p:'informatyka', name:'Informatyka', tematy:[
+        'Praca w edytorze grafiki (kształty, warstwy, kolor)',
+        'Formaty plików graficznych i rozdzielczość',
+        'Przygotowanie awatara i grafiki do sieci']},
+      {p:'polski', name:'Język polski', tematy:[
+        'Slogan i nazwa drużyny — zwięzłość i sugestywność',
+        'Opis projektu — uzasadnienie decyzji twórczych']}
+    ],
+    scenariusze:[
+      {dzien:'Dzień 1', przedmiot:'plastyka', czas:'45 min', tytul:'Co widzi oko — jak działa dobre logo',
+       cele:['uczeń analizuje znaki graficzne','uczeń wskazuje cechy czytelnego logo'],
+       przebieg:['Rozgrzewka: rozpoznaj marki po samym znaku (8 min).','Cechy dobrego logo: prostota, kontrast, skalowalność (12 min).','Analiza estetyki ligi: tarcza, laser, neon na betonie (10 min).','Szkice pierwszych pomysłów na znak drużyny (15 min).'],
+       materialy:['przykłady logo','szkicowniki']},
+      {dzien:'Dzień 2', przedmiot:'matematyka', czas:'45 min', tytul:'Geometria znaku — symetria i okrąg',
+       cele:['uczeń wykorzystuje symetrię przy budowie znaku','uczeń konstruuje okrąg i figury tarczy'],
+       przebieg:['Symetria osiowa i środkowa na przykładach znaków (12 min).','Konstrukcja okręgów tarczy cyrklem (13 min).','Budowa własnego znaku na siatce z osią symetrii (15 min).','Sprawdzenie proporcji (5 min).'],
+       materialy:['cyrkle, linijki','papier w kratkę']},
+      {dzien:'Dzień 3', przedmiot:'plastyka', czas:'45 min', tytul:'Kolor, który świeci',
+       cele:['uczeń dobiera paletę na bazie koła barw','uczeń stosuje kontrast neon–ciemne tło'],
+       przebieg:['Koło barw, barwy ciepłe/zimne, kontrast (12 min).','Wybór 2–3 kolorów neonowych drużyny na ciemnym tle (10 min).','Kolorowanie znaku i testy czytelności (18 min).','Miniprzegląd (5 min).'],
+       materialy:['markery/farby neonowe lub edytor grafiki']},
+      {dzien:'Dzień 4', przedmiot:'informatyka', czas:'45 min', tytul:'Znak w wersji cyfrowej i awatar',
+       cele:['uczeń odwzorowuje znak w edytorze grafiki','uczeń przygotowuje awatar do sieci'],
+       przebieg:['Podstawy edytora: kształty, warstwy, kolor (12 min).','Odtworzenie znaku drużyny cyfrowo (18 min).','Eksport awatara i wersji na plakat (10 min).','Zapis plików w księdze znaku (5 min).'],
+       materialy:['komputery z edytorem grafiki']},
+      {dzien:'Dzień 5', przedmiot:'polski', czas:'45 min', tytul:'Nazwa, slogan i księga znaku',
+       cele:['uczeń tworzy nazwę i slogan drużyny','uczeń prezentuje i uzasadnia projekt'],
+       przebieg:['Zasady dobrego sloganu — krótko i mocno (10 min).','Tworzenie nazwy i hasła drużyny (12 min).','Złożenie księgi znaku: logo, kolory, slogan, zastosowania (13 min).','Prezentacja identyfikacji i głosowanie (10 min).'],
+       materialy:['materiały z tygodnia','szablon księgi znaku']}
+    ]
+  },
+
+  {
+    id:'marketing-ligi', akcent:'#5dff5d',
+    kicker:'Media i komunikacja',
+    tytul:'Rozgłoś ligę — marketing i media',
+    haslo:'Świetny turniej, o którym nikt nie wie, to zmarnowany turniej.',
+    poziom:['SP 7–8','LO'],
+    wiodacy:['polski','informatyka'],
+    produkt:'Kampania medialna wydarzenia: relacja, materiały do sieci i krótki film promocyjny',
+    pytanie:'Jak opowiedzieć o szkolnej lidze tak, żeby zainteresować uczniów, rodziców i lokalne media?',
+    podsumowanie:'Uczniowie wcielają się w zespół medialny ligi: piszą relację i zapowiedź, projektują posty, kręcą krótki materiał i uczą się odpowiedzialności za słowo i wizerunek w sieci.',
+    przedmioty:[
+      {p:'polski', name:'Język polski', tematy:[
+        'Gatunki dziennikarskie: notatka prasowa, zapowiedź, relacja, wywiad',
+        'Nagłówek i lead — jak przyciągnąć uwagę',
+        'Perswazja i etyka słowa; rzetelność przekazu']},
+      {p:'informatyka', name:'Informatyka', tematy:[
+        'Tworzenie i montaż prostego materiału wideo',
+        'Grafika do postów i wymiary pod różne platformy',
+        'Bezpieczeństwo i prawo w sieci: wizerunek, prawa autorskie']},
+      {p:'wos', name:'WOS / wiedza o społeczeństwie', tematy:[
+        'Rola mediów i opinii publicznej',
+        'Odpowiedzialne korzystanie z mediów społecznościowych']},
+      {p:'plastyka', name:'Plastyka', tematy:[
+        'Kompozycja kadru i grafiki promocyjnej',
+        'Spójność wizualna serii materiałów']},
+      {p:'angielski', name:'Język obcy', tematy:[
+        'Krótkie hasło/opis wydarzenia w języku obcym',
+        'Słownictwo sportowe i medialne']}
+    ],
+    scenariusze:[
+      {dzien:'Dzień 1', przedmiot:'polski', czas:'45 min', tytul:'Nagłówek, który zatrzymuje',
+       cele:['uczeń rozróżnia gatunki dziennikarskie','uczeń pisze nagłówek i lead zapowiedzi'],
+       przebieg:['Przegląd gatunków: zapowiedź, relacja, wywiad (10 min).','Analiza dobrych i słabych nagłówków (10 min).','Pisanie zapowiedzi turnieju z nagłówkiem i leadem (20 min).','Wzajemna ocena (5 min).'],
+       materialy:['przykłady artykułów sportowych']},
+      {dzien:'Dzień 2', przedmiot:'wos', czas:'45 min', tytul:'Media i odpowiedzialność',
+       cele:['uczeń wyjaśnia rolę mediów','uczeń formułuje zasady rzetelnego i bezpiecznego przekazu'],
+       przebieg:['Jak media kształtują obraz wydarzenia (12 min).','Prawda, opinia, manipulacja — ćwiczenie rozpoznawania (13 min).','Zasady publikowania: zgoda na wizerunek, rzetelność (12 min).','Ustalenie „kodeksu redakcji” klasy (8 min).'],
+       materialy:['przykłady przekazów medialnych']},
+      {dzien:'Dzień 3', przedmiot:'plastyka', czas:'45 min', tytul:'Seria postów, które trzymają styl',
+       cele:['uczeń projektuje spójną serię grafik','uczeń komponuje kadr i tekst'],
+       przebieg:['Zasady spójności wizualnej serii (10 min).','Projekt szablonu posta: zapowiedź, wynik, podziękowanie (15 min).','Wykonanie 2–3 grafik w serii (15 min).','Przegląd spójności (5 min).'],
+       materialy:['edytor grafiki lub materiały plastyczne']},
+      {dzien:'Dzień 4', przedmiot:'informatyka', czas:'45 min', tytul:'Kręcimy i montujemy film promocyjny',
+       cele:['uczeń planuje ujęcia i nagrywa materiał','uczeń montuje krótki film z poszanowaniem praw'],
+       przebieg:['Scenopis: 5–6 ujęć promujących ligę (10 min).','Nagrywanie materiału (uwaga na zgody na wizerunek) (15 min).','Montaż krótkiego filmu (do 60 s) z podkładem legalnym (15 min).','Zapis i eksport (5 min).'],
+       materialy:['telefony/kamery','program do montażu','muzyka na wolnej licencji']},
+      {dzien:'Dzień 5', przedmiot:'polski', czas:'45 min', tytul:'Konferencja prasowa ligi',
+       cele:['uczeń prezentuje kampanię medialną','uczeń przeprowadza krótki wywiad'],
+       przebieg:['Zespoły składają kampanię: zapowiedź + posty + film (10 min).','Prezentacja materiałów na forum (15 min).','Symulacja konferencji prasowej: pytania i wywiad ze „sportowcem” (15 min).','Ocena i podsumowanie tygodnia (5 min).'],
+       materialy:['gotowe materiały z tygodnia']}
+    ]
+  }
+];
+
+/* ============================================================
+   LOGIKA GENERATORA
+   ============================================================ */
+
+// zbierz unikalne przedmioty wiodące i wypełnij select
+const NAZWY_PRZEDMIOTOW = {};
+MOTYWY.forEach(m => m.przedmioty.forEach(pr => { NAZWY_PRZEDMIOTOW[pr.p] = pr.name; }));
+
+const selPoziom = document.getElementById('poziom');
+const selPrzedmiot = document.getElementById('przedmiot');
+const results = document.getElementById('results');
+const countEl = document.getElementById('count');
+
+// przedmioty wiodące (te, które pojawiają się jako wiodące w motywach)
+const wiodaceSet = new Set();
+MOTYWY.forEach(m => m.wiodacy.forEach(w => wiodaceSet.add(w)));
+[...wiodaceSet].sort((a,b)=> (NAZWY_PRZEDMIOTOW[a]||a).localeCompare(NAZWY_PRZEDMIOTOW[b]||b,'pl'))
+  .forEach(p => {
+    const o = document.createElement('option');
+    o.value = p; o.textContent = NAZWY_PRZEDMIOTOW[p] || p;
+    selPrzedmiot.appendChild(o);
+  });
+
+function pasuje(m){
+  const poziom = selPoziom.value;
+  const przedmiot = selPrzedmiot.value;
+  if(poziom && !m.poziom.includes(poziom)) return false;
+  if(przedmiot && !m.wiodacy.includes(przedmiot)) return false;
+  return true;
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+
+function kartaHTML(m){
+  const chips = [
+    ...m.poziom.map(p => `<span class="chip lv">${escapeHtml(p)}</span>`),
+    `<span class="chip">🎯 Produkt: ${escapeHtml(m.produkt)}</span>`
+  ].join('');
+
+  const subjects = m.przedmioty.map(pr => `
+    <div class="subj">
+      <h4><span class="ic" style="background:${ico(pr.p)}"></span>${escapeHtml(pr.name)}</h4>
+      <ul>${pr.tematy.map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ul>
+    </div>`).join('');
+
+  const lekcje = m.scenariusze.map((s,i) => `
+    <details class="les" ${i===0?'open':''}>
+      <summary>
+        <span class="day">${escapeHtml(s.dzien)}</span>
+        ${escapeHtml(s.tytul)}
+        <span class="st">${escapeHtml(NAZWY_PRZEDMIOTOW[s.przedmiot]||s.przedmiot)}</span>
+      </summary>
+      <div class="les-body">
+        <div class="les-meta">
+          <span class="m">⏱ ${escapeHtml(s.czas)}</span>
+          <span class="m">📚 ${escapeHtml(NAZWY_PRZEDMIOTOW[s.przedmiot]||s.przedmiot)}</span>
+        </div>
+        <h5>Cele lekcji</h5>
+        <ul>${s.cele.map(c=>`<li>${escapeHtml(c)}</li>`).join('')}</ul>
+        <h5>Przebieg</h5>
+        <ol>${s.przebieg.map(c=>`<li>${escapeHtml(c)}</li>`).join('')}</ol>
+        <h5>Materiały</h5>
+        <ul>${s.materialy.map(c=>`<li>${escapeHtml(c)}</li>`).join('')}</ul>
+      </div>
+    </details>`).join('');
+
+  return `
+  <article class="card" style="--accent:${m.akcent}">
+    <div class="card-head">
+      <div class="kicker">${escapeHtml(m.kicker)}</div>
+      <h2>${escapeHtml(m.tytul)}</h2>
+      <div class="haslo">${escapeHtml(m.haslo)}</div>
+      <div class="chips">${chips}</div>
+    </div>
+    <div class="card-body">
+      <div class="qa">
+        <div class="q">❓ Pytanie kluczowe: ${escapeHtml(m.pytanie)}</div>
+        <div class="r">${escapeHtml(m.podsumowanie)}</div>
+        <div class="r"><b>Efekt końcowy tygodnia:</b> ${escapeHtml(m.produkt)}</div>
+      </div>
+
+      <div class="block-title"><span class="bar"></span>Przedmioty i tematy z podstawy programowej</div>
+      <div class="subjects">${subjects}</div>
+
+      <div class="block-title"><span class="bar"></span>Scenariusze zajęć — dzień po dniu</div>
+      ${lekcje}
+    </div>
+  </article>`;
+}
+
+function render(lista){
+  if(lista.length === 0){
+    results.innerHTML = `<div class="empty">Brak pomysłów dla wybranych filtrów. Zmień poziom lub przedmiot wiodący i spróbuj ponownie.</div>`;
+    countEl.textContent = '';
+    return;
+  }
+  results.innerHTML = lista.map(kartaHTML).join('');
+  results.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+document.getElementById('losuj').addEventListener('click', () => {
+  const pula = MOTYWY.filter(pasuje);
+  if(pula.length === 0){ render([]); return; }
+  const wyb = pula[Math.floor(Math.random()*pula.length)];
+  countEl.textContent = `Wylosowano 1 z ${pula.length} pasujących`;
+  render([wyb]);
+});
+
+document.getElementById('pokazWszystkie').addEventListener('click', () => {
+  const pula = MOTYWY.filter(pasuje);
+  countEl.textContent = `Pokazano ${pula.length} z ${MOTYWY.length} pomysłów`;
+  render(pula);
+});
+
+document.getElementById('drukuj').addEventListener('click', () => {
+  if(!results.innerHTML.trim() || results.querySelector('.empty')){
+    document.getElementById('pokazWszystkie').click();
+    setTimeout(()=>window.print(), 250);
+  } else {
+    window.print();
+  }
+});
+
+// aktualizuj licznik dostępnych przy zmianie filtrów
+function aktualizujLicznik(){
+  const n = MOTYWY.filter(pasuje).length;
+  countEl.textContent = `${n} pasujących pomysłów`;
+}
+selPoziom.addEventListener('change', aktualizujLicznik);
+selPrzedmiot.addEventListener('change', aktualizujLicznik);
+
+// start: pokaż wszystkie
+aktualizujLicznik();
+render(MOTYWY);
+countEl.textContent = `Pokazano ${MOTYWY.length} z ${MOTYWY.length} pomysłów`;
+</script>
+</body>
+</html>
