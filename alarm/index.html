@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Alarm PL — ostrzeżenia i alarm obrony cywilnej</title>
+<meta name="description" content="Aplikacja alarmowa dla Polski w stylu Air Alert: żywe ostrzeżenia IMGW per województwo, moduł alarmu obrony cywilnej (sygnały syren) oraz informacje o RCB, RSO i numerze 112." />
+<meta name="theme-color" content="#0b0f14" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="icon.svg" />
+<style>
+  :root{
+    --bg:#0b0f14; --bg2:#111823; --card:#151d29; --card2:#1b2532;
+    --line:#243244; --line2:#2f4055;
+    --txt:#e8eef6; --muted:#93a4bb; --muted2:#6f819a;
+    --ok:#28c76f; --ok-bg:#0f2a1c;
+    --warn:#f5b942; --warn-bg:#2a2410;
+    --alarm:#ff3b46; --alarm-bg:#2a1114;
+    --info:#3aa0ff; --info-bg:#0f2033;
+    --accent:#5b8cff;
+    --l1:#ffd166; --l2:#ff8c42; --l3:#ff3b46;
+    --radius:16px; --radius-sm:11px;
+    --shadow:0 10px 30px rgba(0,0,0,.45);
+    --gap:14px;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Noto Sans",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:radial-gradient(1200px 700px at 50% -10%,#13202f 0%,var(--bg) 60%) fixed;
+    color:var(--txt); font-family:var(--font); line-height:1.5;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    padding:0 max(16px,env(safe-area-inset-left)) calc(40px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-right));
+  }
+  .wrap{max-width:860px;margin:0 auto}
+  a{color:var(--accent)}
+  h1,h2,h3{margin:0;line-height:1.25;font-weight:800;letter-spacing:-.01em}
+  .muted{color:var(--muted)}
+  .small{font-size:13px}
+  .tiny{font-size:12px}
+
+  /* Header */
+  header.top{
+    display:flex;align-items:center;gap:12px;
+    padding:calc(18px + env(safe-area-inset-top)) 0 8px;
+    position:sticky;top:0;z-index:20;
+    background:linear-gradient(180deg,var(--bg) 55%,rgba(11,15,20,0));
+  }
+  .logo{
+    width:42px;height:42px;border-radius:12px;flex:0 0 auto;
+    display:grid;place-items:center;
+    background:linear-gradient(160deg,#ff5a63,#b3121c);
+    box-shadow:0 6px 18px rgba(255,59,70,.35);
+  }
+  .logo svg{width:24px;height:24px}
+  .brand h1{font-size:19px}
+  .brand .sub{font-size:12px;color:var(--muted)}
+  .top .spacer{flex:1}
+  .clock{font-variant-numeric:tabular-nums;font-size:13px;color:var(--muted);text-align:right}
+
+  /* Big status banner */
+  .status{
+    border-radius:var(--radius);padding:20px;margin:6px 0 var(--gap);
+    border:1px solid var(--line);background:var(--card);
+    display:flex;gap:16px;align-items:center;position:relative;overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .status .icon{
+    width:58px;height:58px;flex:0 0 auto;border-radius:15px;display:grid;place-items:center;
+  }
+  .status .icon svg{width:34px;height:34px}
+  .status .body{flex:1;min-width:0}
+  .status .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .status .v{font-size:23px;font-weight:800;margin-top:2px}
+  .status .d{font-size:13px;color:var(--muted);margin-top:4px}
+  .status[data-state="ok"]{background:linear-gradient(180deg,var(--ok-bg),var(--card));border-color:#1c5a37}
+  .status[data-state="ok"] .icon{background:rgba(40,199,111,.14);color:var(--ok)}
+  .status[data-state="ok"] .v{color:#5fe39a}
+  .status[data-state="warn"]{background:linear-gradient(180deg,var(--warn-bg),var(--card));border-color:#6a5a1e}
+  .status[data-state="warn"] .icon{background:rgba(245,185,66,.14);color:var(--warn)}
+  .status[data-state="warn"] .v{color:var(--warn)}
+  .status[data-state="alarm"]{background:linear-gradient(180deg,var(--alarm-bg),var(--card));border-color:#7a1c22}
+  .status[data-state="alarm"] .icon{background:rgba(255,59,70,.16);color:var(--alarm)}
+  .status[data-state="alarm"] .v{color:#ff6b73}
+  .status[data-state="alarm"]::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(400px 120px at 90% 0,rgba(255,59,70,.20),transparent 70%);
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:.35}50%{opacity:.9}}
+  @media (prefers-reduced-motion:reduce){.status::after{animation:none}}
+
+  /* Region picker */
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:var(--gap)}
+  select,button,.btn{font-family:inherit;font-size:15px}
+  .field{
+    flex:1;min-width:220px;display:flex;align-items:center;gap:10px;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius-sm);padding:10px 12px;
+  }
+  .field label{font-size:12px;color:var(--muted);white-space:nowrap}
+  .field select{
+    flex:1;background:transparent;border:0;color:var(--txt);font-weight:700;font-size:16px;outline:none;
+    appearance:none;-webkit-appearance:none;
+  }
+  .field select option{background:var(--card2);color:var(--txt)}
+  .btn{
+    border:1px solid var(--line);background:var(--card);color:var(--txt);
+    border-radius:var(--radius-sm);padding:11px 14px;cursor:pointer;font-weight:700;
+    display:inline-flex;align-items:center;gap:8px;transition:.15s;white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--line2);background:var(--card2)}
+  .btn:active{transform:translateY(1px)}
+  .btn.primary{background:linear-gradient(160deg,#3f6bff,#2f52d6);border-color:#3f6bff;color:#fff}
+  .btn.ghost{background:transparent}
+  .btn.danger{background:linear-gradient(160deg,#ff5a63,#c11a24);border-color:#ff5a63;color:#fff}
+  .btn.warnb{background:linear-gradient(160deg,#ffcf5c,#e0972a);border-color:#ffcf5c;color:#241c00}
+  .btn.on{outline:2px solid var(--accent);outline-offset:1px}
+  .btn svg{width:17px;height:17px}
+  .btn[disabled]{opacity:.5;cursor:not-allowed}
+
+  /* Cards / sections */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:var(--gap);box-shadow:var(--shadow)}
+  .card h2{font-size:15px;letter-spacing:.02em;display:flex;align-items:center;gap:9px;margin-bottom:12px}
+  .card h2 .badge{margin-left:auto;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;background:var(--card2);color:var(--muted);border:1px solid var(--line)}
+  .card h2 svg{width:18px;height:18px;color:var(--muted)}
+
+  /* Banner (demo / info) */
+  .notice{border-radius:var(--radius-sm);padding:11px 13px;margin-bottom:var(--gap);font-size:13.5px;display:flex;gap:10px;align-items:flex-start;border:1px solid}
+  .notice svg{width:18px;height:18px;flex:0 0 auto;margin-top:1px}
+  .notice.demo{background:var(--warn-bg);border-color:#6a5a1e;color:#ffdf9e}
+  .notice.info{background:var(--info-bg);border-color:#1e496f;color:#bfe0ff}
+  .notice.hidden{display:none}
+  .notice .x{margin-left:auto;cursor:pointer;color:inherit;opacity:.6;font-weight:800;background:none;border:0;font-size:16px}
+
+  /* Map grid (schematic cartogram) */
+  .map{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:7px;
+    grid-auto-rows:1fr;
+  }
+  .map::before{content:"";width:0;padding-bottom:64%;grid-row:1;grid-column:1}
+  .region{
+    position:relative;border-radius:11px;border:1px solid var(--line);
+    background:var(--card2);padding:8px 8px 7px;cursor:pointer;
+    display:flex;flex-direction:column;justify-content:space-between;min-height:60px;
+    transition:.15s;overflow:hidden;text-align:left;
+  }
+  .region:hover{border-color:var(--line2)}
+  .region .rn{font-size:11px;font-weight:800;line-height:1.15;color:var(--txt);letter-spacing:-.01em}
+  .region .rl{display:flex;align-items:center;gap:5px;margin-top:6px}
+  .region .dot{width:9px;height:9px;border-radius:50%;background:#3a4a5f}
+  .region .cnt{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .region[data-lvl="1"]{background:linear-gradient(160deg,rgba(255,209,102,.16),var(--card2));border-color:#6a5a1e}
+  .region[data-lvl="1"] .dot{background:var(--l1)}
+  .region[data-lvl="2"]{background:linear-gradient(160deg,rgba(255,140,66,.18),var(--card2));border-color:#7a4a1e}
+  .region[data-lvl="2"] .dot{background:var(--l2)}
+  .region[data-lvl="3"]{background:linear-gradient(160deg,rgba(255,59,70,.22),var(--card2));border-color:#7a1c22}
+  .region[data-lvl="3"] .dot{background:var(--l3);box-shadow:0 0 0 0 rgba(255,59,70,.6);animation:ring 1.6s infinite}
+  @keyframes ring{0%{box-shadow:0 0 0 0 rgba(255,59,70,.55)}70%{box-shadow:0 0 0 7px rgba(255,59,70,0)}100%{box-shadow:0 0 0 0 rgba(255,59,70,0)}}
+  .region.sel{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+  .region .pin{position:absolute;top:5px;right:6px;color:var(--accent);width:12px;height:12px;display:none}
+  .region.sel .pin{display:block}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+  /* Alerts list */
+  .alerts{display:flex;flex-direction:column;gap:10px}
+  .alert{border:1px solid var(--line);border-left-width:4px;border-radius:12px;padding:12px 13px;background:var(--card2)}
+  .alert.l1{border-left-color:var(--l1)}
+  .alert.l2{border-left-color:var(--l2)}
+  .alert.l3{border-left-color:var(--l3)}
+  .alert .ah{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .alert .ttl{font-weight:800;font-size:15px}
+  .alert .chip{font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;border:1px solid var(--line)}
+  .chip.l1{background:rgba(255,209,102,.14);color:var(--l1);border-color:#6a5a1e}
+  .chip.l2{background:rgba(255,140,66,.14);color:var(--l2);border-color:#7a4a1e}
+  .chip.l3{background:rgba(255,59,70,.16);color:#ff6b73;border-color:#7a1c22}
+  .chip.src{background:var(--card);color:var(--muted)}
+  .alert .meta{font-size:12.5px;color:var(--muted);margin-top:5px;font-variant-numeric:tabular-nums}
+  .alert .desc{font-size:13.5px;color:#cdd8e8;margin-top:8px}
+  .empty{text-align:center;color:var(--muted);padding:22px 8px;font-size:14px}
+  .empty svg{width:34px;height:34px;color:var(--ok);margin-bottom:6px}
+
+  /* Civil defense signal buttons */
+  .signals{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.signals{grid-template-columns:1fr}}
+  .sig{border:1px solid var(--line);border-radius:12px;padding:13px;background:var(--card2)}
+  .sig h3{font-size:14px;display:flex;align-items:center;gap:8px}
+  .sig p{font-size:12.5px;color:var(--muted);margin:6px 0 10px}
+  .sig .sigrow{display:flex;gap:8px;align-items:center}
+  .sig .timer{font-variant-numeric:tabular-nums;font-size:12px;color:var(--muted);margin-left:auto}
+
+  /* Info accordions */
+  details{border:1px solid var(--line);border-radius:12px;background:var(--card2);margin-bottom:8px;overflow:hidden}
+  details[open]{border-color:var(--line2)}
+  summary{list-style:none;cursor:pointer;padding:12px 13px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:9px}
+  summary::-webkit-details-marker{display:none}
+  summary .chev{margin-left:auto;transition:.2s;color:var(--muted)}
+  details[open] summary .chev{transform:rotate(180deg)}
+  summary .em{width:20px;text-align:center}
+  .dc{padding:0 13px 13px;font-size:13.5px;color:#cdd8e8}
+  .dc strong{color:var(--txt)}
+  .dc ul{margin:8px 0;padding-left:18px}
+  .dc li{margin:4px 0}
+  .sigtable{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+  .sigtable th,.sigtable td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+  .sigtable th{color:var(--muted);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+
+  .emergencybar{
+    display:flex;gap:10px;flex-wrap:wrap;
+  }
+  .ecall{
+    flex:1;min-width:120px;text-decoration:none;color:inherit;
+    border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:var(--card2);
+    display:flex;flex-direction:column;transition:.15s;
+  }
+  .ecall:hover{border-color:var(--line2);background:var(--card)}
+  .ecall .num{font-size:22px;font-weight:800}
+  .ecall .lab{font-size:12px;color:var(--muted)}
+  .ecall.big .num{color:#ff6b73}
+
+  footer{color:var(--muted2);font-size:12px;text-align:center;padding:14px 0 0;line-height:1.7}
+  footer a{color:var(--muted)}
+
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--gap)}
+  .toolbar .grow{flex:1}
+  .updated{font-size:12px;color:var(--muted);align-self:center}
+  .spin{animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <div class="brand">
+      <h1>Alarm PL</h1>
+      <div class="sub">Ostrzeżenia i alarm obrony cywilnej</div>
+    </div>
+    <div class="spacer"></div>
+    <div class="clock" id="clock">—</div>
+  </header>
+
+  <!-- BIG STATUS -->
+  <div class="status" id="status" data-state="ok">
+    <div class="icon" id="statusIcon"></div>
+    <div class="body">
+      <div class="k" id="statusRegion">Wybierz region</div>
+      <div class="v" id="statusText">Ładowanie…</div>
+      <div class="d" id="statusDetail">Sprawdzam ostrzeżenia dla Polski.</div>
+    </div>
+  </div>
+
+  <!-- NOTICES -->
+  <div class="notice info" id="notifNotice">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    <div><strong>Włącz powiadomienia i dźwięk.</strong> Aplikacja zaalarmuje Cię głośnym sygnałem i powiadomieniem, gdy dla Twojego regionu pojawi się nowe ostrzeżenie — ale musi zostać otwarta w tle.</div>
+    <button class="x" id="notifNoticeX" title="Zamknij">×</button>
+  </div>
+
+  <div class="notice demo hidden" id="demoNotice">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <div id="demoText"><strong>Tryb demo.</strong> Nie udało się pobrać danych na żywo z IMGW — pokazuję dane przykładowe. Sprawdź połączenie i naciśnij „Odśwież".</div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="row">
+    <div class="field">
+      <label for="regionSel">Region</label>
+      <select id="regionSel" aria-label="Wybierz województwo"></select>
+    </div>
+    <button class="btn" id="geoBtn" title="Wykryj województwo z lokalizacji">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>Moja lokalizacja</span>
+    </button>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" id="soundBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      <span id="soundLbl">Dźwięk: wł.</span>
+    </button>
+    <button class="btn" id="notifBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span id="notifLbl">Powiadomienia</span>
+    </button>
+    <span class="grow"></span>
+    <span class="updated" id="updated"></span>
+    <button class="btn" id="refreshBtn" title="Odśwież dane">
+      <svg id="refreshIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+      <span>Odśwież</span>
+    </button>
+  </div>
+
+  <!-- MAP -->
+  <div class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+      Mapa ostrzeżeń — Polska
+      <span class="badge" id="mapBadge">16 województw</span>
+    </h2>
+    <div class="map" id="map"></div>
+    <div class="legend">
+      <span><i style="background:#3a4a5f"></i> brak</span>
+      <span><i style="background:var(--l1)"></i> 1. stopień</span>
+      <span><i style="background:var(--l2)"></i> 2. stopień</span>
+      <span><i style="background:var(--l3)"></i> 3. stopień</span>
+    </div>
+    <p class="tiny muted" style="margin:10px 0 0">Układ schematyczny (kartogram). Kliknij województwo, aby je wybrać.</p>
+  </div>
+
+  <!-- ALERTS FOR REGION -->
+  <div class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Ostrzeżenia dla regionu
+      <span class="badge" id="alertBadge">—</span>
+    </h2>
+    <div class="alerts" id="alerts"></div>
+  </div>
+
+  <!-- CIVIL DEFENSE -->
+  <div class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Alarm obrony cywilnej — sygnały
+      <span class="badge">test / symulacja</span>
+    </h2>
+    <div class="notice info" style="margin-bottom:12px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <div>Odtwarzane poniżej dźwięki to <strong>symulacja</strong> akustycznych sygnałów alarmowych obrony cywilnej (zgodnie z obowiązującym rozporządzeniem). Polska nie udostępnia publicznego API alarmów bojowych — moduł jest gotowy pod przyszły oficjalny feed. Nie używaj do wprowadzania w błąd.</div>
+    </div>
+    <div class="signals">
+      <div class="sig">
+        <h3>📢 Ogłoszenie alarmu</h3>
+        <p>Dźwięk <strong>modulowany</strong> (falujący) trwający 3 minuty. Oznacza: zagrożenie — szukaj schronienia.</p>
+        <div class="sigrow">
+          <button class="btn danger" data-sig="alarm" data-dur="180">Odtwórz (3 min)</button>
+          <button class="btn ghost" data-sig="alarm" data-dur="8">Próbka 8 s</button>
+          <span class="timer" data-timer="alarm"></span>
+        </div>
+      </div>
+      <div class="sig">
+        <h3>✅ Odwołanie alarmu</h3>
+        <p>Dźwięk <strong>ciągły</strong> (jednostajny) trwający 3 minuty. Oznacza: koniec zagrożenia.</p>
+        <div class="sigrow">
+          <button class="btn warnb" data-sig="clear" data-dur="180">Odtwórz (3 min)</button>
+          <button class="btn ghost" data-sig="clear" data-dur="8">Próbka 8 s</button>
+          <span class="timer" data-timer="clear"></span>
+        </div>
+      </div>
+    </div>
+    <div class="sigrow" style="margin-top:10px">
+      <button class="btn" id="stopSig">■ Zatrzymaj dźwięk</button>
+    </div>
+  </div>
+
+  <!-- EMERGENCY NUMBERS -->
+  <div class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.98.36 1.93.7 2.83a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.83.7A2 2 0 0 1 22 16.92z"/></svg>
+      Numery alarmowe
+    </h2>
+    <div class="emergencybar">
+      <a class="ecall big" href="tel:112"><span class="num">112</span><span class="lab">Numer alarmowy (wszystko)</span></a>
+      <a class="ecall" href="tel:998"><span class="num">998</span><span class="lab">Straż pożarna</span></a>
+      <a class="ecall" href="tel:999"><span class="num">999</span><span class="lab">Pogotowie</span></a>
+      <a class="ecall" href="tel:997"><span class="num">997</span><span class="lab">Policja</span></a>
+    </div>
+  </div>
+
+  <!-- INFO -->
+  <div class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      Jak działa ostrzeganie w Polsce
+    </h2>
+
+    <details>
+      <summary><span class="em">📱</span> Alert RCB <span class="chev">▾</span></summary>
+      <div class="dc">
+        <strong>Rządowe Centrum Bezpieczeństwa</strong> wysyła bezpłatne <strong>SMS-y ostrzegawcze</strong> (Alert RCB) na wszystkie telefony w zagrożonym rejonie — bez instalowania niczego. Dostaniesz je automatycznie, gdy jesteś w obszarze objętym alertem (np. gwałtowna burza, powódź, skażenie).
+        <ul>
+          <li>Nie odpowiadaj na SMS — to komunikat jednokierunkowy.</li>
+          <li>RCB nie prosi o dane, hasła ani pieniądze. Taki SMS to oszustwo.</li>
+          <li>Więcej: <a href="https://www.gov.pl/web/rcb" target="_blank" rel="noopener">gov.pl/web/rcb</a></li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="em">📻</span> RSO — Regionalny System Ostrzegania <span class="chev">▾</span></summary>
+      <div class="dc">
+        <strong>RSO</strong> to system ostrzeżeń nadawany w <strong>telewizji publicznej</strong> (napisy/teletekst) oraz w aplikacji mobilnej RSO. Zawiera komunikaty wojewódzkich centrów zarządzania kryzysowego i poradniki postępowania w sytuacjach zagrożenia.
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="em">🌩️</span> IMGW — ostrzeżenia pogodowe <span class="chev">▾</span></summary>
+      <div class="dc">
+        Ta aplikacja pobiera <strong>ostrzeżenia meteorologiczne i hydrologiczne</strong> z publicznego serwisu <strong>IMGW-PIB</strong>. Stopnie:
+        <ul>
+          <li><strong>1. stopień</strong> — bądź uważny, warunki mogą być groźne.</li>
+          <li><strong>2. stopień</strong> — bądź gotowy, spodziewane duże zagrożenie.</li>
+          <li><strong>3. stopień</strong> — działaj, bardzo groźne zjawiska, możliwe straty.</li>
+        </ul>
+        Źródło: <a href="https://danepubliczne.imgw.pl/" target="_blank" rel="noopener">danepubliczne.imgw.pl</a>, <a href="https://meteo.imgw.pl/" target="_blank" rel="noopener">meteo.imgw.pl</a>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="em">🔊</span> Sygnały alarmowe (syreny) <span class="chev">▾</span></summary>
+      <div class="dc">
+        Akustyczne sygnały alarmowe obrony cywilnej:
+        <table class="sigtable">
+          <tr><th>Sygnał</th><th>Dźwięk</th><th>Czas</th></tr>
+          <tr><td>Ogłoszenie alarmu</td><td>Modulowany (falujący)</td><td>3 minuty</td></tr>
+          <tr><td>Odwołanie alarmu</td><td>Ciągły (jednostajny)</td><td>3 minuty</td></tr>
+        </table>
+        <p class="tiny muted" style="margin-top:8px">Uwaga: syreny testowane są okresowo (np. dźwięk ciągły trwający 1 minutę to zwykle test/sygnał okolicznościowy). W razie realnego alarmu postępuj wg komunikatów służb.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="em">🎒</span> Co robić po usłyszeniu alarmu <span class="chev">▾</span></summary>
+      <div class="dc">
+        <ul>
+          <li>Zachowaj spokój, nie panikuj.</li>
+          <li>Schroń się w najbliższym budynku, z dala od okien; zejdź do pomieszczeń niżej położonych, jeśli to możliwe.</li>
+          <li>Włącz radio/TV lub sprawdź oficjalne komunikaty (RCB, wojewoda, służby).</li>
+          <li>Przygotuj plecak ewakuacyjny: woda, leki, dokumenty, latarka, powerbank, ciepła odzież.</li>
+          <li>Stosuj się do poleceń służb i sygnału odwołania alarmu.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <footer>
+    <div><strong>Alarm PL</strong> — nieoficjalna aplikacja informacyjna. Nie zastępuje oficjalnych kanałów: <strong>112</strong>, Alert RCB, komunikatów wojewodów i służb.</div>
+    <div>Dane pogodowe: IMGW-PIB (licencja danych publicznych). W nagłym zagrożeniu życia dzwoń <strong>112</strong>.</div>
+  </footer>
+
+</div>
+
+<script>
+"use strict";
+/* =========================================================================
+   Alarm PL — single-file app
+   Model: live IMGW warnings per województwo + civil-defense siren module.
+   Runs fully client-side; no backend. Falls back to demo data if the live
+   fetch fails (e.g. CORS / offline).
+   ========================================================================= */
+
+/* ---- Regions: 16 województwa. teryt = 2-digit voivodeship code.
+        col/row = schematic cartogram position. lat/lon = centroid. ---- */
+const REGIONS = [
+  {key:"zachodniopomorskie", teryt:"32", name:"Zachodniopomorskie", col:1, row:1, lat:53.6, lon:15.5},
+  {key:"pomorskie",          teryt:"22", name:"Pomorskie",          col:2, row:1, lat:54.2, lon:18.0},
+  {key:"warminsko",          teryt:"28", name:"Warmińsko-Mazurskie",col:4, row:1, lat:53.9, lon:20.8},
+  {key:"podlaskie",          teryt:"20", name:"Podlaskie",          col:5, row:2, lat:53.3, lon:22.9},
+  {key:"lubuskie",           teryt:"08", name:"Lubuskie",           col:1, row:2, lat:52.2, lon:15.3},
+  {key:"wielkopolskie",      teryt:"30", name:"Wielkopolskie",      col:2, row:2, lat:52.4, lon:17.2},
+  {key:"kujawsko",           teryt:"04", name:"Kujawsko-Pomorskie", col:3, row:1, lat:53.0, lon:18.3},
+  {key:"mazowieckie",        teryt:"14", name:"Mazowieckie",        col:4, row:2, lat:52.3, lon:21.0},
+  {key:"lodzkie",            teryt:"10", name:"Łódzkie",            col:3, row:3, lat:51.6, lon:19.4},
+  {key:"lubelskie",          teryt:"06", name:"Lubelskie",          col:5, row:3, lat:51.2, lon:22.9},
+  {key:"dolnoslaskie",       teryt:"02", name:"Dolnośląskie",       col:1, row:4, lat:51.0, lon:16.3},
+  {key:"opolskie",           teryt:"16", name:"Opolskie",           col:2, row:4, lat:50.7, lon:17.9},
+  {key:"slaskie",            teryt:"24", name:"Śląskie",            col:2, row:5, lat:50.3, lon:19.0},
+  {key:"swietokrzyskie",     teryt:"26", name:"Świętokrzyskie",     col:3, row:4, lat:50.8, lon:20.7},
+  {key:"malopolskie",        teryt:"12", name:"Małopolskie",        col:3, row:5, lat:49.9, lon:20.2},
+  {key:"podkarpackie",       teryt:"18", name:"Podkarpackie",       col:4, row:5, lat:50.0, lon:22.2},
+];
+const REGION_BY_TERYT = Object.fromEntries(REGIONS.map(r=>[r.teryt,r]));
+
+const LS = {
+  region:"alarmpl.region",
+  sound:"alarmpl.sound",
+  notifHint:"alarmpl.notifHintDismissed",
+};
+
+const state = {
+  selected: localStorage.getItem(LS.region) || null,
+  soundOn: localStorage.getItem(LS.sound) !== "0",
+  alerts: [],                 // parsed & normalized
+  byRegion: {},               // teryt -> [alerts]
+  demo: false,
+  lastKeys: null,             // Set of alert keys for selected region (for diff)
+  loaded: false,
+};
+
+/* ---------------------- Web Audio: alarm + sirens ---------------------- */
+const Audio = (() => {
+  let ctx=null, active=[], stopTimer=null;
+  function ac(){ if(!ctx) ctx = new (window.AudioContext||window.webkitAudioContext)(); if(ctx.state==="suspended") ctx.resume(); return ctx; }
+  function stopAll(){
+    active.forEach(n=>{try{n.stop?.();}catch(e){} try{n.disconnect?.();}catch(e){}});
+    active=[]; if(stopTimer){clearTimeout(stopTimer);stopTimer=null;} clearTimers();
+  }
+  // Short alert "ping" used when a new warning appears (not the full siren)
+  function alertPing(){
+    if(!state.soundOn) return;
+    const c=ac(), t=c.currentTime, g=c.createGain();
+    g.connect(c.destination); g.gain.value=0.0001;
+    const seq=[880,1320,880,1320];
+    seq.forEach((f,i)=>{
+      const o=c.createOscillator(); o.type="square"; o.frequency.value=f;
+      const gg=c.createGain(); gg.gain.value=0; o.connect(gg); gg.connect(g);
+      const s=t+i*0.28;
+      gg.gain.setValueAtTime(0,s); gg.gain.linearRampToValueAtTime(0.28,s+0.02);
+      gg.gain.setValueAtTime(0.28,s+0.20); gg.gain.linearRampToValueAtTime(0,s+0.26);
+      o.start(s); o.stop(s+0.28); active.push(o);
+    });
+    g.gain.setValueAtTime(0.9,t);
+  }
+  // Modulated (wailing) siren — "ogłoszenie alarmu"
+  function playAlarm(dur){
+    stopAll(); const c=ac(), t=c.currentTime;
+    const g=c.createGain(); g.connect(c.destination);
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.5,t+0.4);
+    const o=c.createOscillator(); o.type="sawtooth";
+    const lp=c.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=1600;
+    o.connect(lp); lp.connect(g);
+    // wail: sweep 440 -> 900 -> 440 every ~4s
+    let f=440, up=true; const base=t;
+    o.frequency.setValueAtTime(440,base);
+    for(let s=0;s<dur;s+=2){
+      const target= up?900:440; up=!up;
+      o.frequency.linearRampToValueAtTime(target, base+s+2);
+    }
+    o.start(t); o.stop(t+dur); active.push(o,g);
+    scheduleStopUI(dur);
+    schedule("alarm",dur);
+    return dur;
+  }
+  // Continuous steady tone — "odwołanie alarmu"
+  function playClear(dur){
+    stopAll(); const c=ac(), t=c.currentTime;
+    const g=c.createGain(); g.connect(c.destination);
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.42,t+0.4);
+    g.gain.setValueAtTime(0.42,t+dur-0.4); g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    const o=c.createOscillator(); o.type="sawtooth"; o.frequency.value=620;
+    const o2=c.createOscillator(); o2.type="sine"; o2.frequency.value=310;
+    const lp=c.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=1400;
+    o.connect(lp); o2.connect(lp); lp.connect(g);
+    o.start(t); o.stop(t+dur); o2.start(t); o2.stop(t+dur); active.push(o,o2,g);
+    scheduleStopUI(dur);
+    schedule("clear",dur);
+    return dur;
+  }
+  // countdown timers on the signal buttons
+  let timers={};
+  function schedule(kind,dur){
+    clearTimers();
+    let left=Math.round(dur);
+    const el=document.querySelector('[data-timer="'+kind+'"]');
+    const tick=()=>{ if(el) el.textContent = left>0 ? fmtMMSS(left) : ""; left--; if(left<-1){clearTimers();} };
+    tick(); timers[kind]=setInterval(tick,1000);
+  }
+  function clearTimers(){ Object.values(timers).forEach(clearInterval); timers={}; document.querySelectorAll('[data-timer]').forEach(e=>e.textContent=""); }
+  function scheduleStopUI(dur){ if(stopTimer)clearTimeout(stopTimer); stopTimer=setTimeout(()=>{active=[];},dur*1000+200); }
+  function fmtMMSS(s){ const m=Math.floor(s/60); const ss=s%60; return m+":"+String(ss).padStart(2,"0"); }
+  return {alertPing, playAlarm, playClear, stopAll, resume:()=>ac()};
+})();
+
+/* --------------------------- Notifications ----------------------------- */
+const Notif = {
+  get supported(){ return "Notification" in window; },
+  get perm(){ return this.supported ? Notification.permission : "unsupported"; },
+  async request(){
+    if(!this.supported) return "unsupported";
+    try{ return await Notification.requestPermission(); }catch(e){ return this.perm; }
+  },
+  show(title, body){
+    if(!this.supported || Notification.permission!=="granted") return;
+    try{ new Notification(title,{body, icon:"icon.svg", badge:"icon.svg", tag:"alarmpl", renotify:true}); }catch(e){}
+  }
+};
+
+/* ------------------------------ Fetching ------------------------------- */
+const IMGW = {
+  meteo:"https://danepubliczne.imgw.pl/api/data/warningsmeteo",
+  hydro:"https://danepubliczne.imgw.pl/api/data/warningshydro",
+};
+
+async function fetchJSON(url){
+  const ctrl=new AbortController(); const to=setTimeout(()=>ctrl.abort(),12000);
+  try{
+    const r=await fetch(url,{signal:ctrl.signal,cache:"no-store",headers:{"Accept":"application/json"}});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    return await r.json();
+  } finally { clearTimeout(to); }
+}
+
+function terytList(item){
+  let t = item.teryt ?? item.TERYT ?? item.teryt_lista ?? [];
+  if(typeof t === "string") t = t.split(/[,;\s]+/).filter(Boolean);
+  if(!Array.isArray(t)) t=[];
+  return t.map(String);
+}
+function pick(o, keys){ for(const k of keys){ if(o[k]!=null && String(o[k]).trim()!=="") return o[k]; } return ""; }
+function toLevel(v){ const n=parseInt(String(v).replace(/\D/g,""),10); return (n>=1&&n<=3)?n:1; }
+
+function normalize(item, source){
+  const teryts = terytList(item);
+  const wojSet = new Set(teryts.map(t=>t.slice(0,2)).filter(w=>REGION_BY_TERYT[w]));
+  const name = pick(item,["nazwa_zdarzenia","zjawisko","nazwa","event"]) || (source==="hydro"?"Ostrzeżenie hydrologiczne":"Ostrzeżenie meteorologiczne");
+  const from = pick(item,["obowiazuje_od","waznosc_od","od","valid_from"]);
+  const to   = pick(item,["obowiazuje_do","waznosc_do","do","valid_to"]);
+  const prob = pick(item,["prawdopodobienstwo","probability"]);
+  const desc = pick(item,["tresc","komentarz","opis","content"]);
+  const level= toLevel(pick(item,["stopien","level"]) || "1");
+  const id   = pick(item,["id","kod"]) || (name+"|"+from+"|"+[...wojSet].join(","));
+  return { id:String(id), source, name, level, from, to, prob:String(prob||""), desc:String(desc||""), wojewodztwa:[...wojSet] };
+}
+
+async function loadData(){
+  setRefreshing(true);
+  let ok=false, items=[];
+  const results = await Promise.allSettled([fetchJSON(IMGW.meteo), fetchJSON(IMGW.hydro)]);
+  const [meteo, hydro] = results;
+  if(meteo.status==="fulfilled" && Array.isArray(meteo.value)){ ok=true; meteo.value.forEach(x=>items.push(normalize(x,"meteo"))); }
+  if(hydro.status==="fulfilled" && Array.isArray(hydro.value)){ ok=true; hydro.value.forEach(x=>items.push(normalize(x,"hydro"))); }
+
+  if(!ok){
+    state.demo=true;
+    items = DEMO_DATA();
+  } else {
+    state.demo=false;
+  }
+  applyItems(items);
+  state.loaded=true;
+  setRefreshing(false);
+  document.getElementById("demoNotice").classList.toggle("hidden", !state.demo);
+  const now=new Date();
+  document.getElementById("updated").textContent = "Aktualizacja: "+now.toLocaleTimeString("pl-PL",{hour:"2-digit",minute:"2-digit"}) + (state.demo?" (demo)":"");
+  render();
+}
+
+function applyItems(items){
+  // keep only items touching a known województwo
+  state.alerts = items.filter(a=>a.wojewodztwa.length);
+  const by={};
+  REGIONS.forEach(r=>by[r.teryt]=[]);
+  state.alerts.forEach(a=>a.wojewodztwa.forEach(w=>{ if(by[w]) by[w].push(a); }));
+  // sort each region by level desc
+  Object.values(by).forEach(list=>list.sort((x,y)=>y.level-x.level));
+  state.byRegion=by;
+  detectAndAlarm();
+}
+
+/* ------- Diff: alarm when a NEW warning appears for selected region ----- */
+function detectAndAlarm(){
+  if(!state.selected) return;
+  const r = REGIONS.find(x=>x.key===state.selected); if(!r) return;
+  const list = state.byRegion[r.teryt]||[];
+  const keys = new Set(list.map(a=>a.id));
+  if(state.lastKeys===null){ state.lastKeys=keys; return; } // first load: baseline, no alarm
+  // new alerts?
+  const added = [...keys].filter(k=>!state.lastKeys.has(k));
+  const removed = [...state.lastKeys].filter(k=>!keys.has(k));
+  if(added.length){
+    const top = list.filter(a=>added.includes(a.id)).sort((x,y)=>y.level-x.level)[0];
+    Audio.alertPing();
+    if(navigator.vibrate) navigator.vibrate([200,100,200,100,400]);
+    Notif.show("⚠️ Ostrzeżenie — "+r.name, (top?top.name+" (stopień "+top.level+")":"Nowe ostrzeżenie") );
+  } else if(removed.length && keys.size===0){
+    // region fully cleared
+    if(navigator.vibrate) navigator.vibrate([120,80,120]);
+    Notif.show("✅ Odwołano — "+r.name, "Brak aktywnych ostrzeżeń dla regionu.");
+  }
+  state.lastKeys=keys;
+}
+
+/* -------------------------------- Render ------------------------------- */
+function regionLevel(teryt){
+  const list=state.byRegion[teryt]||[];
+  return list.reduce((m,a)=>Math.max(m,a.level),0);
+}
+
+function buildRegionSelect(){
+  const sel=document.getElementById("regionSel");
+  sel.innerHTML="";
+  const opt0=document.createElement("option"); opt0.value=""; opt0.textContent="— wybierz województwo —"; sel.appendChild(opt0);
+  REGIONS.slice().sort((a,b)=>a.name.localeCompare(b.name,"pl")).forEach(r=>{
+    const o=document.createElement("option"); o.value=r.key; o.textContent=r.name; sel.appendChild(o);
+  });
+  sel.value = state.selected || "";
+}
+
+function buildMap(){
+  const map=document.getElementById("map");
+  map.innerHTML="";
+  REGIONS.forEach(r=>{
+    const el=document.createElement("button");
+    el.className="region"; el.style.gridColumn=r.col; el.style.gridRow=r.row;
+    el.dataset.key=r.key;
+    el.setAttribute("aria-label",r.name);
+    el.innerHTML =
+      '<svg class="pin" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>'+
+      '<div class="rn">'+shortName(r.name)+'</div>'+
+      '<div class="rl"><span class="dot"></span><span class="cnt"></span></div>';
+    el.addEventListener("click",()=>selectRegion(r.key));
+    map.appendChild(el);
+  });
+}
+function shortName(n){ return n.replace("Województwo ",""); }
+
+function updateMap(){
+  document.querySelectorAll(".region").forEach(el=>{
+    const r=REGIONS.find(x=>x.key===el.dataset.key);
+    const lvl=regionLevel(r.teryt);
+    const cnt=(state.byRegion[r.teryt]||[]).length;
+    if(lvl>0) el.dataset.lvl=String(lvl); else el.removeAttribute("data-lvl");
+    el.classList.toggle("sel", state.selected===r.key);
+    el.querySelector(".cnt").textContent = cnt>0 ? (cnt+"×") : "";
+  });
+}
+
+const STATE_ICONS = {
+  ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+  warn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  alarm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+};
+
+function updateStatus(){
+  const box=document.getElementById("status");
+  const region=document.getElementById("statusRegion");
+  const text=document.getElementById("statusText");
+  const detail=document.getElementById("statusDetail");
+  const icon=document.getElementById("statusIcon");
+
+  if(!state.selected){
+    box.dataset.state="ok"; icon.innerHTML=STATE_ICONS.ok;
+    region.textContent="Wybierz region";
+    text.textContent="Wybierz województwo";
+    detail.textContent="Zaznacz swój region na mapie lub z listy, aby śledzić ostrzeżenia.";
+    return;
+  }
+  const r=REGIONS.find(x=>x.key===state.selected);
+  const list=state.byRegion[r.teryt]||[];
+  const lvl=list.reduce((m,a)=>Math.max(m,a.level),0);
+  region.textContent=r.name.toUpperCase();
+  if(lvl===0){
+    box.dataset.state="ok"; icon.innerHTML=STATE_ICONS.ok;
+    text.textContent="Brak ostrzeżeń";
+    detail.textContent="Aktualnie nie ma aktywnych ostrzeżeń dla tego regionu.";
+  } else if(lvl>=3){
+    box.dataset.state="alarm"; icon.innerHTML=STATE_ICONS.alarm;
+    text.textContent="ALARM — 3. stopień";
+    detail.textContent=list.length+" aktywne ostrzeżenie(a). Zachowaj ostrożność i śledź komunikaty służb.";
+  } else {
+    box.dataset.state="warn"; icon.innerHTML=STATE_ICONS.warn;
+    text.textContent="Ostrzeżenie — "+lvl+". stopień";
+    detail.textContent=list.length+" aktywne ostrzeżenie(a) dla regionu.";
+  }
+}
+
+function fmtDate(s){
+  if(!s) return "";
+  const d=new Date(s.replace(" ","T"));
+  if(isNaN(d)) return s;
+  return d.toLocaleString("pl-PL",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+}
+
+function updateAlerts(){
+  const wrap=document.getElementById("alerts");
+  const badge=document.getElementById("alertBadge");
+  wrap.innerHTML="";
+  if(!state.selected){
+    badge.textContent="—";
+    wrap.innerHTML='<div class="empty muted">Wybierz region, aby zobaczyć ostrzeżenia.</div>';
+    return;
+  }
+  const r=REGIONS.find(x=>x.key===state.selected);
+  const list=(state.byRegion[r.teryt]||[]);
+  badge.textContent = list.length ? (list.length+" aktywne") : "brak";
+  if(!list.length){
+    wrap.innerHTML='<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><div>Brak aktywnych ostrzeżeń dla: <strong>'+r.name+'</strong></div></div>';
+    return;
+  }
+  list.forEach(a=>{
+    const div=document.createElement("div");
+    div.className="alert l"+a.level;
+    const period = (a.from||a.to) ? ("Od "+fmtDate(a.from)+" do "+fmtDate(a.to)) : "";
+    div.innerHTML =
+      '<div class="ah">'+
+        '<span class="ttl">'+esc(a.name)+'</span>'+
+        '<span class="chip l'+a.level+'">'+a.level+'. stopień</span>'+
+        '<span class="chip src">'+(a.source==="hydro"?"hydro":"meteo")+'</span>'+
+      '</div>'+
+      (period||a.prob ? '<div class="meta">'+esc(period)+(a.prob?(period?" · ":"")+"prawdopodob. "+esc(a.prob)+"%":"")+'</div>' : '')+
+      (a.desc ? '<div class="desc">'+esc(a.desc)+'</div>' : '');
+    wrap.appendChild(div);
+  });
+}
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function render(){ updateMap(); updateStatus(); updateAlerts(); document.getElementById("mapBadge").textContent = state.demo?"dane demo":"16 województw"; }
+
+/* ------------------------------ Actions -------------------------------- */
+function selectRegion(key){
+  state.selected=key||null;
+  state.lastKeys=null; // reset baseline so we don't false-alarm on switch
+  if(key) localStorage.setItem(LS.region,key); else localStorage.removeItem(LS.region);
+  document.getElementById("regionSel").value=key||"";
+  Audio.resume();
+  detectAndAlarm();
+  render();
+}
+
+function setRefreshing(on){
+  const b=document.getElementById("refreshBtn");
+  const ic=document.getElementById("refreshIcon");
+  b.disabled=on; ic.classList.toggle("spin",on);
+}
+
+function geolocate(){
+  if(!navigator.geolocation){ alert("Geolokalizacja nie jest dostępna w tej przeglądarce."); return; }
+  const btn=document.getElementById("geoBtn"); btn.disabled=true;
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const {latitude:la, longitude:lo}=pos.coords;
+    let best=null,bd=1e9;
+    REGIONS.forEach(r=>{ const d=(r.lat-la)**2+((r.lon-lo)*Math.cos(la*Math.PI/180))**2; if(d<bd){bd=d;best=r;} });
+    if(best) selectRegion(best.key);
+    btn.disabled=false;
+  }, err=>{
+    alert("Nie udało się ustalić lokalizacji: "+err.message);
+    btn.disabled=false;
+  }, {enableHighAccuracy:false, timeout:10000, maximumAge:600000});
+}
+
+function updateSoundBtn(){
+  const b=document.getElementById("soundBtn"), l=document.getElementById("soundLbl");
+  l.textContent = state.soundOn ? "Dźwięk: wł." : "Dźwięk: wył.";
+  b.classList.toggle("on",state.soundOn);
+}
+function updateNotifBtn(){
+  const b=document.getElementById("notifBtn"), l=document.getElementById("notifLbl");
+  const p=Notif.perm;
+  if(p==="granted"){ l.textContent="Powiadomienia: wł."; b.classList.add("on"); }
+  else if(p==="denied"){ l.textContent="Powiadomienia zablokowane"; b.classList.remove("on"); }
+  else if(p==="unsupported"){ l.textContent="Brak powiadomień"; b.classList.remove("on"); b.disabled=true; }
+  else { l.textContent="Włącz powiadomienia"; b.classList.remove("on"); }
+}
+
+/* ------------------------------ Demo data ------------------------------ */
+function DEMO_DATA(){
+  const now=new Date(); const iso=d=>new Date(now.getTime()+d*3600e3).toISOString().slice(0,16).replace("T"," ");
+  return [
+    {id:"d1",source:"meteo",name:"Burze z gradem",level:2,from:iso(-1),to:iso(8),prob:"85",desc:"Prognozowane burze, miejscami z gradem. Porywy wiatru do 90 km/h, opady do 30 mm.",wojewodztwa:["14","10","06"]},
+    {id:"d2",source:"meteo",name:"Silny wiatr",level:1,from:iso(0),to:iso(12),prob:"80",desc:"Wiatr w porywach do 75 km/h.",wojewodztwa:["22","28","20"]},
+    {id:"d3",source:"meteo",name:"Upał",level:3,from:iso(-2),to:iso(24),prob:"90",desc:"Temperatura maksymalna do 36°C, w nocy do 22°C. Ekstremalne warunki.",wojewodztwa:["24","12","18","16"]},
+    {id:"d4",source:"hydro",name:"Gwałtowne wzrosty stanów wody",level:2,from:iso(-3),to:iso(18),prob:"",desc:"Możliwe przekroczenia stanów ostrzegawczych na mniejszych rzekach.",wojewodztwa:["12","18"]},
+    {id:"d5",source:"meteo",name:"Oblodzenie",level:1,from:iso(1),to:iso(10),prob:"70",desc:"Zamarzanie mokrej nawierzchni dróg i chodników.",wojewodztwa:["02","30","08"]},
+  ];
+}
+
+/* ------------------------------ Wiring --------------------------------- */
+function tickClock(){ document.getElementById("clock").textContent = new Date().toLocaleTimeString("pl-PL"); }
+
+function init(){
+  buildRegionSelect();
+  buildMap();
+
+  document.getElementById("regionSel").addEventListener("change",e=>selectRegion(e.target.value));
+  document.getElementById("geoBtn").addEventListener("click",geolocate);
+  document.getElementById("refreshBtn").addEventListener("click",()=>{Audio.resume();loadData();});
+
+  document.getElementById("soundBtn").addEventListener("click",()=>{
+    state.soundOn=!state.soundOn; localStorage.setItem(LS.sound,state.soundOn?"1":"0");
+    updateSoundBtn(); Audio.resume();
+    if(state.soundOn) Audio.alertPing();
+  });
+
+  document.getElementById("notifBtn").addEventListener("click",async()=>{
+    Audio.resume();
+    if(Notif.perm==="default"){ await Notif.request(); }
+    else if(Notif.perm==="denied"){ alert("Powiadomienia są zablokowane w ustawieniach przeglądarki dla tej strony. Odblokuj je, aby otrzymywać alerty."); }
+    updateNotifBtn();
+  });
+
+  // civil-defense signal buttons
+  document.querySelectorAll("[data-sig]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      Audio.resume();
+      const dur=parseInt(btn.dataset.dur,10)||8;
+      if(btn.dataset.sig==="alarm") Audio.playAlarm(dur);
+      else Audio.playClear(dur);
+    });
+  });
+  document.getElementById("stopSig").addEventListener("click",()=>Audio.stopAll());
+
+  document.getElementById("notifNoticeX").addEventListener("click",()=>{
+    document.getElementById("notifNotice").classList.add("hidden");
+    localStorage.setItem(LS.notifHint,"1");
+  });
+  if(localStorage.getItem(LS.notifHint)==="1" || Notif.perm==="granted")
+    document.getElementById("notifNotice").classList.add("hidden");
+
+  updateSoundBtn(); updateNotifBtn();
+  if(state.selected) document.getElementById("regionSel").value=state.selected;
+
+  tickClock(); setInterval(tickClock,1000);
+  render();
+  loadData();
+  // auto-refresh every 2 minutes
+  setInterval(loadData, 120000);
+  // re-check when tab becomes visible again
+  document.addEventListener("visibilitychange",()=>{ if(!document.hidden) loadData(); });
+
+  // register service worker for offline / installability
+  if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
+}
+
+document.addEventListener("DOMContentLoaded",init);
+</script>
+</body>
+</html>

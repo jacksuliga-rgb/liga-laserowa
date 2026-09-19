@@ -1,0 +1,16 @@
+{
+  "name": "Alarm PL — ostrzeżenia i alarm obrony cywilnej",
+  "short_name": "Alarm PL",
+  "description": "Ostrzeżenia IMGW per województwo w stylu Air Alert oraz moduł alarmu obrony cywilnej i informacje o RCB, RSO i numerze 112.",
+  "lang": "pl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0f14",
+  "theme_color": "#0b0f14",
+  "categories": ["utilities", "news", "weather"],
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
