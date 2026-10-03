@@ -273,6 +273,138 @@
       "szkola": "SP199",
       "pistolet": 64.6,
       "karabinek": 33.2
+    },
+    {
+      "imie": "Antoni Trojanowski",
+      "szkola": "SP26",
+      "pistolet": 51.3,
+      "karabinek": 10
+    },
+    {
+      "imie": "Sendra Wojtek",
+      "szkola": "SP26",
+      "pistolet": 46.1,
+      "karabinek": 15
+    },
+    {
+      "imie": "Aleksy Grabski",
+      "szkola": "SP26",
+      "pistolet": 40.0,
+      "karabinek": 5
+    },
+    {
+      "imie": "Maciej Sobalczyk",
+      "szkola": "SP26",
+      "pistolet": 38.7,
+      "karabinek": 5
+    },
+    {
+      "imie": "Iga Białas",
+      "szkola": "SP26",
+      "pistolet": 40.4,
+      "karabinek": 0
+    },
+    {
+      "imie": "Michał Dymek",
+      "szkola": "SP26",
+      "pistolet": 24.3,
+      "karabinek": 10
+    },
+    {
+      "imie": "Wacław Wołkowski",
+      "szkola": "SP26",
+      "pistolet": 29.0,
+      "karabinek": 5
+    },
+    {
+      "imie": "Ivan Tertyshnyk",
+      "szkola": "SP26",
+      "pistolet": 32.8,
+      "karabinek": 0
+    },
+    {
+      "imie": "Krawery Wojciechowski",
+      "szkola": "SP26",
+      "pistolet": 26.4,
+      "karabinek": 5
+    },
+    {
+      "imie": "Fabian Czyński",
+      "szkola": "SP26",
+      "pistolet": 20.7,
+      "karabinek": 10
+    },
+    {
+      "imie": "Nadia Kotwica",
+      "szkola": "SP26",
+      "pistolet": 13.2,
+      "karabinek": 15
+    },
+    {
+      "imie": "Bartosz Osimek",
+      "szkola": "SP26",
+      "pistolet": 17.2,
+      "karabinek": 10
+    },
+    {
+      "imie": "Dominika Kamecka",
+      "szkola": "SP26",
+      "pistolet": 11.4,
+      "karabinek": 15
+    },
+    {
+      "imie": "Emil Rogowski",
+      "szkola": "SP26",
+      "pistolet": 20.5,
+      "karabinek": 5
+    },
+    {
+      "imie": "Stanisław Wojdaszek",
+      "szkola": "SP26",
+      "pistolet": 11.1,
+      "karabinek": 5
+    },
+    {
+      "imie": "Franciszek Sitkowski",
+      "szkola": "SP26",
+      "pistolet": 10.8,
+      "karabinek": 5
+    },
+    {
+      "imie": "Jan Tomaszewski",
+      "szkola": "SP26",
+      "pistolet": 0,
+      "karabinek": 15
+    },
+    {
+      "imie": "Kajetan Ziarko",
+      "szkola": "SP26",
+      "pistolet": 10.5,
+      "karabinek": 0
+    },
+    {
+      "imie": "Mark Nesmiianovych",
+      "szkola": "SP26",
+      "pistolet": 6.7,
+      "karabinek": 0
+    },
+    {
+      "imie": "Mira Zozulova",
+      "szkola": "SP26",
+      "pistolet": 0,
+      "karabinek": 0
+    },
+    {
+      "imie": "Adam Adamiak",
+      "szkola": "SP26",
+      "pistolet": 0,
+      "karabinek": 0
+    },
+    {
+      "imie": "Krystian Konarski",
+      "szkola": "SP26",
+      "pistolet": 0,
+      "karabinek": 0
     }
   ],
   "terminarz": [
