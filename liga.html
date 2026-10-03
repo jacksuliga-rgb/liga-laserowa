@@ -152,13 +152,6 @@
   }
   .page-head h1 .accent{color:var(--laser-magenta)}
   .page-head p{color:var(--muted);font-size:17px;margin-top:14px;max-width:640px}
-  .sample-banner{
-    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-    margin-top:22px;padding:12px 18px;border-radius:4px;font-size:14px;
-    background:rgba(255,138,30,.09);border:1px solid rgba(255,138,30,.32);color:#f2d3a8;
-  }
-  .sample-banner b{color:var(--laser-orange)}
-
   /* ---------- TABS ---------- */
   .tabs{
     display:flex;gap:4px;margin:34px 0 0;border-bottom:1px solid var(--line);
@@ -340,9 +333,6 @@
   <div class="page-head">
     <h1>Wyniki i <span class="accent">finał</span></h1>
     <p>Ranking zawodników, awans do finału i finał Łódzkiej Ligi Strzelectwa Laserowego Szkół. Każdy oddaje <strong style="color:var(--laser-green)">10 strzałów z pistoletu i 5 z karabinka</strong> — o miejscu decyduje łączna suma punktów.</p>
-    <div class="sample-banner" id="sampleBanner">
-      <span>🎯 <b>Dane przykładowe.</b> To makieta z przykładowymi wynikami — podmień je w sekcji <code>DANE</code> na początku pliku <code>liga.html</code>. Jak, opisano w komentarzach w kodzie.</span>
-    </div>
   </div>
 
   <div class="tabs" role="tablist" aria-label="Sekcje ligi">
@@ -470,7 +460,7 @@
    ===================================================================== */
 const DANE_SEED = {
   sezon: "2026",
-  daneTestowe: true,
+  daneTestowe: false,
 
   szkoly: [
     { id:"SP26",  nazwa:"Szkoła Podstawowa nr 26",  dzielnica:"Bałuty",   kolor:"green"   },
@@ -819,7 +809,6 @@ function renderEditor(){
   h += `<div class="ed-block"><h3>Ustawienia</h3>
     <div class="ed-inline">
       <div class="ed-field" style="max-width:160px"><label>Sezon</label><input class="ed-in" type="text" data-g="sezon" value="${esc(s.sezon||"")}"></div>
-      <label class="switch"><input type="checkbox" data-g="daneTestowe" ${s.daneTestowe?"checked":""}> Pokazuj baner „Dane przykładowe"</label>
     </div></div>`;
 
   // Szkoły
@@ -946,7 +935,7 @@ function onEdChange(e){
     else if(trT){ ensureTerminarz(); DANE.terminarz[+trT.dataset.ti][f]=t.value; }
     zapiszDane(); renderAll(); return;
   }
-  if(t.matches('input[type=checkbox][data-g]')){ DANE[t.dataset.g]=t.checked; if(t.dataset.g==="daneTestowe"){ const b=$("#sampleBanner"); if(b) b.hidden=!t.checked; } zapiszDane(); renderAll(); return; }
+  if(t.matches('input[type=checkbox][data-g]')){ DANE[t.dataset.g]=t.checked; zapiszDane(); renderAll(); return; }
   if(t.matches('input[type=checkbox][data-fmeta]')){ ensureFinal(); DANE.final[t.dataset.fmeta]=t.checked; zapiszDane(); renderAll(); return; }
   // zmiana nazwy szkoły (blur) → odśwież listy wyboru szkół u zawodników
   if(t.matches('input.ed-in') && t.closest('[data-si]') && t.dataset.f==="nazwa"){ renderEditor(); }
@@ -1014,7 +1003,6 @@ async function wczytajOpublikowane(){
 }
 function applyChrome(){
   const b=$("#seasonBadge"); if(b) b.textContent="SEZON "+(DANE.sezon||"");
-  const sb=$("#sampleBanner"); if(sb) sb.hidden = !DANE.daneTestowe;
 }
 function setEdit(on){
   trybEdycji = on;
