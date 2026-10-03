@@ -5,31 +5,26 @@
     {
       "id": "SP26",
       "nazwa": "Szkoła Podstawowa nr 153",
-      "dzielnica": "Bałuty",
       "kolor": "green"
     },
     {
       "id": "SP81",
-      "nazwa": "Szkoła Podstawowa nr  212",
-      "dzielnica": "Widzew",
+      "nazwa": "Szkoła Podstawowa nr 212",
       "kolor": "blue"
     },
     {
       "id": "LO3",
       "nazwa": "XXIII LO",
-      "dzielnica": "Widzew",
       "kolor": "magenta"
     },
     {
       "id": "ZSP9",
-      "nazwa": "NSP  FPdE",
-      "dzielnica": "Górna",
+      "nazwa": "NSP FPdE",
       "kolor": "orange"
     },
     {
       "id": "SP199",
-      "nazwa": "Szkoła Podstawowa nr 7 ",
-      "dzielnica": "Górna",
+      "nazwa": "Szkoła Podstawowa nr 7",
       "kolor": "violet"
     }
   ],
@@ -38,181 +33,148 @@
       "imie": "Antoni Trojanowski",
       "szkola": "SP26",
       "pistolet": 51.3,
-      "karabinek": 10
+      "karabinek": 10.0
     },
     {
       "imie": "Sendra Wojtek",
       "szkola": "SP26",
       "pistolet": 46.1,
-      "karabinek": 15
+      "karabinek": 15.0
     },
     {
       "imie": "Aleksy Grabski",
       "szkola": "SP26",
       "pistolet": 40.0,
-      "karabinek": 5
+      "karabinek": 5.0
     },
     {
       "imie": "Maciej Sobalczyk",
       "szkola": "SP26",
       "pistolet": 38.7,
-      "karabinek": 5
+      "karabinek": 5.0
     },
     {
       "imie": "Iga Białas",
       "szkola": "SP26",
       "pistolet": 40.4,
-      "karabinek": 0
+      "karabinek": 0.0
     },
     {
       "imie": "Michał Dymek",
       "szkola": "SP26",
       "pistolet": 24.3,
-      "karabinek": 10
+      "karabinek": 10.0
     },
     {
       "imie": "Wacław Wołkowski",
       "szkola": "SP26",
       "pistolet": 29.0,
-      "karabinek": 5
+      "karabinek": 5.0
     },
     {
       "imie": "Ivan Tertyshnyk",
       "szkola": "SP26",
       "pistolet": 32.8,
-      "karabinek": 0
+      "karabinek": 0.0
     },
     {
       "imie": "Krawery Wojciechowski",
       "szkola": "SP26",
       "pistolet": 26.4,
-      "karabinek": 5
+      "karabinek": 5.0
     },
     {
       "imie": "Fabian Czyński",
       "szkola": "SP26",
       "pistolet": 20.7,
-      "karabinek": 10
+      "karabinek": 10.0
     },
     {
       "imie": "Nadia Kotwica",
       "szkola": "SP26",
       "pistolet": 13.2,
-      "karabinek": 15
+      "karabinek": 15.0
     },
     {
       "imie": "Bartosz Osimek",
       "szkola": "SP26",
       "pistolet": 17.2,
-      "karabinek": 10
+      "karabinek": 10.0
     },
     {
       "imie": "Dominika Kamecka",
       "szkola": "SP26",
       "pistolet": 11.4,
-      "karabinek": 15
+      "karabinek": 15.0
     },
     {
       "imie": "Emil Rogowski",
       "szkola": "SP26",
       "pistolet": 20.5,
-      "karabinek": 5
+      "karabinek": 5.0
     },
     {
       "imie": "Stanisław Wojdaszek",
       "szkola": "SP26",
       "pistolet": 11.1,
-      "karabinek": 5
+      "karabinek": 5.0
     },
     {
       "imie": "Franciszek Sitkowski",
       "szkola": "SP26",
       "pistolet": 10.8,
-      "karabinek": 5
+      "karabinek": 5.0
     },
     {
       "imie": "Jan Tomaszewski",
       "szkola": "SP26",
-      "pistolet": 0,
-      "karabinek": 15
+      "pistolet": 0.0,
+      "karabinek": 15.0
     },
     {
       "imie": "Kajetan Ziarko",
       "szkola": "SP26",
       "pistolet": 10.5,
-      "karabinek": 0
+      "karabinek": 0.0
     },
     {
       "imie": "Mark Nesmiianovych",
       "szkola": "SP26",
       "pistolet": 6.7,
-      "karabinek": 0
+      "karabinek": 0.0
     },
     {
       "imie": "Mira Zozulova",
       "szkola": "SP26",
-      "pistolet": 0,
-      "karabinek": 0
+      "pistolet": 0.0,
+      "karabinek": 0.0
     },
     {
       "imie": "Adam Adamiak",
       "szkola": "SP26",
-      "pistolet": 0,
-      "karabinek": 0
+      "pistolet": 0.0,
+      "karabinek": 0.0
     },
     {
       "imie": "Krystian Konarski",
       "szkola": "SP26",
-      "pistolet": 0,
-      "karabinek": 0
+      "pistolet": 0.0,
+      "karabinek": 0.0
     }
   ],
   "terminarz": [
     {
-      "data": "2026-10-02",
+      "data": "2026-10",
       "etap": "Etap 1 · Eliminacje",
-      "tytul": "SP 153",
-      "miejsce": "Sale gimnastyczne szkół",
-      "status": "plan"
-    },
-    {
-      "data": "2026-10-12",
-      "etap": "Etap 1 · Eliminacje",
-      "tytul": "SP 212",
-      "miejsce": "Sale gimnastyczne szkół",
-      "status": "plan"
-    },
-    {
-      "data": "2026-10-15",
-      "etap": "Etap  1 Eliminacje",
-      "tytul": "NSPFPdE",
-      "miejsce": "Sale gimnastyczne szkół",
-      "status": "plan"
-    },
-    {
-      "data": "2026-10-22",
-      "etap": "Etap 1 Eliminacje",
-      "tytul": "XXIII LO",
-      "miejsce": "Sala gimnstyczna szkół",
-      "status": "plan"
-    },
-    {
-      "data": "2026-10-23",
-      "etap": "Etap 1 Eliminacje",
-      "tytul": "SP 7 ",
-      "miejsce": "Sala gimnastyczna",
-      "status": "plan"
-    },
-    {
-      "data": "2026-11-15",
-      "etap": "FINAŁ",
-      "tytul": "FInał",
-      "miejsce": "MEMO",
-      "status": "plan"
+      "tytul": "Eliminacje — SP 153",
+      "miejsce": "Sala gimnastyczna szkoły",
+      "status": "done"
     }
   ],
   "final": {
     "rozegrany": false,
+    "data": "",
+    "miejsce": "",
     "zawodnicy": []
   }
 }
