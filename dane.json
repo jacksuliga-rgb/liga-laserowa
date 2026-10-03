@@ -4,40 +4,40 @@
   "szkoly": [
     {
       "id": "SP26",
-      "nazwa": "Szkoła Podstawowa nr 26",
+      "nazwa": "Szkoła Podstawowa nr 153",
       "dzielnica": "Bałuty",
       "kolor": "green"
     },
     {
       "id": "SP81",
-      "nazwa": "Szkoła Podstawowa nr 81",
-      "dzielnica": "Górna",
+      "nazwa": "Szkoła Podstawowa nr  212",
+      "dzielnica": "Widzew",
       "kolor": "blue"
     },
     {
       "id": "LO3",
-      "nazwa": "III Liceum Ogólnokształcące",
-      "dzielnica": "Śródmieście",
+      "nazwa": "XXIII LO",
+      "dzielnica": "Widzew",
       "kolor": "magenta"
     },
     {
       "id": "ZSP9",
-      "nazwa": "Zespół Szkół nr 9",
-      "dzielnica": "Widzew",
+      "nazwa": "NSP  FPdE",
+      "dzielnica": "Górna",
       "kolor": "orange"
     },
     {
       "id": "SP199",
-      "nazwa": "Szkoła Podstawowa nr 199",
-      "dzielnica": "Polesie",
+      "nazwa": "Szkoła Podstawowa nr 7 ",
+      "dzielnica": "Górna",
       "kolor": "violet"
     }
   ],
   "zawodnicy": [
     {
-      "imie": "Maja Kowalczyk",
+      "imie": "Jac Wur",
       "szkola": "SP26",
-      "pistolet": 96.4,
+      "pistolet": 12.5,
       "karabinek": 48.2
     },
     {
@@ -65,10 +65,10 @@
       "karabinek": 44.6
     },
     {
-      "imie": "Filip Szymański",
+      "imie": "Jacek Suliga",
       "szkola": "SP26",
-      "pistolet": 88.9,
-      "karabinek": 43.1
+      "pistolet": 70,
+      "karabinek": 35
     },
     {
       "imie": "Alicja Dąbrowska",
@@ -277,31 +277,45 @@
   ],
   "terminarz": [
     {
-      "data": "2026-03-14",
+      "data": "2026-10-02",
       "etap": "Etap 1 · Eliminacje",
-      "tytul": "Eliminacje — SP 26 i SP 81",
+      "tytul": "SP 153",
       "miejsce": "Sale gimnastyczne szkół",
-      "status": "done"
+      "status": "plan"
     },
     {
-      "data": "2026-03-21",
+      "data": "2026-10-12",
       "etap": "Etap 1 · Eliminacje",
-      "tytul": "Eliminacje — LO III, ZSP 9, SP 199",
+      "tytul": "SP 212",
       "miejsce": "Sale gimnastyczne szkół",
-      "status": "done"
+      "status": "plan"
     },
     {
-      "data": "2026-03-28",
-      "etap": "Etap 2 · Awans",
-      "tytul": "Ogłoszenie awansów i lucky loserów",
-      "miejsce": "Online",
-      "status": "live"
+      "data": "2026-10-15",
+      "etap": "Etap  1 Eliminacje",
+      "tytul": "NSPFPdE",
+      "miejsce": "Sale gimnastyczne szkół",
+      "status": "plan"
     },
     {
-      "data": "2026-04-18",
-      "etap": "Etap 3 · Finał",
-      "tytul": "Wielki finał — 32 finalistów",
-      "miejsce": "Hala MOSiR, Łódź",
+      "data": "2026-10-22",
+      "etap": "Etap 1 Eliminacje",
+      "tytul": "XXIII LO",
+      "miejsce": "Sala gimnstyczna szkół",
+      "status": "plan"
+    },
+    {
+      "data": "2026-10-23",
+      "etap": "Etap 1 Eliminacje",
+      "tytul": "SP 7 ",
+      "miejsce": "Sala gimnastyczna",
+      "status": "plan"
+    },
+    {
+      "data": "2026-11-15",
+      "etap": "FINAŁ",
+      "tytul": "FInał",
+      "miejsce": "MEMO",
       "status": "plan"
     }
   ],
