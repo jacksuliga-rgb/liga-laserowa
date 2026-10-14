@@ -380,11 +380,46 @@
   ],
   "terminarz": [
     {
-      "data": "2026-10",
+      "data": "2026-10-02",
       "etap": "Etap 1 · Eliminacje",
       "tytul": "Eliminacje — SP 153",
       "miejsce": "Sala gimnastyczna szkoły",
       "status": "done"
+    },
+    {
+      "data": "2026-10-12",
+      "etap": "Etap 1 · Eliminacje",
+      "tytul": "Eliminacje — SP 212",
+      "miejsce": "Sala gimnastyczna szkoły",
+      "status": "done"
+    },
+    {
+      "data": "2026-10-15",
+      "etap": "Etap 1 · Eliminacje",
+      "tytul": "Eliminacje — NSP FPdE",
+      "miejsce": "Sala gimnastyczna szkoły",
+      "status": "plan"
+    },
+    {
+      "data": "2026-10-22",
+      "etap": "Etap 1 · Eliminacje",
+      "tytul": "Eliminacje — XXIII LO",
+      "miejsce": "Sala gimnastyczna szkoły",
+      "status": "plan"
+    },
+    {
+      "data": "2026-10-23",
+      "etap": "Etap 1 · Eliminacje",
+      "tytul": "Eliminacje — SP 7",
+      "miejsce": "Sala gimnastyczna szkoły",
+      "status": "plan"
+    },
+    {
+      "data": "2026-11-15",
+      "etap": "Etap 2 · Finał",
+      "tytul": "Finał",
+      "miejsce": "MEMO",
+      "status": "plan"
     }
   ],
   "final": {
