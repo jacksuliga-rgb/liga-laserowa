@@ -376,6 +376,186 @@
       "szkola": "SP81",
       "pistolet": 0.0,
       "karabinek": 0.0
+    },
+    {
+      "imie": "Krzysztof Żbikowski",
+      "szkola": "ZSP9",
+      "pistolet": 93.8,
+      "karabinek": 25.0
+    },
+    {
+      "imie": "Olga Brendel",
+      "szkola": "ZSP9",
+      "pistolet": 80.2,
+      "karabinek": 25.0
+    },
+    {
+      "imie": "Michał Fabijańczyk",
+      "szkola": "ZSP9",
+      "pistolet": 79.3,
+      "karabinek": 25.0
+    },
+    {
+      "imie": "Antonina Zbieranowska",
+      "szkola": "ZSP9",
+      "pistolet": 75.3,
+      "karabinek": 20.0
+    },
+    {
+      "imie": "Jan Zbieranowski",
+      "szkola": "ZSP9",
+      "pistolet": 74.9,
+      "karabinek": 15.0
+    },
+    {
+      "imie": "Kacper Mardas",
+      "szkola": "ZSP9",
+      "pistolet": 71.7,
+      "karabinek": 15.0
+    },
+    {
+      "imie": "Kaja Domańska",
+      "szkola": "ZSP9",
+      "pistolet": 69.1,
+      "karabinek": 15.0
+    },
+    {
+      "imie": "Antoni Przymusiała",
+      "szkola": "ZSP9",
+      "pistolet": 68.7,
+      "karabinek": 15.0
+    },
+    {
+      "imie": "Maja Domańska",
+      "szkola": "ZSP9",
+      "pistolet": 66.7,
+      "karabinek": 15.0
+    },
+    {
+      "imie": "Adrian Janiszewski",
+      "szkola": "ZSP9",
+      "pistolet": 71.3,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Zofia Powroźnik",
+      "szkola": "ZSP9",
+      "pistolet": 53.6,
+      "karabinek": 25.0
+    },
+    {
+      "imie": "Helena Okupska-Viana",
+      "szkola": "ZSP9",
+      "pistolet": 62.0,
+      "karabinek": 15.0
+    },
+    {
+      "imie": "Wiktor Wójcik",
+      "szkola": "ZSP9",
+      "pistolet": 61.8,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Weronika Skórzepa",
+      "szkola": "ZSP9",
+      "pistolet": 46.3,
+      "karabinek": 20.0
+    },
+    {
+      "imie": "Adam Andrzejczak",
+      "szkola": "ZSP9",
+      "pistolet": 56.1,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Kornelia Czaplińska",
+      "szkola": "ZSP9",
+      "pistolet": 40.8,
+      "karabinek": 25.0
+    },
+    {
+      "imie": "Szczepan Stefański",
+      "szkola": "ZSP9",
+      "pistolet": 49.1,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Bartosz Chabiński",
+      "szkola": "ZSP9",
+      "pistolet": 40.8,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Filip Kwiatkowski",
+      "szkola": "ZSP9",
+      "pistolet": 44.3,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Tymoteusz Wituła",
+      "szkola": "ZSP9",
+      "pistolet": 37.7,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Jan Mielczarek",
+      "szkola": "ZSP9",
+      "pistolet": 25.0,
+      "karabinek": 20.0
+    },
+    {
+      "imie": "Stefan Wnuk",
+      "szkola": "ZSP9",
+      "pistolet": 37.9,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Adrianna Szulc",
+      "szkola": "ZSP9",
+      "pistolet": 27.9,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Helena Wójcik",
+      "szkola": "ZSP9",
+      "pistolet": 25.5,
+      "karabinek": 0.0
+    },
+    {
+      "imie": "Matylda Pająk",
+      "szkola": "ZSP9",
+      "pistolet": 12.0,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Gustaw Marcinkowski",
+      "szkola": "ZSP9",
+      "pistolet": 5.3,
+      "karabinek": 0.0
+    },
+    {
+      "imie": "Marysia Kandzia",
+      "szkola": "ZSP9",
+      "pistolet": 0.5,
+      "karabinek": 0.0
+    },
+    {
+      "imie": "Ludwik Jagiełło",
+      "szkola": "ZSP9",
+      "pistolet": 34.6,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Stefan Macioszek",
+      "szkola": "ZSP9",
+      "pistolet": 0.0,
+      "karabinek": 0.0
+    },
+    {
+      "imie": "Hanna Nowakowska",
+      "szkola": "ZSP9",
+      "pistolet": 0.0,
+      "karabinek": 0.0
     }
   ],
   "terminarz": [
@@ -398,7 +578,7 @@
       "etap": "Etap 1 · Eliminacje",
       "tytul": "Eliminacje — NSP FPdE",
       "miejsce": "Sala gimnastyczna szkoły",
-      "status": "plan"
+      "status": "done"
     },
     {
       "data": "2026-10-22",
