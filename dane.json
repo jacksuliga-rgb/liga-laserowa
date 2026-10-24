@@ -556,6 +556,180 @@
       "szkola": "ZSP9",
       "pistolet": 0.0,
       "karabinek": 0.0
+    },
+    {
+      "imie": "Weronika Suliga",
+      "szkola": "LO3",
+      "pistolet": 71.3,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Dominik Cichowicz",
+      "szkola": "LO3",
+      "pistolet": 29.7,
+      "karabinek": 20.0
+    },
+    {
+      "imie": "Martyna Kowalska",
+      "szkola": "LO3",
+      "pistolet": 25.0,
+      "karabinek": 15.0
+    },
+    {
+      "imie": "Maria Faszmanowicz",
+      "szkola": "LO3",
+      "pistolet": 23.5,
+      "karabinek": 15.0
+    },
+    {
+      "imie": "Marek Szyjka",
+      "szkola": "LO3",
+      "pistolet": 14.4,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Adrian Marajda",
+      "szkola": "LO3",
+      "pistolet": 12.6,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Miłosz Płachta",
+      "szkola": "LO3",
+      "pistolet": 0.0,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Wiktoria Ufa",
+      "szkola": "LO3",
+      "pistolet": 0.0,
+      "karabinek": 0.0
+    },
+    {
+      "imie": "Liam Sietsema",
+      "szkola": "LO3",
+      "pistolet": 0.0,
+      "karabinek": 0.0
+    },
+    {
+      "imie": "Dorian Kowalski",
+      "szkola": "SP199",
+      "pistolet": 63.6,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Maks Vasiliev",
+      "szkola": "SP199",
+      "pistolet": 49.2,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Adam Kotkowski",
+      "szkola": "SP199",
+      "pistolet": 36.6,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Stanisław Jaroniek",
+      "szkola": "SP199",
+      "pistolet": 24.8,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Oliwier Strzelecki",
+      "szkola": "SP199",
+      "pistolet": 27.0,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Jan Mastalerz",
+      "szkola": "SP199",
+      "pistolet": 19.4,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Antoni Glinkowski",
+      "szkola": "SP199",
+      "pistolet": 28.4,
+      "karabinek": 0.0
+    },
+    {
+      "imie": "Basia Pietrzyk",
+      "szkola": "SP199",
+      "pistolet": 18.0,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Oliwier Dominiczyk",
+      "szkola": "SP199",
+      "pistolet": 26.9,
+      "karabinek": 0.0
+    },
+    {
+      "imie": "Roman Dmytriv",
+      "szkola": "SP199",
+      "pistolet": 26.8,
+      "karabinek": 0.0
+    },
+    {
+      "imie": "Kacper Wiciejewski",
+      "szkola": "SP199",
+      "pistolet": 18.2,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Mateusz Śpionek",
+      "szkola": "SP199",
+      "pistolet": 17.9,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Mateusz Ślipek",
+      "szkola": "SP199",
+      "pistolet": 22.0,
+      "karabinek": 0.0
+    },
+    {
+      "imie": "Fabian Olkusz",
+      "szkola": "SP199",
+      "pistolet": 5.0,
+      "karabinek": 10.0
+    },
+    {
+      "imie": "Robert Szczutecki",
+      "szkola": "SP199",
+      "pistolet": 0.0,
+      "karabinek": 15.0
+    },
+    {
+      "imie": "Jeremi Czekalski",
+      "szkola": "SP199",
+      "pistolet": 9.2,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Antek Chrzanowski",
+      "szkola": "SP199",
+      "pistolet": 4.4,
+      "karabinek": 5.0
+    },
+    {
+      "imie": "Tobiasz Kowalski",
+      "szkola": "SP199",
+      "pistolet": 9.0,
+      "karabinek": 0.0
+    },
+    {
+      "imie": "Jan Zbiorczyk",
+      "szkola": "SP199",
+      "pistolet": 7.1,
+      "karabinek": 0.0
+    },
+    {
+      "imie": "Polina Merkulova",
+      "szkola": "SP199",
+      "pistolet": 0.0,
+      "karabinek": 0.0
     }
   ],
   "terminarz": [
@@ -585,14 +759,14 @@
       "etap": "Etap 1 · Eliminacje",
       "tytul": "Eliminacje — XXIII LO",
       "miejsce": "Sala gimnastyczna szkoły",
-      "status": "plan"
+      "status": "done"
     },
     {
       "data": "2026-10-23",
       "etap": "Etap 1 · Eliminacje",
       "tytul": "Eliminacje — SP 7",
       "miejsce": "Sala gimnastyczna szkoły",
-      "status": "plan"
+      "status": "done"
     },
     {
       "data": "2026-11-15",
