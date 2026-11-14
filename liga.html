@@ -267,6 +267,14 @@
   .bartrack{background:var(--fog);border-radius:4px;overflow:hidden;height:8px}
   .bar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--laser-green),var(--laser-blue))}
   tr.top1 .bar{background:linear-gradient(90deg,var(--laser-orange),var(--laser-magenta))}
+  .awards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .award{background:var(--concrete-2);border:1px solid var(--line);border-left:4px solid var(--awc,var(--laser-blue));border-radius:6px;padding:18px 22px}
+  .award .aw-lbl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--awc,var(--laser-blue));font-weight:800;margin-bottom:10px}
+  .award .aw-name{font-size:20px;font-weight:800;line-height:1.1}
+  .award .aw-sch{font-size:13px;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:7px}
+  .award .aw-sch .dot{width:9px;height:9px;border-radius:50%;flex:none;box-shadow:0 0 8px currentColor}
+  .award .aw-score{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:26px;color:var(--laser-green);margin-top:10px}
+  .award .aw-unit{font-size:13px;color:var(--muted)}
 
   /* ---------- SCHEDULE ---------- */
   .timeline{position:relative;margin-left:8px;padding-left:30px}
@@ -719,6 +727,30 @@ function formatDataPL(s){
   const d = new Date(s+"T00:00:00");
   return isNaN(d) ? esc(s) : d.toLocaleDateString("pl-PL",{day:"numeric",month:"long",year:"numeric"});
 }
+// Nagrody indywidualne ze ścisłego finału (II tura): najlepszy pistolet i najlepszy karabinek.
+function nagrodyIndywidualne(f2){
+  const best = (klucz) => {
+    const z = f2.filter(r => r[klucz]!=null).sort((a,b)=> b[klucz]-a[klucz])[0];
+    return z || null;
+  };
+  const p = best("p"), k = best("k");
+  if(!p && !k) return "";
+  const karta = (tytul, z, klucz, kolor) => {
+    if(!z) return "";
+    const s = szkolaById(z.szkola)||{};
+    return `<div class="award" style="--awc:${kolor}">
+      <div class="aw-lbl">${tytul}</div>
+      <div class="aw-name">${esc(z.imie)}</div>
+      <div class="aw-sch"><span class="dot" style="color:${szkolaKolor(z.szkola)}"></span>${esc(s.nazwa||z.szkola||"")}</div>
+      <div class="aw-score">${z[klucz].toFixed(1)}<span class="aw-unit"> pkt</span></div>
+    </div>`;
+  };
+  return `<div class="final-sub" style="margin-top:28px">Nagrody indywidualne — ścisły finał (II tura)</div>
+    <div class="awards">
+      ${karta("🎯 Najlepszy pistolet", p, "p", "var(--laser-magenta)")}
+      ${karta("🎯 Najlepszy karabinek", k, "k", "var(--laser-blue)")}
+    </div>`;
+}
 function renderFinal(){
   ensureFinal();
   const cfg = DANE.final;
@@ -755,6 +787,7 @@ function renderFinal(){
   let html = naglowek;
   if(f2.length){
     html += `<div class="final-sub">II tura · finał medalowy — miejsca 1–8</div>` + finalTabela(f2, true);
+    html += nagrodyIndywidualne(f2);
   }
   if(f1.length){
     html += `<div class="final-sub" style="margin-top:28px">I tura · wszyscy finaliści (${f1.length})</div>` + finalTabela(f1, !f2.length);
