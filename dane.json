@@ -781,17 +781,19 @@
       "status": "done"
     },
     {
-      "data": "2026-11-15",
-      "etap": "Etap 2 · Finał",
-      "tytul": "Finał",
-      "miejsce": "MEMO",
+      "data": "2026-11-21",
+      "etap": "Etap 3 · Finał",
+      "tytul": "Wielki finał — 32 finalistów (od 10:00)",
+      "miejsce": "Niepubliczna Szkoła Podstawowa Fundacji „Przyszłość dla Edukacji”, ul. Piękna 30/32, Łódź",
       "status": "plan"
     }
   ],
   "final": {
     "rozegrany": false,
-    "data": "",
-    "miejsce": "",
-    "zawodnicy": []
+    "data": "2026-11-21",
+    "godzina": "10:00",
+    "miejsce": "Niepubliczna Szkoła Podstawowa Fundacji „Przyszłość dla Edukacji”, ul. Piękna 30/32, Łódź",
+    "faza1": [],
+    "faza2": []
   }
 }

@@ -152,7 +152,7 @@
   }
   .page-head h1 .accent{color:var(--laser-magenta)}
   .page-head p{color:var(--muted);font-size:17px;margin-top:14px;max-width:640px}
-  /* ---------- TABS ---------- */
+/* ---------- TABS ---------- */
   .tabs{
     display:flex;gap:4px;margin:34px 0 0;border-bottom:1px solid var(--line);
     overflow-x:auto;scrollbar-width:none;
@@ -333,7 +333,7 @@
   <div class="page-head">
     <h1>Wyniki i <span class="accent">finał</span></h1>
     <p>Ranking zawodników, awans do finału i finał Łódzkiej Ligi Strzelectwa Laserowego Szkół. Każdy oddaje <strong style="color:var(--laser-green)">10 strzałów z pistoletu i 5 z karabinka</strong> — o miejscu decyduje łączna suma punktów.</p>
-  </div>
+</div>
 
   <div class="tabs" role="tablist" aria-label="Sekcje ligi">
     <button class="tab" role="tab" aria-selected="true"  aria-controls="p-ranking" id="t-ranking">Ranking</button>
@@ -389,8 +389,8 @@
   <!-- FINAŁ (ISSF) -->
   <section class="panel" id="p-final" role="tabpanel" aria-labelledby="t-final" hidden>
     <div class="panel-head">
-      <h2>Finał medalowy</h2>
-      <p>Ósemka z najlepszą sumą punktów wchodzi do finału i strzela jeszcze raz — 10× pistolet + 5× karabinek. O medalach decyduje suma punktów z finału. Klasyfikacja końcowa 1–8.</p>
+      <h2>Finał (ISSF)</h2>
+      <p>Finał w dwóch turach. I tura: strzela 32 finalistów. II tura: ósemka z najlepszym wynikiem strzela jeszcze raz — 10× pistolet + 5× karabinek. O miejscach 1–8 decyduje wyłącznie wynik II tury.</p>
     </div>
     <div class="final-status" id="finalStatus"></div>
     <div id="finalBody"></div>
@@ -451,12 +451,13 @@
                     O miejscu w rankingu decyduje SUMA obu (pistolet+karabinek).
                     Jeśli ktoś jeszcze nie strzelał z którejś broni, wpisz null.
    • terminarz    – wydarzenia. `status`: 'done' | 'live' | 'plan'.
-   • final        – finał medalowy (ósemka strzela jeszcze raz).
-                    `rozegrany`: false = pokazuje ósemkę wyłonioną z
-                    kwalifikacji; true = pokazuje klasyfikację końcową.
-                    `zawodnicy`: finaliści z wynikami finału `pistolet`
-                    i `karabinek`; aplikacja sumuje i ustawia miejsca 1–8.
-                    Wpisuj po `imie` dokładnie jak w liście `zawodnicy`.
+   • final        – finał dwufazowy (format ISSF).
+                    `rozegrany`: false = pokazuje 32 finalistów z kwalifikacji;
+                    true = pokazuje wyniki finału.
+                    FAZA 1 (`faza1`): 32 finalistów strzela — tabela 1–32.
+                    FAZA 2 (`faza2`): 8 najlepszych z fazy 1 strzela jeszcze
+                    raz; o miejscach 1–8 decyduje WYŁĄCZNIE wynik fazy 2.
+                    `data`, `godzina`, `miejsce` — termin i miejsce finału.
    ===================================================================== */
 const DANE_SEED = {
   sezon: "2026",
@@ -527,25 +528,18 @@ const DANE_SEED = {
     { data:"2026-03-14", etap:"Etap 1 · Eliminacje", tytul:"Eliminacje — SP 26 i SP 81", miejsce:"Sale gimnastyczne szkół", status:"done" },
     { data:"2026-03-21", etap:"Etap 1 · Eliminacje", tytul:"Eliminacje — LO III, ZSP 9, SP 199", miejsce:"Sale gimnastyczne szkół", status:"done" },
     { data:"2026-03-28", etap:"Etap 2 · Awans", tytul:"Ogłoszenie awansów i lucky loserów", miejsce:"Online", status:"live" },
-    { data:"2026-04-18", etap:"Etap 3 · Finał", tytul:"Wielki finał — 32 finalistów", miejsce:"Hala MOSiR, Łódź", status:"plan" },
+    { data:"2026-11-21", etap:"Etap 3 · Finał", tytul:"Wielki finał — 32 finalistów (od 10:00)", miejsce:"Niepubliczna Szkoła Podstawowa Fundacji „Przyszłość dla Edukacji”, ul. Piękna 30/32, Łódź", status:"plan" },
   ],
 
   // Finał medalowy — ósemka strzela jeszcze raz (10× pistolet + 5× karabinek).
   // O miejscu decyduje suma. Ustaw rozegrany:false, by pokazać ósemkę z kwalifikacji.
   final: {
-    rozegrany: true,
-    data: "2026-04-18",
-    miejsce: "Hala MOSiR, Łódź",
-    zawodnicy: [
-      { imie:"Antoni Nowak",         pistolet:97.2, karabinek:48.6 },
-      { imie:"Maja Kowalczyk",       pistolet:96.0, karabinek:49.0 },
-      { imie:"Aleksandra Michalska", pistolet:95.1, karabinek:48.1 },
-      { imie:"Zofia Wiśniewska",     pistolet:93.4, karabinek:48.8 },
-      { imie:"Nikola Kozłowska",     pistolet:92.6, karabinek:46.9 },
-      { imie:"Natalia Baran",        pistolet:91.8, karabinek:46.2 },
-      { imie:"Kacper Jankowski",     pistolet:90.3, karabinek:47.1 },
-      { imie:"Mateusz Zając",        pistolet:89.0, karabinek:45.5 },
-    ]
+    rozegrany: false,
+    data: "2026-11-21",
+    godzina: "10:00",
+    miejsce: "Niepubliczna Szkoła Podstawowa Fundacji „Przyszłość dla Edukacji”, ul. Piękna 30/32, Łódź",
+    faza1: [],
+    faza2: []
   }
 };
 
@@ -690,44 +684,21 @@ function renderAwans(){
 }
 
 /* ---- FINAŁ ---- */
-function renderFinal(){
-  const cfg = DANE.final || { rozegrany:false, zawodnicy:[] };
-  const status = $("#finalStatus"), wrap = $("#finalBody");
-  const top8 = kwalifikacja().finalisci.slice(0,8);
-  const intro = "Ósemka z najlepszą sumą strzela jeszcze raz (10× pistolet + 5× karabinek). O medalach decyduje suma punktów z finału.";
-  const gdzie = cfg.miejsce ? ` · ${esc(cfg.miejsce)}` : "";
-
-  // Przed finałem — pokaż ósemkę wyłonioną z kwalifikacji.
-  if(!cfg.rozegrany || !(cfg.zawodnicy||[]).length){
-    status.innerHTML = `<span class="pill soon">Przed finałem</span> ${intro}`;
-    if(top8.length < 2){
-      wrap.innerHTML = `<div class="empty"><div class="big">Brak finalistów</div>Ósemka finałowa pojawi się, gdy będą wyniki kwalifikacji.</div>`;
-      return;
-    }
-    wrap.innerHTML = `<div class="final-sub">Ósemka finałowa — awans z kwalifikacji${gdzie}</div>`
-      + `<div class="lucky-list">` + top8.map((z,i)=>{
-          const s = szkolaById(z.szkola)||{};
-          return `<div class="lucky-item">
-            <span class="ll-rk" style="color:var(--laser-green)">${i+1}</span>
-            <span class="ll-name">${esc(z.imie)}<span class="ll-sch"> · ${esc(s.nazwa||z.szkola)}</span></span>
-            <span class="ll-sc">${z.s.toFixed(1)}</span></div>`;
-        }).join("") + `</div>`;
-    return;
-  }
-
-  // Finał rozegrany — klasyfikacja końcowa wg sumy (pistolet + karabinek).
-  const rows = cfg.zawodnicy.map(z=>{
+// Buduje wiersze z listy wyników (imie, pistolet, karabinek), posortowane.
+function finalRows(lista){
+  return (lista||[]).map(z=>{
     const p = num(z.pistolet), k = num(z.karabinek);
     const info = DANE.zawodnicy.find(x=>x.imie===z.imie) || {};
     return { imie:z.imie, szkola:info.szkola, p, k, s:sumaOf(p,k)||0 };
   }).sort((a,b)=> b.s - a.s || (b.p||0)-(a.p||0));
+}
+// Rysuje jedną tabelę finału; medale (1–3) tylko gdy medals=true.
+function finalTabela(rows, medals){
+  if(!rows.length) return "";
   const max = rows[0].s || 1;
-
-  status.innerHTML = `<span class="pill live">Rozegrany</span> Klasyfikacja końcowa${gdzie}. ${intro}`;
-
   const body = rows.map((r,i)=>{
-    const cls = i<3 ? `top${i+1}` : "";
-    const medal = i<3 ? `<span class="medal">${MEDALE[i]}</span>` : "";
+    const cls = (medals && i<3) ? `top${i+1}` : "";
+    const medal = (medals && i<3) ? `<span class="medal">${MEDALE[i]}</span>` : "";
     const s = szkolaById(r.szkola)||{};
     const pct = Math.max(6, Math.round(r.s/max*100));
     return `<tr class="${cls}">
@@ -740,10 +711,55 @@ function renderFinal(){
       <td class="barcell"><div class="bartrack"><div class="bar" style="width:${pct}%"></div></div></td>
     </tr>`;
   }).join("");
-
-  wrap.innerHTML = `<div class="table-scroll"><table>
+  return `<div class="table-scroll"><table>
     <thead><tr><th class="rk">#</th><th>Zawodnik</th><th>Szkoła</th><th class="num">Pistolet</th><th class="num">Karabinek</th><th class="num">Suma</th><th>Progresja</th></tr></thead>
     <tbody>${body}</tbody></table></div>`;
+}
+function formatDataPL(s){
+  const d = new Date(s+"T00:00:00");
+  return isNaN(d) ? esc(s) : d.toLocaleDateString("pl-PL",{day:"numeric",month:"long",year:"numeric"});
+}
+function renderFinal(){
+  ensureFinal();
+  const cfg = DANE.final;
+  const status = $("#finalStatus"), wrap = $("#finalBody");
+  const finalisci = kwalifikacja().finalisci; // 32 z kwalifikacji
+  const intro = "Finał dwufazowy: w I turze strzela 32 finalistów, w II turze ósemka z najlepszym wynikiem strzela jeszcze raz. O miejscach 1–8 decyduje wyłącznie wynik II tury (jak w ISSF).";
+  const kiedy = [cfg.data ? formatDataPL(cfg.data) : "", cfg.godzina ? "od "+esc(cfg.godzina) : ""].filter(Boolean).join(", ");
+  const gdzie = cfg.miejsce ? ` · ${esc(cfg.miejsce)}` : "";
+  const naglowek = (kiedy||cfg.miejsce) ? `<div class="final-sub">${esc(kiedy)}${gdzie}</div>` : "";
+
+  const f1 = finalRows(cfg.faza1);
+  const f2 = finalRows(cfg.faza2);
+
+  // Przed finałem — pokaż 32 finalistów wyłonionych z kwalifikacji.
+  if(!cfg.rozegrany || (!f1.length && !f2.length)){
+    status.innerHTML = `<span class="pill soon">Przed finałem</span> ${intro}`;
+    if(finalisci.length < 2){
+      wrap.innerHTML = `<div class="empty"><div class="big">Brak finalistów</div>Lista 32 finalistów pojawi się, gdy będą wyniki kwalifikacji.</div>`;
+      return;
+    }
+    wrap.innerHTML = naglowek + `<div class="final-sub">32 finalistów — awans z kwalifikacji</div>`
+      + `<div class="lucky-list">` + finalisci.map((z,i)=>{
+          const s = szkolaById(z.szkola)||{};
+          return `<div class="lucky-item">
+            <span class="ll-rk" style="color:var(--laser-green)">${i+1}</span>
+            <span class="ll-name">${esc(z.imie)}<span class="ll-sch"> · ${esc(s.nazwa||z.szkola)}</span></span>
+            <span class="ll-sc">${z.s.toFixed(1)}</span></div>`;
+        }).join("") + `</div>`;
+    return;
+  }
+
+  // Finał rozegrany — dwie tabele (II tura na górze, bo decyduje o medalach).
+  status.innerHTML = `<span class="pill live">Rozegrany</span> ${intro}`;
+  let html = naglowek;
+  if(f2.length){
+    html += `<div class="final-sub">II tura · finał medalowy — miejsca 1–8</div>` + finalTabela(f2, true);
+  }
+  if(f1.length){
+    html += `<div class="final-sub" style="margin-top:28px">I tura · wszyscy finaliści (${f1.length})</div>` + finalTabela(f1, !f2.length);
+  }
+  wrap.innerHTML = html;
 }
 
 /* ---- TERMINARZ ---- */
@@ -792,7 +808,13 @@ function zablokujEdycje(){
   setEdit(false);
 }
 const parseNum = v => { v = String(v).trim().replace(",", "."); if(v==="") return null; const n = Number(v); return isFinite(n) ? n : null; };
-const ensureFinal = () => { if(!DANE.final) DANE.final = { rozegrany:false, zawodnicy:[] }; if(!Array.isArray(DANE.final.zawodnicy)) DANE.final.zawodnicy = []; };
+const ensureFinal = () => {
+  if(!DANE.final) DANE.final = { rozegrany:false, faza1:[], faza2:[] };
+  const f = DANE.final;
+  if(Array.isArray(f.zawodnicy) && !Array.isArray(f.faza1)){ f.faza1 = f.zawodnicy; delete f.zawodnicy; }
+  if(!Array.isArray(f.faza1)) f.faza1 = [];
+  if(!Array.isArray(f.faza2)) f.faza2 = [];
+};
 const ensureTerminarz = () => { if(!Array.isArray(DANE.terminarz)) DANE.terminarz = []; };
 const statusOptions = sel => [["done","Zakończone"],["live","W toku"],["plan","Planowane"]].map(([v,l])=>`<option value="${v}" ${v===sel?"selected":""}>${l}</option>`).join("");
 const szkolaOptions = sel => DANE.szkoly.map(s=>`<option value="${esc(s.id)}" ${s.id===sel?"selected":""}>${esc(s.nazwa)}</option>`).join("");
@@ -840,29 +862,44 @@ function renderEditor(){
   });
   h += `</tbody></table></div><div class="ed-actions"><button class="btn-ed" data-act="add-zawodnik">+ Dodaj zawodnika</button></div></div>`;
 
-  // Finał
-  h += `<div class="ed-block"><h3>Finał</h3>
-    <p class="hint">Ta sama zasada — liczą się punkty. Wpisz wyniki finału tej samej ósemki (możesz ją wczytać z kwalifikacji jednym kliknięciem).</p>
+  // Finał — dwie fazy (ISSF)
+  ensureFinal();
+  const faze = (lista, faza) => {
+    let t = `<div class="ed-table"><table class="ed"><thead><tr><th>Finalista</th><th class="col-num">Pistolet</th><th class="col-num">Karabinek</th><th class="col-num">Suma</th><th></th></tr></thead><tbody>`;
+    lista.forEach((z,i)=>{
+      const p=num(z.pistolet), k=num(z.karabinek);
+      t += `<tr data-fi="${i}" data-faza="${faza}">
+        <td><input class="ed-in" type="text" data-f="imie" value="${esc(z.imie||"")}" list="finlist"></td>
+        <td><input class="ed-in num-in" type="text" inputmode="decimal" data-f="pistolet" value="${p!=null?p:""}"></td>
+        <td><input class="ed-in num-in" type="text" inputmode="decimal" data-f="karabinek" value="${k!=null?k:""}"></td>
+        ${sumaCell(sumaOf(p,k))}
+        <td><button class="btn-x" data-act="del-final" data-faza="${faza}" title="Usuń">✕</button></td></tr>`;
+    });
+    t += `</tbody></table></div>`;
+    return t;
+  };
+  h += `<div class="ed-block"><h3>Finał — dwie fazy (ISSF)</h3>
+    <p class="hint">I tura: strzela 32 finalistów. II tura: 8 najlepszych strzela jeszcze raz — o miejscach 1–8 decyduje wyłącznie wynik II tury. Wpisuj sumy: pistolet (10 strzałów), karabinek (5 strzałów).</p>
     <div class="ed-inline" style="margin-bottom:14px">
-      <label class="switch"><input type="checkbox" data-fmeta="rozegrany" ${f.rozegrany?"checked":""}> Finał rozegrany (pokaż klasyfikację)</label>
-      <div class="ed-field" style="max-width:240px"><label>Miejsce</label><input class="ed-in" type="text" data-fmeta="miejsce" value="${esc(f.miejsce||"")}"></div>
-      <div class="ed-field" style="max-width:170px"><label>Data</label><input class="ed-in" type="date" data-fmeta="data" value="${esc(f.data||"")}"></div>
+      <label class="switch"><input type="checkbox" data-fmeta="rozegrany" ${f.rozegrany?"checked":""}> Finał rozegrany (pokaż wyniki)</label>
+      <div class="ed-field" style="max-width:280px"><label>Miejsce</label><input class="ed-in" type="text" data-fmeta="miejsce" value="${esc(f.miejsce||"")}"></div>
+      <div class="ed-field" style="max-width:150px"><label>Data</label><input class="ed-in" type="date" data-fmeta="data" value="${esc(f.data||"")}"></div>
+      <div class="ed-field" style="max-width:110px"><label>Godzina</label><input class="ed-in" type="text" data-fmeta="godzina" value="${esc(f.godzina||"")}" placeholder="10:00"></div>
     </div>
-    <div class="ed-table"><table class="ed"><thead><tr><th>Finalista</th><th class="col-num">Pistolet</th><th class="col-num">Karabinek</th><th class="col-num">Suma</th><th></th></tr></thead><tbody>`;
-  f.zawodnicy.forEach((z,i)=>{
-    const p=num(z.pistolet), k=num(z.karabinek);
-    h += `<tr data-fi="${i}">
-      <td><input class="ed-in" type="text" data-f="imie" value="${esc(z.imie||"")}" list="finlist"></td>
-      <td><input class="ed-in num-in" type="text" inputmode="decimal" data-f="pistolet" value="${p!=null?p:""}"></td>
-      <td><input class="ed-in num-in" type="text" inputmode="decimal" data-f="karabinek" value="${k!=null?k:""}"></td>
-      ${sumaCell(sumaOf(p,k))}
-      <td><button class="btn-x" data-act="del-final" title="Usuń">✕</button></td></tr>`;
-  });
-  h += `</tbody></table></div>
+
+    <div class="final-sub">I tura — 32 finalistów</div>
+    ${faze(f.faza1, "faza1")}
+    <div class="ed-actions" style="margin-bottom:22px">
+      <button class="btn-ed" data-act="add-final" data-faza="faza1">+ Dodaj finalistę</button>
+      <button class="btn-ed" data-act="load-32">↑ Wczytaj 32 finalistów z kwalifikacji</button>
+    </div>
+
+    <div class="final-sub">II tura — 8 najlepszych (finał medalowy)</div>
+    ${faze(f.faza2, "faza2")}
     <datalist id="finlist">${s.zawodnicy.map(z=>`<option value="${esc(z.imie)}">`).join("")}</datalist>
     <div class="ed-actions">
-      <button class="btn-ed" data-act="add-final">+ Dodaj finalistę</button>
-      <button class="btn-ed" data-act="load-eight">↑ Wczytaj ósemkę z kwalifikacji</button>
+      <button class="btn-ed" data-act="add-final" data-faza="faza2">+ Dodaj finalistę</button>
+      <button class="btn-ed" data-act="load-8">↑ Wczytaj ósemkę z I tury</button>
     </div></div>`;
 
   // Terminarz
@@ -918,7 +955,7 @@ function onEdInput(e){
     z[f] = (f==="pistolet"||f==="karabinek") ? parseNum(t.value) : t.value;
     const c=trZ.children[4]; if(c) c.textContent = (v=>v!=null?v.toFixed(1):"—")(sumaOf(num(z.pistolet),num(z.karabinek)));
   }
-  else if(trF){ ensureFinal(); const i=+trF.dataset.fi, z=DANE.final.zawodnicy[i];
+  else if(trF){ ensureFinal(); const faza=trF.dataset.faza||"faza1"; const i=+trF.dataset.fi, z=DANE.final[faza][i];
     z[f] = (f==="pistolet"||f==="karabinek") ? parseNum(t.value) : t.value;
     const c=trF.children[3]; if(c) c.textContent = (v=>v!=null?v.toFixed(1):"—")(sumaOf(num(z.pistolet),num(z.karabinek)));
   }
@@ -948,11 +985,12 @@ function onEdClick(e){
   else if(act==="del-szkola"){ DANE.szkoly.splice(+b.closest('[data-si]').dataset.si,1); afterStruct(); }
   else if(act==="add-zawodnik"){ DANE.zawodnicy.unshift({imie:"", szkola:(DANE.szkoly[0]||{}).id||"", pistolet:null, karabinek:null}); afterStruct(); }
   else if(act==="del-zawodnik"){ DANE.zawodnicy.splice(+b.closest('[data-zi]').dataset.zi,1); afterStruct(); }
-  else if(act==="add-final"){ ensureFinal(); DANE.final.zawodnicy.push({imie:"", pistolet:null, karabinek:null}); afterStruct(); }
-  else if(act==="del-final"){ ensureFinal(); DANE.final.zawodnicy.splice(+b.closest('[data-fi]').dataset.fi,1); afterStruct(); }
+  else if(act==="add-final"){ ensureFinal(); const faza=b.dataset.faza||"faza1"; DANE.final[faza].push({imie:"", pistolet:null, karabinek:null}); afterStruct(); }
+  else if(act==="del-final"){ ensureFinal(); const row=b.closest('[data-fi]'); const faza=row.dataset.faza||"faza1"; DANE.final[faza].splice(+row.dataset.fi,1); afterStruct(); }
   else if(act==="add-termin"){ ensureTerminarz(); DANE.terminarz.push({data:"", etap:"", tytul:"Nowe wydarzenie", miejsce:"", status:"plan"}); afterStruct(); }
   else if(act==="del-termin"){ ensureTerminarz(); DANE.terminarz.splice(+b.closest('[data-ti]').dataset.ti,1); afterStruct(); }
-  else if(act==="load-eight"){ ladujOsemke(); }
+  else if(act==="load-32"){ laduj32(); }
+  else if(act==="load-8"){ ladujOsemke(); }
   else if(act==="load-published"){ wczytajOpublikowane(); }
   else if(act==="download-json"){ pobierzJSON(); }
   else if(act==="show-code"){ pokazKod(); }
@@ -960,12 +998,21 @@ function onEdClick(e){
   else if(act==="lock"){ zablokujEdycje(); }
 }
 
+function laduj32(){
+  ensureFinal();
+  const fin = kwalifikacja().finalisci;
+  if(!fin.length){ alert("Najpierw wpisz wyniki eliminacji — nie ma z kogo wyłonić finalistów."); return; }
+  const prev = DANE.final.faza1 || [];
+  DANE.final.faza1 = fin.map(z=>{ const ex=prev.find(x=>x.imie===z.imie)||{}; return { imie:z.imie, pistolet:ex.pistolet??null, karabinek:ex.karabinek??null }; });
+  afterStruct();
+}
 function ladujOsemke(){
   ensureFinal();
-  const top8 = kwalifikacja().finalisci.slice(0,8);
-  if(!top8.length){ alert("Najpierw wpisz wyniki eliminacji — nie ma z kogo wyłonić ósemki."); return; }
-  const prev = DANE.final.zawodnicy || [];
-  DANE.final.zawodnicy = top8.map(z=>{ const ex=prev.find(x=>x.imie===z.imie)||{}; return { imie:z.imie, pistolet:ex.pistolet??null, karabinek:ex.karabinek??null }; });
+  const f1 = finalRows(DANE.final.faza1);
+  if(f1.length < 2){ alert("Najpierw wpisz wyniki I tury finału — nie ma z kogo wyłonić ósemki."); return; }
+  const top8 = f1.slice(0,8);
+  const prev = DANE.final.faza2 || [];
+  DANE.final.faza2 = top8.map(z=>{ const ex=prev.find(x=>x.imie===z.imie)||{}; return { imie:z.imie, pistolet:ex.pistolet??null, karabinek:ex.karabinek??null }; });
   afterStruct();
 }
 function pobierzJSON(){
@@ -1003,6 +1050,7 @@ async function wczytajOpublikowane(){
 }
 function applyChrome(){
   const b=$("#seasonBadge"); if(b) b.textContent="SEZON "+(DANE.sezon||"");
+  const sb=$("#sampleBanner"); if(sb) sb.hidden = !DANE.daneTestowe;
 }
 function setEdit(on){
   trybEdycji = on;
