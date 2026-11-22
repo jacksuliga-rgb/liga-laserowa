@@ -542,12 +542,54 @@ const DANE_SEED = {
   // Finał medalowy — ósemka strzela jeszcze raz (10× pistolet + 5× karabinek).
   // O miejscu decyduje suma. Ustaw rozegrany:false, by pokazać ósemkę z kwalifikacji.
   final: {
-    rozegrany: false,
+    rozegrany: true,
     data: "2026-11-21",
     godzina: "10:00",
     miejsce: "Niepubliczna Szkoła Podstawowa Fundacji „Przyszłość dla Edukacji”, ul. Piękna 30/32, Łódź",
-    faza1: [],
-    faza2: []
+
+    // I tura — wszyscy, którzy strzelali
+    faza1: [
+      { imie:"Krzysztof Żbikowski",      pistolet:66.8, karabinek:15 },
+      { imie:"Dorian Kowalski",          pistolet:55.2, karabinek:25 },
+      { imie:"Paweł Czeszejko-Sochacki", pistolet:62.8, karabinek:15 },
+      { imie:"Aleksy Grabski",           pistolet:60.5, karabinek:15 },
+      { imie:"Maja Domańska",            pistolet:51.9, karabinek:20 },
+      { imie:"Weronika Suliga",          pistolet:49.7, karabinek:15 },
+      { imie:"Stanisław Jaroniek",       pistolet:48.1, karabinek:15 },
+      { imie:"Nicola Gierszewska",       pistolet:40.0, karabinek:20 },
+      { imie:"Przemek Owczarski",        pistolet:49.9, karabinek:10 },
+      { imie:"Franek Pytlos",            pistolet:49.7, karabinek:10 },
+      { imie:"Maks Vasiliev",            pistolet:53.8, karabinek:5  },
+      { imie:"Weronika Skorzepa",        pistolet:47.7, karabinek:10 },
+      { imie:"Adam Andrzejczak",         pistolet:50.4, karabinek:5  },
+      { imie:"Kacper Mardas",            pistolet:39.6, karabinek:15 },
+      { imie:"Jan Zbieranowski",         pistolet:44.5, karabinek:10 },
+      { imie:"Wiktor Wójcik",            pistolet:43.2, karabinek:10 },
+      { imie:"Antoni Przymusiała",       pistolet:37.0, karabinek:15 },
+      { imie:"Sendra Wojtek",            pistolet:27.2, karabinek:20 },
+      { imie:"Kornelia Czaplińska",      pistolet:33.8, karabinek:10 },
+      { imie:"Maria Faszmanowicz",       pistolet:28.0, karabinek:15 },
+      { imie:"Adrian Janiszewski",       pistolet:41.8, karabinek:0  },
+      { imie:"Michał Fabijańczyk",       pistolet:26.8, karabinek:15 },
+      { imie:"Adam Kotkowski",           pistolet:31.1, karabinek:5  },
+      { imie:"Dominik Cichowicz",        pistolet:25.2, karabinek:10 },
+      { imie:"Helena Okupska-Viana",     pistolet:18.0, karabinek:15 },
+      { imie:"Helena Wójcik",            pistolet:22.7, karabinek:5  },
+      { imie:"Maciej Sobalczyk",         pistolet:21.5, karabinek:0  },
+      { imie:"Martyna Kowalska",         pistolet:11.1, karabinek:5  }
+    ],
+
+    // II tura — ósemka, o miejscach 1–8 decyduje wyłącznie ten wynik
+    faza2: [
+      { imie:"Krzysztof Żbikowski",      pistolet:77.0, karabinek:20 },
+      { imie:"Aleksy Grabski",           pistolet:62.2, karabinek:20 },
+      { imie:"Maja Domańska",            pistolet:39.9, karabinek:25 },
+      { imie:"Stanisław Jaroniek",       pistolet:46.2, karabinek:15 },
+      { imie:"Dorian Kowalski",          pistolet:45.1, karabinek:15 },
+      { imie:"Paweł Czeszejko-Sochacki", pistolet:38.7, karabinek:15 },
+      { imie:"Weronika Suliga",          pistolet:31.8, karabinek:10 },
+      { imie:"Nicola Gierszewska",       pistolet:18.5, karabinek:5  }
+    ]
   }
 };
 
