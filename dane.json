@@ -2,747 +2,132 @@
   "sezon": "2026",
   "daneTestowe": false,
   "szkoly": [
-    {
-      "id": "SP26",
-      "nazwa": "Szkoła Podstawowa nr 153",
-      "kolor": "green"
-    },
-    {
-      "id": "SP81",
-      "nazwa": "Szkoła Podstawowa nr 212",
-      "kolor": "blue"
-    },
-    {
-      "id": "LO3",
-      "nazwa": "XXIII LO",
-      "kolor": "magenta"
-    },
-    {
-      "id": "ZSP9",
-      "nazwa": "NSP FPdE",
-      "kolor": "orange"
-    },
-    {
-      "id": "SP199",
-      "nazwa": "Szkoła Podstawowa nr 7",
-      "kolor": "violet"
-    }
+    { "id": "SP26", "nazwa": "Szkoła Podstawowa nr 153", "kolor": "green" },
+    { "id": "SP81", "nazwa": "Szkoła Podstawowa nr 212", "kolor": "blue" },
+    { "id": "LO3", "nazwa": "XXIII LO", "kolor": "magenta" },
+    { "id": "ZSP9", "nazwa": "NSP FPdE", "kolor": "orange" },
+    { "id": "SP199", "nazwa": "Szkoła Podstawowa nr 7", "kolor": "violet" }
   ],
   "zawodnicy": [
-    {
-      "imie": "Antoni Trojanowski",
-      "szkola": "SP26",
-      "pistolet": 51.3,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Sendra Wojtek",
-      "szkola": "SP26",
-      "pistolet": 46.1,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Aleksy Grabski",
-      "szkola": "SP26",
-      "pistolet": 40.0,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Maciej Sobalczyk",
-      "szkola": "SP26",
-      "pistolet": 38.7,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Iga Białas",
-      "szkola": "SP26",
-      "pistolet": 40.4,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Michał Dymek",
-      "szkola": "SP26",
-      "pistolet": 24.3,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Wacław Wołkowski",
-      "szkola": "SP26",
-      "pistolet": 29.0,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Ivan Tertyshnyk",
-      "szkola": "SP26",
-      "pistolet": 32.8,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Krawery Wojciechowski",
-      "szkola": "SP26",
-      "pistolet": 26.4,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Fabian Czyński",
-      "szkola": "SP26",
-      "pistolet": 20.7,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Nadia Kotwica",
-      "szkola": "SP26",
-      "pistolet": 13.2,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Bartosz Osimek",
-      "szkola": "SP26",
-      "pistolet": 17.2,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Dominika Kamecka",
-      "szkola": "SP26",
-      "pistolet": 11.4,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Emil Rogowski",
-      "szkola": "SP26",
-      "pistolet": 20.5,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Stanisław Wojdaszek",
-      "szkola": "SP26",
-      "pistolet": 11.1,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Franciszek Sitkowski",
-      "szkola": "SP26",
-      "pistolet": 10.8,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Jan Tomaszewski",
-      "szkola": "SP26",
-      "pistolet": 0.0,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Kajetan Ziarko",
-      "szkola": "SP26",
-      "pistolet": 10.5,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Mark Nesmiianovych",
-      "szkola": "SP26",
-      "pistolet": 6.7,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Mira Zozulova",
-      "szkola": "SP26",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Adam Adamiak",
-      "szkola": "SP26",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Krystian Konarski",
-      "szkola": "SP26",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Ariel Ewczyński",
-      "szkola": "SP81",
-      "pistolet": 69.3,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Paweł Czeszejko-Sochacki",
-      "szkola": "SP81",
-      "pistolet": 52.3,
-      "karabinek": 25.0
-    },
-    {
-      "imie": "Krystian Gawroński",
-      "szkola": "SP81",
-      "pistolet": 56.2,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Nicola Gierszewska",
-      "szkola": "SP81",
-      "pistolet": 52.5,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Przemek Owczarski",
-      "szkola": "SP81",
-      "pistolet": 50.4,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Sandra Machura",
-      "szkola": "SP81",
-      "pistolet": 42.8,
-      "karabinek": 20.0
-    },
-    {
-      "imie": "Fabian Raszewski",
-      "szkola": "SP81",
-      "pistolet": 55.7,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Piotr Szczepski",
-      "szkola": "SP81",
-      "pistolet": 42.3,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Igor Urbański",
-      "szkola": "SP81",
-      "pistolet": 36.9,
-      "karabinek": 20.0
-    },
-    {
-      "imie": "Alan Witczak",
-      "szkola": "SP81",
-      "pistolet": 43.2,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Mateusz Babiński",
-      "szkola": "SP81",
-      "pistolet": 47.4,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Jaromir Jakubowski",
-      "szkola": "SP81",
-      "pistolet": 46.0,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Adam Zakrzewski",
-      "szkola": "SP81",
-      "pistolet": 35.4,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Piotr Karbowiak",
-      "szkola": "SP81",
-      "pistolet": 36.2,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Alan Sumera",
-      "szkola": "SP81",
-      "pistolet": 25.3,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Zuzanna Rogaczewska",
-      "szkola": "SP81",
-      "pistolet": 23.6,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Kacper Burda",
-      "szkola": "SP81",
-      "pistolet": 37.4,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Gaja Olejniczak",
-      "szkola": "SP81",
-      "pistolet": 34.1,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Julianna Stachowiak",
-      "szkola": "SP81",
-      "pistolet": 19.3,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Kacper Ziętek",
-      "szkola": "SP81",
-      "pistolet": 15.9,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Jan Borkowski",
-      "szkola": "SP81",
-      "pistolet": 10.5,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Zuzanna Marayda",
-      "szkola": "SP81",
-      "pistolet": 19.1,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Dorian Baranowski",
-      "szkola": "SP81",
-      "pistolet": 3.7,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Wiktoria Urbaniak",
-      "szkola": "SP81",
-      "pistolet": 13.2,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Jakub Bartuzel",
-      "szkola": "SP81",
-      "pistolet": 6.0,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Aleks Kornecki",
-      "szkola": "SP81",
-      "pistolet": 0.0,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Oliwia Opaszowska-Żelechowska",
-      "szkola": "SP81",
-      "pistolet": 9.9,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Nikola Dąbrowska",
-      "szkola": "SP81",
-      "pistolet": 8.4,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Iga Pawlik",
-      "szkola": "SP81",
-      "pistolet": 5.9,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Piotr Michalski",
-      "szkola": "SP81",
-      "pistolet": 5.1,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Daniel Wróblewski",
-      "szkola": "SP81",
-      "pistolet": 1.8,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Kornelia Wojtunile",
-      "szkola": "SP81",
-      "pistolet": 1.6,
-      "karabinek": null
-    },
-    {
-      "imie": "Nicola Błaszczyk",
-      "szkola": "SP81",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Dawid Binias",
-      "szkola": "SP81",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Gabriela Malik",
-      "szkola": "SP81",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Natan Pawlak",
-      "szkola": "SP81",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Krzysztof Żbikowski",
-      "szkola": "ZSP9",
-      "pistolet": 93.8,
-      "karabinek": 25.0
-    },
-    {
-      "imie": "Olga Brendzel",
-      "szkola": "ZSP9",
-      "pistolet": 80.2,
-      "karabinek": 25.0
-    },
-    {
-      "imie": "Michał Fabijańczyk",
-      "szkola": "ZSP9",
-      "pistolet": 79.3,
-      "karabinek": 25.0
-    },
-    {
-      "imie": "Antonina Zbieranowska",
-      "szkola": "ZSP9",
-      "pistolet": 75.3,
-      "karabinek": 20.0
-    },
-    {
-      "imie": "Jan Zbieranowski",
-      "szkola": "ZSP9",
-      "pistolet": 74.9,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Kacper Mardas",
-      "szkola": "ZSP9",
-      "pistolet": 71.7,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Kaja Domańska",
-      "szkola": "ZSP9",
-      "pistolet": 69.1,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Antoni Przymusiała",
-      "szkola": "ZSP9",
-      "pistolet": 68.7,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Maja Domańska",
-      "szkola": "ZSP9",
-      "pistolet": 66.7,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Adrian Janiszewski",
-      "szkola": "ZSP9",
-      "pistolet": 71.3,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Zofia Powroźnik",
-      "szkola": "ZSP9",
-      "pistolet": 53.6,
-      "karabinek": 25.0
-    },
-    {
-      "imie": "Helena Okupska-Viana",
-      "szkola": "ZSP9",
-      "pistolet": 62.0,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Wiktor Wójcik",
-      "szkola": "ZSP9",
-      "pistolet": 61.8,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Weronika Skorzepa",
-      "szkola": "ZSP9",
-      "pistolet": 46.3,
-      "karabinek": 20.0
-    },
-    {
-      "imie": "Adam Andrzejczak",
-      "szkola": "ZSP9",
-      "pistolet": 56.1,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Kornelia Czaplińska",
-      "szkola": "ZSP9",
-      "pistolet": 40.8,
-      "karabinek": 25.0
-    },
-    {
-      "imie": "Szczepan Stefański",
-      "szkola": "ZSP9",
-      "pistolet": 49.1,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Bartosz Chabiński",
-      "szkola": "ZSP9",
-      "pistolet": 40.8,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Filip Kwiatkowski",
-      "szkola": "ZSP9",
-      "pistolet": 44.3,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Tymoteusz Wituła",
-      "szkola": "ZSP9",
-      "pistolet": 37.7,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Jan Mielczarek",
-      "szkola": "ZSP9",
-      "pistolet": 25.0,
-      "karabinek": 20.0
-    },
-    {
-      "imie": "Stefan Wnuk",
-      "szkola": "ZSP9",
-      "pistolet": 37.9,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Adrianna Szulc",
-      "szkola": "ZSP9",
-      "pistolet": 27.9,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Helena Wójcik",
-      "szkola": "ZSP9",
-      "pistolet": 25.5,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Matylda Pająk",
-      "szkola": "ZSP9",
-      "pistolet": 12.0,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Gustaw Marcinkowski",
-      "szkola": "ZSP9",
-      "pistolet": 5.3,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Marysia Kandzia",
-      "szkola": "ZSP9",
-      "pistolet": 0.5,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Ludwik Jagiełło",
-      "szkola": "ZSP9",
-      "pistolet": 34.6,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Stefan Macioszek",
-      "szkola": "ZSP9",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Hanna Nowakowska",
-      "szkola": "ZSP9",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Weronika Suliga",
-      "szkola": "LO3",
-      "pistolet": 71.3,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Dominik Cichowicz",
-      "szkola": "LO3",
-      "pistolet": 29.7,
-      "karabinek": 20.0
-    },
-    {
-      "imie": "Martyna Kowalska",
-      "szkola": "LO3",
-      "pistolet": 25.0,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Maria Faszmanowicz",
-      "szkola": "LO3",
-      "pistolet": 23.5,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Marek Szyjka",
-      "szkola": "LO3",
-      "pistolet": 14.4,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Adrian Marajda",
-      "szkola": "LO3",
-      "pistolet": 12.6,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Miłosz Płachta",
-      "szkola": "LO3",
-      "pistolet": 0.0,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Wiktoria Ufa",
-      "szkola": "LO3",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Liam Sietsema",
-      "szkola": "LO3",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Dorian Kowalski",
-      "szkola": "SP199",
-      "pistolet": 63.6,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Maks Vasiliev",
-      "szkola": "SP199",
-      "pistolet": 49.2,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Adam Kotkowski",
-      "szkola": "SP199",
-      "pistolet": 36.6,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Stanisław Jaroniek",
-      "szkola": "SP199",
-      "pistolet": 24.8,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Oliwier Strzelecki",
-      "szkola": "SP199",
-      "pistolet": 27.0,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Jan Mastalerz",
-      "szkola": "SP199",
-      "pistolet": 19.4,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Antoni Glinkowski",
-      "szkola": "SP199",
-      "pistolet": 28.4,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Basia Pietrzyk",
-      "szkola": "SP199",
-      "pistolet": 18.0,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Oliwier Dominiczyk",
-      "szkola": "SP199",
-      "pistolet": 26.9,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Roman Dmytriv",
-      "szkola": "SP199",
-      "pistolet": 26.8,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Kacper Wiciejewski",
-      "szkola": "SP199",
-      "pistolet": 18.2,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Mateusz Śpionek",
-      "szkola": "SP199",
-      "pistolet": 17.9,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Mateusz Ślipek",
-      "szkola": "SP199",
-      "pistolet": 22.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Fabian Olkusz",
-      "szkola": "SP199",
-      "pistolet": 5.0,
-      "karabinek": 10.0
-    },
-    {
-      "imie": "Robert Szczutecki",
-      "szkola": "SP199",
-      "pistolet": 0.0,
-      "karabinek": 15.0
-    },
-    {
-      "imie": "Jeremi Czekalski",
-      "szkola": "SP199",
-      "pistolet": 9.2,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Antek Chrzanowski",
-      "szkola": "SP199",
-      "pistolet": 4.4,
-      "karabinek": 5.0
-    },
-    {
-      "imie": "Tobiasz Kowalski",
-      "szkola": "SP199",
-      "pistolet": 9.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Jan Zbiorczyk",
-      "szkola": "SP199",
-      "pistolet": 7.1,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Polina Merkulova",
-      "szkola": "SP199",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Krzysztof Joachimiak",
-      "szkola": "SP199",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    },
-    {
-      "imie": "Stanisław Kamiński",
-      "szkola": "SP199",
-      "pistolet": 0.0,
-      "karabinek": 0.0
-    }
+    { "imie": "Antoni Trojanowski", "szkola": "SP26", "pistolet": 51.3, "karabinek": 10.0 },
+    { "imie": "Sendra Wojtek", "szkola": "SP26", "pistolet": 46.1, "karabinek": 15.0 },
+    { "imie": "Aleksy Grabski", "szkola": "SP26", "pistolet": 40.0, "karabinek": 5.0 },
+    { "imie": "Maciej Sobalczyk", "szkola": "SP26", "pistolet": 38.7, "karabinek": 5.0 },
+    { "imie": "Iga Białas", "szkola": "SP26", "pistolet": 40.4, "karabinek": 0.0 },
+    { "imie": "Michał Dymek", "szkola": "SP26", "pistolet": 24.3, "karabinek": 10.0 },
+    { "imie": "Wacław Wołkowski", "szkola": "SP26", "pistolet": 29.0, "karabinek": 5.0 },
+    { "imie": "Ivan Tertyshnyk", "szkola": "SP26", "pistolet": 32.8, "karabinek": 0.0 },
+    { "imie": "Krawery Wojciechowski", "szkola": "SP26", "pistolet": 26.4, "karabinek": 5.0 },
+    { "imie": "Fabian Czyński", "szkola": "SP26", "pistolet": 20.7, "karabinek": 10.0 },
+    { "imie": "Nadia Kotwica", "szkola": "SP26", "pistolet": 13.2, "karabinek": 15.0 },
+    { "imie": "Bartosz Osimek", "szkola": "SP26", "pistolet": 17.2, "karabinek": 10.0 },
+    { "imie": "Dominika Kamecka", "szkola": "SP26", "pistolet": 11.4, "karabinek": 15.0 },
+    { "imie": "Emil Rogowski", "szkola": "SP26", "pistolet": 20.5, "karabinek": 5.0 },
+    { "imie": "Stanisław Wojdaszek", "szkola": "SP26", "pistolet": 11.1, "karabinek": 5.0 },
+    { "imie": "Franciszek Sitkowski", "szkola": "SP26", "pistolet": 10.8, "karabinek": 5.0 },
+    { "imie": "Jan Tomaszewski", "szkola": "SP26", "pistolet": 0.0, "karabinek": 15.0 },
+    { "imie": "Kajetan Ziarko", "szkola": "SP26", "pistolet": 10.5, "karabinek": 0.0 },
+    { "imie": "Mark Nesmiianovych", "szkola": "SP26", "pistolet": 6.7, "karabinek": 0.0 },
+    { "imie": "Mira Zozulova", "szkola": "SP26", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Adam Adamiak", "szkola": "SP26", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Krystian Konarski", "szkola": "SP26", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Ariel Ewczyński", "szkola": "SP81", "pistolet": 69.3, "karabinek": 10.0 },
+    { "imie": "Paweł Czeszejko-Sochacki", "szkola": "SP81", "pistolet": 52.3, "karabinek": 25.0 },
+    { "imie": "Krystian Gawroński", "szkola": "SP81", "pistolet": 56.2, "karabinek": 15.0 },
+    { "imie": "Nicola Gierszewska", "szkola": "SP81", "pistolet": 52.5, "karabinek": 15.0 },
+    { "imie": "Przemek Owczarski", "szkola": "SP81", "pistolet": 50.4, "karabinek": 15.0 },
+    { "imie": "Sandra Machura", "szkola": "SP81", "pistolet": 42.8, "karabinek": 20.0 },
+    { "imie": "Fabian Raszewski", "szkola": "SP81", "pistolet": 55.7, "karabinek": 5.0 },
+    { "imie": "Piotr Szczepski", "szkola": "SP81", "pistolet": 42.3, "karabinek": 15.0 },
+    { "imie": "Igor Urbański", "szkola": "SP81", "pistolet": 36.9, "karabinek": 20.0 },
+    { "imie": "Alan Witczak", "szkola": "SP81", "pistolet": 43.2, "karabinek": 10.0 },
+    { "imie": "Mateusz Babiński", "szkola": "SP81", "pistolet": 47.4, "karabinek": 5.0 },
+    { "imie": "Jaromir Jakubowski", "szkola": "SP81", "pistolet": 46.0, "karabinek": 5.0 },
+    { "imie": "Adam Zakrzewski", "szkola": "SP81", "pistolet": 35.4, "karabinek": 15.0 },
+    { "imie": "Piotr Karbowiak", "szkola": "SP81", "pistolet": 36.2, "karabinek": 5.0 },
+    { "imie": "Alan Sumera", "szkola": "SP81", "pistolet": 25.3, "karabinek": 15.0 },
+    { "imie": "Zuzanna Rogaczewska", "szkola": "SP81", "pistolet": 23.6, "karabinek": 15.0 },
+    { "imie": "Kacper Burda", "szkola": "SP81", "pistolet": 37.4, "karabinek": 0.0 },
+    { "imie": "Gaja Olejniczak", "szkola": "SP81", "pistolet": 34.1, "karabinek": 0.0 },
+    { "imie": "Julianna Stachowiak", "szkola": "SP81", "pistolet": 19.3, "karabinek": 10.0 },
+    { "imie": "Kacper Ziętek", "szkola": "SP81", "pistolet": 15.9, "karabinek": 5.0 },
+    { "imie": "Jan Borkowski", "szkola": "SP81", "pistolet": 10.5, "karabinek": 10.0 },
+    { "imie": "Zuzanna Marayda", "szkola": "SP81", "pistolet": 19.1, "karabinek": 0.0 },
+    { "imie": "Dorian Baranowski", "szkola": "SP81", "pistolet": 3.7, "karabinek": 10.0 },
+    { "imie": "Wiktoria Urbaniak", "szkola": "SP81", "pistolet": 13.2, "karabinek": 0.0 },
+    { "imie": "Jakub Bartuzel", "szkola": "SP81", "pistolet": 6.0, "karabinek": 5.0 },
+    { "imie": "Aleks Kornecki", "szkola": "SP81", "pistolet": 0.0, "karabinek": 10.0 },
+    { "imie": "Oliwia Opaszowska-Żelechowska", "szkola": "SP81", "pistolet": 9.9, "karabinek": 0.0 },
+    { "imie": "Nikola Dąbrowska", "szkola": "SP81", "pistolet": 8.4, "karabinek": 0.0 },
+    { "imie": "Iga Pawlik", "szkola": "SP81", "pistolet": 5.9, "karabinek": 0.0 },
+    { "imie": "Piotr Michalski", "szkola": "SP81", "pistolet": 5.1, "karabinek": 0.0 },
+    { "imie": "Daniel Wróblewski", "szkola": "SP81", "pistolet": 1.8, "karabinek": 0.0 },
+    { "imie": "Kornelia Wojtunile", "szkola": "SP81", "pistolet": 1.6, "karabinek": null },
+    { "imie": "Nicola Błaszczyk", "szkola": "SP81", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Dawid Binias", "szkola": "SP81", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Gabriela Malik", "szkola": "SP81", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Natan Pawlak", "szkola": "SP81", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Krzysztof Żbikowski", "szkola": "ZSP9", "pistolet": 93.8, "karabinek": 25.0 },
+    { "imie": "Olga Brendzel", "szkola": "ZSP9", "pistolet": 80.2, "karabinek": 25.0 },
+    { "imie": "Michał Fabijańczyk", "szkola": "ZSP9", "pistolet": 79.3, "karabinek": 25.0 },
+    { "imie": "Antonina Zbieranowska", "szkola": "ZSP9", "pistolet": 75.3, "karabinek": 20.0 },
+    { "imie": "Jan Zbieranowski", "szkola": "ZSP9", "pistolet": 74.9, "karabinek": 15.0 },
+    { "imie": "Kacper Mardas", "szkola": "ZSP9", "pistolet": 71.7, "karabinek": 15.0 },
+    { "imie": "Kaja Domańska", "szkola": "ZSP9", "pistolet": 69.1, "karabinek": 15.0 },
+    { "imie": "Antoni Przymusiała", "szkola": "ZSP9", "pistolet": 68.7, "karabinek": 15.0 },
+    { "imie": "Maja Domańska", "szkola": "ZSP9", "pistolet": 66.7, "karabinek": 15.0 },
+    { "imie": "Adrian Janiszewski", "szkola": "ZSP9", "pistolet": 71.3, "karabinek": 10.0 },
+    { "imie": "Zofia Powroźnik", "szkola": "ZSP9", "pistolet": 53.6, "karabinek": 25.0 },
+    { "imie": "Helena Okupska-Viana", "szkola": "ZSP9", "pistolet": 62.0, "karabinek": 15.0 },
+    { "imie": "Wiktor Wójcik", "szkola": "ZSP9", "pistolet": 61.8, "karabinek": 10.0 },
+    { "imie": "Weronika Skorzepa", "szkola": "ZSP9", "pistolet": 46.3, "karabinek": 20.0 },
+    { "imie": "Adam Andrzejczak", "szkola": "ZSP9", "pistolet": 56.1, "karabinek": 10.0 },
+    { "imie": "Kornelia Czaplińska", "szkola": "ZSP9", "pistolet": 40.8, "karabinek": 25.0 },
+    { "imie": "Szczepan Stefański", "szkola": "ZSP9", "pistolet": 49.1, "karabinek": 10.0 },
+    { "imie": "Bartosz Chabiński", "szkola": "ZSP9", "pistolet": 40.8, "karabinek": 10.0 },
+    { "imie": "Filip Kwiatkowski", "szkola": "ZSP9", "pistolet": 44.3, "karabinek": 5.0 },
+    { "imie": "Tymoteusz Wituła", "szkola": "ZSP9", "pistolet": 37.7, "karabinek": 10.0 },
+    { "imie": "Jan Mielczarek", "szkola": "ZSP9", "pistolet": 25.0, "karabinek": 20.0 },
+    { "imie": "Stefan Wnuk", "szkola": "ZSP9", "pistolet": 37.9, "karabinek": 5.0 },
+    { "imie": "Adrianna Szulc", "szkola": "ZSP9", "pistolet": 27.9, "karabinek": 5.0 },
+    { "imie": "Helena Wójcik", "szkola": "ZSP9", "pistolet": 25.5, "karabinek": 0.0 },
+    { "imie": "Matylda Pająk", "szkola": "ZSP9", "pistolet": 12.0, "karabinek": 5.0 },
+    { "imie": "Gustaw Marcinkowski", "szkola": "ZSP9", "pistolet": 5.3, "karabinek": 0.0 },
+    { "imie": "Marysia Kandzia", "szkola": "ZSP9", "pistolet": 0.5, "karabinek": 0.0 },
+    { "imie": "Ludwik Jagiełło", "szkola": "ZSP9", "pistolet": 34.6, "karabinek": 5.0 },
+    { "imie": "Stefan Macioszek", "szkola": "ZSP9", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Hanna Nowakowska", "szkola": "ZSP9", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Weronika Suliga", "szkola": "LO3", "pistolet": 71.3, "karabinek": 10.0 },
+    { "imie": "Dominik Cichowicz", "szkola": "LO3", "pistolet": 29.7, "karabinek": 20.0 },
+    { "imie": "Martyna Kowalska", "szkola": "LO3", "pistolet": 25.0, "karabinek": 15.0 },
+    { "imie": "Maria Faszmanowicz", "szkola": "LO3", "pistolet": 23.5, "karabinek": 15.0 },
+    { "imie": "Marek Szyjka", "szkola": "LO3", "pistolet": 14.4, "karabinek": 10.0 },
+    { "imie": "Adrian Marajda", "szkola": "LO3", "pistolet": 12.6, "karabinek": 10.0 },
+    { "imie": "Miłosz Płachta", "szkola": "LO3", "pistolet": 0.0, "karabinek": 5.0 },
+    { "imie": "Wiktoria Ufa", "szkola": "LO3", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Liam Sietsema", "szkola": "LO3", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Dorian Kowalski", "szkola": "SP199", "pistolet": 63.6, "karabinek": 5.0 },
+    { "imie": "Maks Vasiliev", "szkola": "SP199", "pistolet": 49.2, "karabinek": 5.0 },
+    { "imie": "Adam Kotkowski", "szkola": "SP199", "pistolet": 36.6, "karabinek": 10.0 },
+    { "imie": "Stanisław Jaroniek", "szkola": "SP199", "pistolet": 24.8, "karabinek": 10.0 },
+    { "imie": "Oliwier Strzelecki", "szkola": "SP199", "pistolet": 27.0, "karabinek": 5.0 },
+    { "imie": "Jan Mastalerz", "szkola": "SP199", "pistolet": 19.4, "karabinek": 10.0 },
+    { "imie": "Antoni Glinkowski", "szkola": "SP199", "pistolet": 28.4, "karabinek": 0.0 },
+    { "imie": "Basia Pietrzyk", "szkola": "SP199", "pistolet": 18.0, "karabinek": 10.0 },
+    { "imie": "Oliwier Dominiczyk", "szkola": "SP199", "pistolet": 26.9, "karabinek": 0.0 },
+    { "imie": "Roman Dmytriv", "szkola": "SP199", "pistolet": 26.8, "karabinek": 0.0 },
+    { "imie": "Kacper Wiciejewski", "szkola": "SP199", "pistolet": 18.2, "karabinek": 5.0 },
+    { "imie": "Mateusz Śpionek", "szkola": "SP199", "pistolet": 17.9, "karabinek": 5.0 },
+    { "imie": "Mateusz Ślipek", "szkola": "SP199", "pistolet": 22.0, "karabinek": 0.0 },
+    { "imie": "Fabian Olkusz", "szkola": "SP199", "pistolet": 5.0, "karabinek": 10.0 },
+    { "imie": "Robert Szczutecki", "szkola": "SP199", "pistolet": 0.0, "karabinek": 15.0 },
+    { "imie": "Jeremi Czekalski", "szkola": "SP199", "pistolet": 9.2, "karabinek": 5.0 },
+    { "imie": "Antek Chrzanowski", "szkola": "SP199", "pistolet": 4.4, "karabinek": 5.0 },
+    { "imie": "Tobiasz Kowalski", "szkola": "SP199", "pistolet": 9.0, "karabinek": 0.0 },
+    { "imie": "Jan Zbiorczyk", "szkola": "SP199", "pistolet": 7.1, "karabinek": 0.0 },
+    { "imie": "Polina Merkulova", "szkola": "SP199", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Krzysztof Joachimiak", "szkola": "SP199", "pistolet": 0.0, "karabinek": 0.0 },
+    { "imie": "Stanisław Kamiński", "szkola": "SP199", "pistolet": 0.0, "karabinek": 0.0 }
   ],
   "terminarz": [
     {
@@ -785,15 +170,53 @@
       "etap": "Etap 3 · Finał",
       "tytul": "Wielki finał — 32 finalistów (od 10:00)",
       "miejsce": "Niepubliczna Szkoła Podstawowa Fundacji „Przyszłość dla Edukacji”, ul. Piękna 30/32, Łódź",
-      "status": "plan"
+      "status": "done"
     }
   ],
   "final": {
-    "rozegrany": false,
+    "rozegrany": true,
     "data": "2026-11-21",
     "godzina": "10:00",
     "miejsce": "Niepubliczna Szkoła Podstawowa Fundacji „Przyszłość dla Edukacji”, ul. Piękna 30/32, Łódź",
-    "faza1": [],
-    "faza2": []
+    "faza1": [
+      { "imie": "Krzysztof Żbikowski", "pistolet": 66.8, "karabinek": 15.0 },
+      { "imie": "Dorian Kowalski", "pistolet": 55.2, "karabinek": 25.0 },
+      { "imie": "Paweł Czeszejko-Sochacki", "pistolet": 62.8, "karabinek": 15.0 },
+      { "imie": "Aleksy Grabski", "pistolet": 60.5, "karabinek": 15.0 },
+      { "imie": "Maja Domańska", "pistolet": 51.9, "karabinek": 20.0 },
+      { "imie": "Weronika Suliga", "pistolet": 49.7, "karabinek": 15.0 },
+      { "imie": "Stanisław Jaroniek", "pistolet": 48.1, "karabinek": 15.0 },
+      { "imie": "Nicola Gierszewska", "pistolet": 40.0, "karabinek": 20.0 },
+      { "imie": "Przemek Owczarski", "pistolet": 49.9, "karabinek": 10.0 },
+      { "imie": "Franek Pytlos", "pistolet": 49.7, "karabinek": 10.0 },
+      { "imie": "Maks Vasiliev", "pistolet": 53.8, "karabinek": 5.0 },
+      { "imie": "Weronika Skorzepa", "pistolet": 47.7, "karabinek": 10.0 },
+      { "imie": "Adam Andrzejczak", "pistolet": 50.4, "karabinek": 5.0 },
+      { "imie": "Kacper Mardas", "pistolet": 39.6, "karabinek": 15.0 },
+      { "imie": "Jan Zbieranowski", "pistolet": 44.5, "karabinek": 10.0 },
+      { "imie": "Wiktor Wójcik", "pistolet": 43.2, "karabinek": 10.0 },
+      { "imie": "Antoni Przymusiała", "pistolet": 37.0, "karabinek": 15.0 },
+      { "imie": "Sendra Wojtek", "pistolet": 27.2, "karabinek": 20.0 },
+      { "imie": "Kornelia Czaplińska", "pistolet": 33.8, "karabinek": 10.0 },
+      { "imie": "Maria Faszmanowicz", "pistolet": 28.0, "karabinek": 15.0 },
+      { "imie": "Adrian Janiszewski", "pistolet": 41.8, "karabinek": 0.0 },
+      { "imie": "Michał Fabijańczyk", "pistolet": 26.8, "karabinek": 15.0 },
+      { "imie": "Adam Kotkowski", "pistolet": 31.1, "karabinek": 5.0 },
+      { "imie": "Dominik Cichowicz", "pistolet": 25.2, "karabinek": 10.0 },
+      { "imie": "Helena Okupska-Viana", "pistolet": 18.0, "karabinek": 15.0 },
+      { "imie": "Helena Wójcik", "pistolet": 22.7, "karabinek": 5.0 },
+      { "imie": "Maciej Sobalczyk", "pistolet": 21.5, "karabinek": 0.0 },
+      { "imie": "Martyna Kowalska", "pistolet": 11.1, "karabinek": 5.0 }
+    ],
+    "faza2": [
+      { "imie": "Krzysztof Żbikowski", "pistolet": 77.0, "karabinek": 20.0 },
+      { "imie": "Aleksy Grabski", "pistolet": 62.2, "karabinek": 20.0 },
+      { "imie": "Maja Domańska", "pistolet": 39.9, "karabinek": 25.0 },
+      { "imie": "Stanisław Jaroniek", "pistolet": 46.2, "karabinek": 15.0 },
+      { "imie": "Dorian Kowalski", "pistolet": 45.1, "karabinek": 15.0 },
+      { "imie": "Paweł Czeszejko-Sochacki", "pistolet": 38.7, "karabinek": 15.0 },
+      { "imie": "Weronika Suliga", "pistolet": 31.8, "karabinek": 10.0 },
+      { "imie": "Nicola Gierszewska", "pistolet": 18.5, "karabinek": 5.0 }
+    ]
   }
 }
